@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="el">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090d18"><meta name="description" content="AURA Clock — ένα κομψό, ζωντανό ρολόι.">
+<title>AURA CLOCK — Time, in focus</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700;800&display=swap');
+:root{color-scheme:dark;--bg:#090d18;--muted:#8590a7;--line:rgba(255,255,255,.1);--cyan:#8be9e1;--gold:#e6c994}
+*{box-sizing:border-box}body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 50% 0%,#18243b 0%,#0c1221 38%,var(--bg) 76%);color:#f4f6fb;font-family:Manrope,system-ui,sans-serif;display:grid;place-items:center;padding:26px;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+.shell{width:min(100%,900px);position:relative}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}.brand{display:flex;align-items:center;gap:11px;letter-spacing:.22em;font-size:11px;font-weight:800}.mark{width:30px;height:30px;border:1px solid #8be9e177;border-radius:10px;display:grid;place-items:center;color:var(--cyan);box-shadow:0 0 25px #8be9e122}.live{font:10px 'DM Mono';letter-spacing:.14em;color:#9da9bd;display:flex;align-items:center;gap:8px}.dot{width:7px;height:7px;border-radius:50%;background:#8be9e1;box-shadow:0 0 12px #8be9e1;animation:pulse 2s infinite}@keyframes pulse{50%{opacity:.35;box-shadow:0 0 3px #8be9e1}}
+.panel{border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018));box-shadow:0 35px 100px #0008,inset 0 1px 0 #ffffff12;backdrop-filter:blur(18px);padding:clamp(22px,5vw,54px);position:relative;overflow:hidden}.panel:after{content:"";position:absolute;width:360px;height:360px;right:-190px;top:-230px;border-radius:50%;background:#8be9e112;filter:blur(12px);pointer-events:none}
+.eyebrow{text-align:center;color:var(--muted);font-size:10px;letter-spacing:.28em;font-weight:700}.clockrow{display:flex;align-items:center;justify-content:center;gap:clamp(22px,5vw,64px);padding:38px 0 28px}.dial{width:clamp(170px,32vw,260px);aspect-ratio:1;border-radius:50%;position:relative;background:radial-gradient(circle at 50% 45%,#18243a,#0b1220 70%);border:1px solid #ffffff1a;box-shadow:0 0 0 9px #ffffff05,0 0 55px #8be9e10c,inset 0 0 30px #0009;flex-shrink:0}.dial:before{content:"";position:absolute;inset:10px;border:1px solid #ffffff12;border-radius:50%}.tick{position:absolute;left:50%;top:50%;width:2px;height:9px;background:#64728a;transform-origin:50% calc(clamp(170px,32vw,260px)*.5 - 12px);border-radius:2px}.tick.major{height:14px;width:3px;background:var(--gold)}.hand{position:absolute;left:50%;bottom:50%;transform-origin:50% 100%;border-radius:10px 10px 2px 2px;z-index:3}.hour{height:25%;width:5px;background:#f5f2e9}.minute{height:34%;width:3px;background:var(--cyan);box-shadow:0 0 12px #8be9e155}.second{height:39%;width:1px;background:var(--gold)}.hub{position:absolute;left:50%;top:50%;width:10px;height:10px;background:#f2d6a4;border:2px solid #101a2a;border-radius:50%;transform:translate(-50%,-50%);z-index:4;box-shadow:0 0 10px #e6c99488}
+.digital{text-align:left;min-width:0}.time{font:clamp(38px,8vw,76px)/1 'DM Mono',monospace;letter-spacing:-.075em;white-space:nowrap}.time .sec{font-size:.43em;color:var(--cyan);letter-spacing:-.04em;margin-left:5px}.ampm{font:11px 'DM Mono';color:var(--gold);letter-spacing:.2em;margin:12px 0 22px}.date{color:#b5bfd0;font-size:14px;font-weight:500}.subdate{font:10px 'DM Mono';letter-spacing:.13em;color:#6f7c93;margin-top:8px}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:10px 0 25px}.bottom{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}.zone-label{font-size:10px;color:var(--muted);letter-spacing:.18em;margin-bottom:8px}.zone{background:#ffffff08;border:1px solid var(--line);border-radius:12px;color:#e9edf5;padding:11px 14px;font:12px 'DM Mono';outline:none;max-width:100%}.zone option{background:#101827}.meta{display:flex;gap:24px}.metric{text-align:right}.metric b{display:block;font:14px 'DM Mono';font-weight:400}.metric span{display:block;color:var(--muted);font-size:9px;letter-spacing:.14em;margin-top:5px}
+.footer{text-align:center;color:#5f6b80;font:9px 'DM Mono';letter-spacing:.2em;margin-top:22px}.footer span{color:#8be9e1}
+@media(max-width:620px){.clockrow{flex-direction:column;gap:28px;padding:28px 0}.digital{text-align:center}.ampm{margin:10px 0 14px}.date{font-size:13px}.bottom{justify-content:center}.zone-wrap{text-align:center}.meta{width:100%;justify-content:center}.metric{text-align:center}.panel{border-radius:22px}.top{margin-bottom:18px}}
+@media(prefers-reduced-motion:reduce){.dot{animation:none}}
+</style></head>
+<body><main class="shell">
+<header class="top"><div class="brand"><div class="mark">A</div><span>AURA / TIME</span></div><div class="live"><i class="dot"></i> LIVE SYSTEM</div></header>
+<section class="panel">
+<div class="eyebrow">THE PRESENT MOMENT</div>
+<div class="clockrow">
+<div class="dial" id="dial" aria-label="Αναλογικό ρολόι">
+<div class="hand hour" id="hour"></div><div class="hand minute" id="minute"></div><div class="hand second" id="second"></div><div class="hub"></div>
+</div>
+<div class="digital"><div class="time"><span id="hhmm">--:--</span><span class="sec" id="ss">--</span></div><div class="ampm" id="ampm">LOCAL TIME</div><div class="date" id="date">Φόρτωση ημερομηνίας…</div><div class="subdate" id="ordinal">YOUR TIME ZONE · REAL TIME</div></div>
+</div>
+<div class="rule"></div>
+<div class="bottom">
+<div class="zone-wrap"><div class="zone-label">TIME ZONE</div><select class="zone" id="zone" aria-label="Ζώνη ώρας"><option value="Europe/Athens">Αθήνα · Europe/Athens</option><option value="Europe/London">Λονδίνο · Europe/London</option><option value="Europe/Paris">Παρίσι · Europe/Paris</option><option value="Europe/Berlin">Βερολίνο · Europe/Berlin</option><option value="America/New_York">Νέα Υόρκη · America/New_York</option><option value="Asia/Tokyo">Τόκιο · Asia/Tokyo</option><option value="Australia/Sydney">Σίδνεϊ · Australia/Sydney</option><option value="local">Η συσκευή μου · Local</option></select></div>
+<div class="meta"><div class="metric"><b id="utc">UTC +00:00</b><span>UTC OFFSET</span></div><div class="metric"><b id="day">---</b><span>DAY OF YEAR</span></div></div>
+</div></section><div class="footer">DESIGNED FOR THE NOW ✦ AURA CLOCK 01</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);const zone=$('zone');
+try{const saved=localStorage.getItem('aura-clock-zone');if(saved)zone.value=saved}catch(e){}
+function getParts(date,tz){const opts={timeZone:tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23',weekday:'long',day:'numeric',month:'long',year:'numeric'};const parts=new Intl.DateTimeFormat('el-GR',opts).formatToParts(date);return Object.fromEntries(parts.map(p=>[p.type,p.value]))}
+function update(){const now=new Date(),tz=zone.value==='local'?Intl.DateTimeFormat().resolvedOptions().timeZone:zone.value,p=getParts(now,tz);let h=Number(p.hour),m=Number(p.minute),s=Number(p.second);$('hour').style.transform='translateX(-50%) rotate('+(h%12*30+m*.5)+'deg)';$('minute').style.transform='translateX(-50%) rotate('+(m*6+s*.1)+'deg)';$('second').style.transform='translateX(-50%) rotate('+(s*6)+'deg)';$('hhmm').textContent=p.hour+':'+p.minute;$('ss').textContent=':'+p.second;$('ampm').textContent=tz.toUpperCase().replace('_',' ')+' '+(h>=12?'PM':'AM');$('date').textContent=p.weekday.charAt(0).toLocaleUpperCase('el-GR')+p.weekday.slice(1)+' · '+p.day+' '+p.month+' '+p.year;
+const offsetParts=new Intl.DateTimeFormat('en-US',{timeZone:tz,timeZoneName:'longOffset'}).formatToParts(now);const offset=offsetParts.find(x=>x.type==='timeZoneName')?.value||'GMT';$('utc').textContent=offset.replace('GMT','UTC').replace('UTC','UTC ');const start=new Date(now.getFullYear(),0,0);$('day').textContent=String(Math.floor((now-start)/86400000)).padStart(3,'0');}
+zone.addEventListener('change',()=>{try{localStorage.setItem('aura-clock-zone',zone.value)}catch(e){}update()});update();setInterval(update,250);
+</script></body></html>
