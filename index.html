@@ -1,44 +1,300 @@
 <!doctype html>
 <html lang="el">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090d18"><meta name="description" content="AURA Clock — ένα κομψό, ζωντανό ρολόι.">
-<title>AURA CLOCK — Time, in focus</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#060813">
+<meta name="description" content="AURA — Living Intelligence Command Center. Interactive visual prototype.">
+<title>AURA // Living Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700;800&display=swap');
-:root{color-scheme:dark;--bg:#090d18;--muted:#8590a7;--line:rgba(255,255,255,.1);--cyan:#8be9e1;--gold:#e6c994}
-*{box-sizing:border-box}body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 50% 0%,#18243b 0%,#0c1221 38%,var(--bg) 76%);color:#f4f6fb;font-family:Manrope,system-ui,sans-serif;display:grid;place-items:center;padding:26px;overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
-.shell{width:min(100%,900px);position:relative}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}.brand{display:flex;align-items:center;gap:11px;letter-spacing:.22em;font-size:11px;font-weight:800}.mark{width:30px;height:30px;border:1px solid #8be9e177;border-radius:10px;display:grid;place-items:center;color:var(--cyan);box-shadow:0 0 25px #8be9e122}.live{font:10px 'DM Mono';letter-spacing:.14em;color:#9da9bd;display:flex;align-items:center;gap:8px}.dot{width:7px;height:7px;border-radius:50%;background:#8be9e1;box-shadow:0 0 12px #8be9e1;animation:pulse 2s infinite}@keyframes pulse{50%{opacity:.35;box-shadow:0 0 3px #8be9e1}}
-.panel{border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018));box-shadow:0 35px 100px #0008,inset 0 1px 0 #ffffff12;backdrop-filter:blur(18px);padding:clamp(22px,5vw,54px);position:relative;overflow:hidden}.panel:after{content:"";position:absolute;width:360px;height:360px;right:-190px;top:-230px;border-radius:50%;background:#8be9e112;filter:blur(12px);pointer-events:none}
-.eyebrow{text-align:center;color:var(--muted);font-size:10px;letter-spacing:.28em;font-weight:700}.clockrow{display:flex;align-items:center;justify-content:center;gap:clamp(22px,5vw,64px);padding:38px 0 28px}.dial{width:clamp(170px,32vw,260px);aspect-ratio:1;border-radius:50%;position:relative;background:radial-gradient(circle at 50% 45%,#18243a,#0b1220 70%);border:1px solid #ffffff1a;box-shadow:0 0 0 9px #ffffff05,0 0 55px #8be9e10c,inset 0 0 30px #0009;flex-shrink:0}.dial:before{content:"";position:absolute;inset:10px;border:1px solid #ffffff12;border-radius:50%}.tick{position:absolute;left:50%;top:50%;width:2px;height:9px;background:#64728a;transform-origin:50% calc(clamp(170px,32vw,260px)*.5 - 12px);border-radius:2px}.tick.major{height:14px;width:3px;background:var(--gold)}.hand{position:absolute;left:50%;bottom:50%;transform-origin:50% 100%;border-radius:10px 10px 2px 2px;z-index:3}.hour{height:25%;width:5px;background:#f5f2e9}.minute{height:34%;width:3px;background:var(--cyan);box-shadow:0 0 12px #8be9e155}.second{height:39%;width:1px;background:var(--gold)}.hub{position:absolute;left:50%;top:50%;width:10px;height:10px;background:#f2d6a4;border:2px solid #101a2a;border-radius:50%;transform:translate(-50%,-50%);z-index:4;box-shadow:0 0 10px #e6c99488}
-.digital{text-align:left;min-width:0}.time{font:clamp(38px,8vw,76px)/1 'DM Mono',monospace;letter-spacing:-.075em;white-space:nowrap}.time .sec{font-size:.43em;color:var(--cyan);letter-spacing:-.04em;margin-left:5px}.ampm{font:11px 'DM Mono';color:var(--gold);letter-spacing:.2em;margin:12px 0 22px}.date{color:#b5bfd0;font-size:14px;font-weight:500}.subdate{font:10px 'DM Mono';letter-spacing:.13em;color:#6f7c93;margin-top:8px}
-.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:10px 0 25px}.bottom{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}.zone-label{font-size:10px;color:var(--muted);letter-spacing:.18em;margin-bottom:8px}.zone{background:#ffffff08;border:1px solid var(--line);border-radius:12px;color:#e9edf5;padding:11px 14px;font:12px 'DM Mono';outline:none;max-width:100%}.zone option{background:#101827}.meta{display:flex;gap:24px}.metric{text-align:right}.metric b{display:block;font:14px 'DM Mono';font-weight:400}.metric span{display:block;color:var(--muted);font-size:9px;letter-spacing:.14em;margin-top:5px}
-.footer{text-align:center;color:#5f6b80;font:9px 'DM Mono';letter-spacing:.2em;margin-top:22px}.footer span{color:#8be9e1}
-@media(max-width:620px){.clockrow{flex-direction:column;gap:28px;padding:28px 0}.digital{text-align:center}.ampm{margin:10px 0 14px}.date{font-size:13px}.bottom{justify-content:center}.zone-wrap{text-align:center}.meta{width:100%;justify-content:center}.metric{text-align:center}.panel{border-radius:22px}.top{margin-bottom:18px}}
-@media(prefers-reduced-motion:reduce){.dot{animation:none}}
-</style></head>
-<body><main class="shell">
-<header class="top"><div class="brand"><div class="mark">A</div><span>AURA / TIME</span></div><div class="live"><i class="dot"></i> LIVE SYSTEM</div></header>
-<section class="panel">
-<div class="eyebrow">THE PRESENT MOMENT</div>
-<div class="clockrow">
-<div class="dial" id="dial" aria-label="Αναλογικό ρολόι">
-<div class="hand hour" id="hour"></div><div class="hand minute" id="minute"></div><div class="hand second" id="second"></div><div class="hub"></div>
-</div>
-<div class="digital"><div class="time"><span id="hhmm">--:--</span><span class="sec" id="ss">--</span></div><div class="ampm" id="ampm">LOCAL TIME</div><div class="date" id="date">Φόρτωση ημερομηνίας…</div><div class="subdate" id="ordinal">YOUR TIME ZONE · REAL TIME</div></div>
-</div>
-<div class="rule"></div>
-<div class="bottom">
-<div class="zone-wrap"><div class="zone-label">TIME ZONE</div><select class="zone" id="zone" aria-label="Ζώνη ώρας"><option value="Europe/Athens">Αθήνα · Europe/Athens</option><option value="Europe/London">Λονδίνο · Europe/London</option><option value="Europe/Paris">Παρίσι · Europe/Paris</option><option value="Europe/Berlin">Βερολίνο · Europe/Berlin</option><option value="America/New_York">Νέα Υόρκη · America/New_York</option><option value="Asia/Tokyo">Τόκιο · Asia/Tokyo</option><option value="Australia/Sydney">Σίδνεϊ · Australia/Sydney</option><option value="local">Η συσκευή μου · Local</option></select></div>
-<div class="meta"><div class="metric"><b id="utc">UTC +00:00</b><span>UTC OFFSET</span></div><div class="metric"><b id="day">---</b><span>DAY OF YEAR</span></div></div>
-</div></section><div class="footer">DESIGNED FOR THE NOW ✦ AURA CLOCK 01</div>
+:root{--bg:#060813;--panel:rgba(15,20,39,.64);--panel2:rgba(19,25,48,.72);--line:rgba(159,180,255,.12);--line2:rgba(139,234,255,.24);--text:#eef3ff;--muted:#8490ad;--cyan:#8be9f2;--blue:#829aff;--violet:#b68cff;--mint:#8df7d0;--gold:#f0d49b;--danger:#ff809d;--glow:0 0 60px rgba(91,173,255,.12);--mx:0deg;--my:0deg;--intensity:1}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Manrope,system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background:radial-gradient(ellipse at 50% -12%,rgba(88,113,210,.23),transparent 47%),radial-gradient(ellipse at 8% 72%,rgba(38,161,175,.10),transparent 35%),radial-gradient(ellipse at 94% 48%,rgba(139,89,221,.11),transparent 36%),linear-gradient(180deg,#080b19 0%,#070a15 55%,#050711 100%)}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.13;background-image:linear-gradient(rgba(155,180,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(155,180,255,.08) 1px,transparent 1px);background-size:58px 58px;mask-image:linear-gradient(to bottom,black,transparent 90%)}
+button,input{font:inherit}
+button{color:inherit}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(139,233,242,.3);color:#fff}
+.ambient{position:fixed;width:480px;height:480px;border-radius:50%;filter:blur(110px);opacity:.12;pointer-events:none;z-index:-1;transition:transform 1s ease}
+.ambient.a{background:#466cff;top:5%;left:-270px}.ambient.b{background:#20cfc1;right:-290px;top:45%}
+.cursor-glow{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(450px circle at var(--px,50%) var(--py,30%),rgba(110,162,255,.075),transparent 62%)}
+.shell{width:min(1510px,100% - 54px);margin:auto;position:relative;z-index:1}
+.topbar{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:20px}
+.brand{display:flex;align-items:center;gap:13px;min-width:210px}
+.brand-mark{width:38px;height:38px;border:1px solid rgba(139,233,242,.38);border-radius:13px;display:grid;place-items:center;position:relative;background:linear-gradient(145deg,rgba(139,233,242,.18),rgba(130,154,255,.05));box-shadow:0 0 28px rgba(103,205,244,.13),inset 0 0 18px rgba(139,233,242,.1)}
+.brand-mark svg{width:24px;height:24px;filter:drop-shadow(0 0 7px rgba(139,233,242,.7))}
+.brand-name{font-size:15px;font-weight:800;letter-spacing:.24em}
+.brand-sub{display:block;font:9px 'DM Mono',monospace;color:#8795b3;letter-spacing:.2em;margin-top:3px}
+.top-center{display:flex;align-items:center;gap:10px;color:#9ba7c1;font:10px 'DM Mono',monospace;letter-spacing:.13em}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint);animation:blink 2s infinite}
+.top-right{display:flex;align-items:center;gap:18px}
+.timebox{text-align:right}.timebox strong{font:19px 'DM Mono',monospace;letter-spacing:.03em;font-weight:400}.timebox span{display:block;font-size:9px;color:var(--muted);letter-spacing:.12em;margin-top:3px}
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(182,140,255,.4);background:radial-gradient(circle at 30% 20%,rgba(182,140,255,.32),rgba(29,34,67,.7));font-size:12px;color:#e6d8ff;box-shadow:0 0 22px rgba(182,140,255,.12)}
+.layout{display:grid;grid-template-columns:218px minmax(0,1fr);gap:26px;padding:27px 0 46px}
+.sidebar{border-right:1px solid var(--line);padding:5px 20px 0 0;min-height:calc(100vh - 110px)}
+.side-label{font:9px 'DM Mono',monospace;color:#5f6b88;letter-spacing:.2em;margin:18px 0 12px 12px}
+.nav{display:grid;gap:5px}
+.nav button{background:transparent;border:1px solid transparent;color:#8e9ab5;display:flex;align-items:center;gap:12px;padding:12px 13px;border-radius:12px;text-align:left;font-size:12px;cursor:pointer;transition:.25s;position:relative}
+.nav button svg{width:16px;height:16px;opacity:.8}
+.nav button:hover{color:white;background:rgba(115,145,220,.07);border-color:var(--line)}
+.nav button.active{color:#eafaff;border-color:rgba(139,233,242,.16);background:linear-gradient(100deg,rgba(86,190,210,.14),rgba(117,124,225,.08));box-shadow:inset 2px 0 0 var(--cyan),0 8px 25px rgba(0,0,0,.1)}
+.nav button.active svg{color:var(--cyan);filter:drop-shadow(0 0 5px rgba(139,233,242,.5))}
+.nav .count{margin-left:auto;font:9px 'DM Mono',monospace;color:#7583a3}
+.side-card{margin-top:34px;padding:15px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,rgba(31,39,72,.53),rgba(13,18,37,.36));position:relative;overflow:hidden}
+.side-card:before{content:"";position:absolute;width:110px;height:110px;right:-55px;top:-60px;border-radius:50%;background:rgba(139,233,242,.14);filter:blur(25px)}
+.side-card small{font:9px 'DM Mono',monospace;color:#8390ad;letter-spacing:.16em}
+.side-card strong{display:block;font-size:14px;margin:9px 0 4px}
+.side-card p{font-size:10px;line-height:1.6;color:#8491ad;margin:0}
+.side-foot{position:sticky;top:calc(100vh - 95px);margin:35px 0 0 12px;color:#53617e;font:9px 'DM Mono',monospace;letter-spacing:.1em}
+.main{min-width:0}
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin:7px 0 22px}
+.eyebrow{font:10px 'DM Mono',monospace;letter-spacing:.22em;color:var(--cyan);text-transform:uppercase}
+h1{font-size:clamp(25px,3vw,39px);letter-spacing:-.055em;line-height:1.1;margin:9px 0 7px;font-weight:600}
+.page-head p{margin:0;color:#8793b0;font-size:12px}
+.head-actions{display:flex;gap:9px;align-items:center}
+.pill{border:1px solid var(--line);border-radius:100px;padding:8px 12px;color:#a8b5ce;font:9px 'DM Mono',monospace;letter-spacing:.08em;background:rgba(16,22,43,.55);white-space:nowrap}
+.pill .tiny-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--mint);margin-right:7px;box-shadow:0 0 8px var(--mint)}
+.btn{border:1px solid rgba(139,233,242,.25);background:linear-gradient(135deg,rgba(78,174,193,.2),rgba(107,115,218,.15));padding:10px 14px;border-radius:10px;font-size:10px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:transform .25s,border-color .25s,box-shadow .25s;box-shadow:inset 0 1px rgba(255,255,255,.09)}
+.btn:hover{transform:translateY(-2px);border-color:rgba(139,233,242,.6);box-shadow:0 8px 25px rgba(62,168,190,.14)}
+.btn:active{transform:scale(.97)}
+.btn.secondary{background:rgba(19,25,48,.55);border-color:var(--line);color:#a8b5ce}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.58fr) minmax(275px,.82fr);gap:16px}
+.glass{background:linear-gradient(145deg,rgba(22,29,55,.77),rgba(10,15,31,.72));border:1px solid rgba(153,176,255,.14);box-shadow:0 20px 65px rgba(0,0,0,.23),inset 0 1px rgba(255,255,255,.055);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-radius:20px;position:relative;overflow:hidden}
+.entity-card{min-height:426px;perspective:1100px;isolation:isolate}
+.entity-card:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 51% 46%,rgba(65,125,205,.15),transparent 42%),linear-gradient(125deg,rgba(112,129,225,.06),transparent 50%,rgba(49,197,190,.05));z-index:-1}
+.entity-card:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.24;background:linear-gradient(110deg,transparent 10%,rgba(255,255,255,.05) 48%,transparent 56%);transform:translateX(-100%);animation:sweep 9s ease-in-out infinite}
+.entity-top{display:flex;justify-content:space-between;align-items:center;padding:19px 21px 0;position:relative;z-index:3}
+.entity-top .eyebrow{font-size:9px;color:#9eaccb}
+.entity-state{display:flex;gap:7px;align-items:center;font:9px 'DM Mono',monospace;color:#a3b2ce;letter-spacing:.12em}
+.entity-state i{width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 11px var(--mint)}
+.scene-wrap{position:absolute;inset:32px 0 36px;display:grid;place-items:center;transform-style:preserve-3d;transition:transform .25s ease-out;z-index:1}
+#scene{width:100%;height:100%;display:block;position:absolute;inset:0}
+.orb-fallback{width:208px;height:208px;border-radius:50%;position:relative;background:radial-gradient(circle at 33% 28%,#d9ffff 0%,#7ce8f1 5%,#4679c9 19%,#202e68 44%,#131735 65%,transparent 69%);box-shadow:0 0 20px #82ecff,0 0 80px rgba(70,174,255,.5),0 0 170px rgba(128,105,255,.25);animation:breathe 5s ease-in-out infinite}
+.orb-fallback:before,.orb-fallback:after{content:"";position:absolute;inset:-23px;border:1px solid rgba(139,233,242,.5);border-radius:50%;transform:rotateX(70deg);box-shadow:0 0 24px rgba(139,233,242,.16)}
+.orb-fallback:after{inset:-46px;transform:rotateX(72deg) rotateZ(45deg);border-color:rgba(182,140,255,.35)}
+.entity-caption{position:absolute;bottom:9px;left:0;right:0;text-align:center;z-index:3;pointer-events:none}
+.entity-caption .name{font-size:13px;letter-spacing:.35em;font-weight:800;text-shadow:0 0 24px rgba(139,233,242,.45)}
+.entity-caption .desc{font:9px 'DM Mono',monospace;color:#8190b0;letter-spacing:.18em;margin-top:7px}
+.entity-bottom{position:absolute;left:20px;right:20px;bottom:17px;display:flex;justify-content:space-between;align-items:center;z-index:4}
+.micro{font:9px 'DM Mono',monospace;color:#7786a6;letter-spacing:.1em}
+.entity-buttons{display:flex;gap:7px}
+.icon-btn{width:31px;height:31px;border:1px solid var(--line);border-radius:9px;background:rgba(13,20,39,.55);display:grid;place-items:center;cursor:pointer;color:#a7b5d1;transition:.2s}
+.icon-btn:hover{color:var(--cyan);border-color:var(--line2);box-shadow:0 0 16px rgba(139,233,242,.12)}
+.icon-btn svg{width:14px;height:14px}
+.right-stack{display:grid;grid-template-rows:1fr 1fr;gap:16px}
+.signal-card{padding:19px 19px 15px;min-height:204px}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.card-kicker{font:9px 'DM Mono',monospace;color:#8f9db9;letter-spacing:.17em}
+.card-head .more{color:#71809f;font-size:17px;line-height:10px}
+.signal-value{font:36px 'DM Mono',monospace;letter-spacing:-.07em;margin:22px 0 4px}
+.signal-value span{font-size:12px;color:#8c9bb8;letter-spacing:0}
+.signal-caption{font-size:10px;color:#7e8ba7}
+.spark{width:100%;height:48px;margin-top:9px;display:block;overflow:visible}
+.metric-row{display:flex;justify-content:space-between;align-items:center;margin-top:5px}
+.metric-row span{font:9px 'DM Mono',monospace;color:#7d8ba8}
+.mini-bar{height:4px;background:rgba(255,255,255,.07);border-radius:20px;margin-top:13px;overflow:hidden}
+.mini-bar i{display:block;height:100%;width:74%;border-radius:20px;background:linear-gradient(90deg,#5a9de4,#8be9f2);box-shadow:0 0 12px rgba(139,233,242,.5);animation:barin 1.4s ease both}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:15px}
+.metric{border:1px solid rgba(151,174,255,.1);background:rgba(255,255,255,.025);padding:9px 10px;border-radius:10px}
+.metric b{display:block;font:16px 'DM Mono',monospace;font-weight:400;color:#e4edff}
+.metric small{display:block;color:#71809e;font-size:8px;margin-top:4px;letter-spacing:.08em}
+.section-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:16px;margin-top:16px}
+.section-card{padding:18px 19px 17px;min-height:215px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
+.section-title h2{font-size:12px;font-weight:700;letter-spacing:.02em;margin:0}
+.section-title span{font:9px 'DM Mono',monospace;color:#7785a2;letter-spacing:.12em}
+.system-list{display:grid;gap:14px}
+.system{display:grid;grid-template-columns:30px minmax(0,1fr) auto;align-items:center;gap:11px}
+.sys-icon{width:29px;height:29px;border-radius:9px;display:grid;place-items:center;background:rgba(119,155,238,.10);border:1px solid rgba(139,167,240,.13);color:#9ecdf2}
+.sys-icon svg{width:14px;height:14px}
+.sys-info b{font-size:10px;font-weight:650;display:block}
+.sys-info small{font-size:8px;color:#71809f;display:block;margin-top:3px}
+.sys-status{font:8px 'DM Mono',monospace;color:var(--mint);letter-spacing:.08em}
+.pulse-track{grid-column:2/4;height:3px;border-radius:20px;background:rgba(255,255,255,.06);margin-top:-5px;overflow:hidden}
+.pulse-track i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#687fe4,#8be9f2);box-shadow:0 0 10px rgba(139,233,242,.35);animation:barin 1.5s both}
+.activity-list{display:grid;gap:0}
+.activity{display:grid;grid-template-columns:11px minmax(0,1fr) auto;gap:10px;align-items:start;padding:9px 0;border-bottom:1px solid rgba(151,174,255,.075)}
+.activity:last-child{border:0}
+.activity .bullet{width:6px;height:6px;border-radius:50%;background:var(--cyan);margin-top:5px;box-shadow:0 0 9px rgba(139,233,242,.7)}
+.activity:nth-child(2) .bullet{background:var(--violet);box-shadow:0 0 9px rgba(182,140,255,.5)}
+.activity:nth-child(3) .bullet{background:var(--mint)}
+.activity p{font-size:9px;color:#aab6ce;line-height:1.5;margin:0}
+.activity p strong{font-weight:700;color:#e4edff}
+.activity time{font:8px 'DM Mono',monospace;color:#687795;white-space:nowrap}
+.command-card{margin-top:16px;padding:18px 19px 16px}
+.command-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.command-top h2{font-size:12px;margin:0}
+.command-top span{font:9px 'DM Mono',monospace;color:#6f7e9d;letter-spacing:.12em}
+.terminal{border:1px solid rgba(139,233,242,.15);background:rgba(3,7,17,.68);border-radius:12px;padding:12px 14px;box-shadow:inset 0 0 35px rgba(37,72,120,.08)}
+.terminal-log{height:63px;overflow:auto;font:9px/1.8 'DM Mono',monospace;color:#8798b8;scrollbar-width:thin}
+.terminal-log .ok{color:var(--mint)}.terminal-log .accent{color:var(--cyan)}.terminal-log .dim{color:#5c6a88}
+.terminal-form{display:flex;align-items:center;gap:9px;margin-top:8px;border-top:1px solid rgba(151,174,255,.08);padding-top:10px}
+.prompt{font:11px 'DM Mono',monospace;color:var(--cyan)}
+.terminal-form input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#eff6ff;font:10px 'DM Mono',monospace}
+.terminal-form input::placeholder{color:#4e5d7a}
+.terminal-form button{background:transparent;border:0;color:var(--cyan);font:9px 'DM Mono',monospace;cursor:pointer;letter-spacing:.1em}
+.footer{display:flex;justify-content:space-between;gap:15px;padding:17px 2px 0;color:#4f5d79;font:8px 'DM Mono',monospace;letter-spacing:.12em}
+.footer span:last-child{color:#667591}
+.toast{position:fixed;right:24px;bottom:24px;z-index:20;padding:13px 17px;border:1px solid rgba(139,233,242,.26);border-radius:12px;background:rgba(10,17,34,.92);backdrop-filter:blur(15px);font-size:10px;color:#dffaff;box-shadow:0 15px 45px rgba(0,0,0,.35);transform:translateY(20px);opacity:0;pointer-events:none;transition:.3s}
+.toast.show{transform:translateY(0);opacity:1}
+.focus-mode .sidebar,.focus-mode .right-stack,.focus-mode .section-grid,.focus-mode .command-card{opacity:.22;filter:blur(2px);transition:.5s}
+.focus-mode .entity-card{transform:scale(1.015);box-shadow:0 0 90px rgba(91,173,255,.2)}
+.focus-mode .layout{grid-template-columns:90px minmax(0,1fr)}
+.focus-mode .sidebar .side-label,.focus-mode .sidebar .nav button:not(.active),.focus-mode .side-card,.focus-mode .side-foot{display:none}
+.focus-mode .sidebar .nav button{font-size:0;justify-content:center}
+.focus-mode .sidebar .nav button svg{width:19px;height:19px}
+.reduced *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+@keyframes blink{50%{opacity:.35;box-shadow:0 0 3px var(--mint)}}
+@keyframes breathe{0%,100%{transform:scale(.96);filter:hue-rotate(0)}50%{transform:scale(1.04);filter:hue-rotate(12deg)}}
+@keyframes sweep{0%,65%{transform:translateX(-110%)}85%,100%{transform:translateX(110%)}}
+@keyframes barin{from{width:0}to{width:var(--w,74%)}}
+@media(max-width:1050px){.shell{width:min(100% - 36px,900px)}.layout{grid-template-columns:68px minmax(0,1fr);gap:16px}.sidebar{padding-right:10px}.nav button{justify-content:center;padding:12px 8px;font-size:0}.nav button svg{width:18px;height:18px}.nav .count,.side-card,.side-label,.side-foot{display:none}.brand{min-width:0}.hero-grid{grid-template-columns:minmax(0,1.35fr) minmax(245px,.8fr)}}
+@media(max-width:760px){.shell{width:calc(100% - 28px)}.topbar{height:68px}.top-center{display:none}.top-right{gap:10px}.timebox strong{font-size:15px}.layout{display:block;padding-top:18px}.sidebar{position:fixed;z-index:15;bottom:10px;left:50%;transform:translateX(-50%);width:min(420px,calc(100% - 24px));min-height:0;border:1px solid rgba(157,179,255,.2);border-radius:17px;padding:7px;background:rgba(8,13,29,.88);backdrop-filter:blur(25px);box-shadow:0 10px 40px rgba(0,0,0,.45)}
+.sidebar .nav{display:flex;justify-content:space-around;gap:2px}.sidebar .nav button{flex:1;padding:10px 6px;border-radius:10px}.sidebar .nav button.active{box-shadow:inset 0 2px 0 var(--cyan)}.page-head{align-items:flex-start}.page-head p{max-width:260px;line-height:1.5}.head-actions .pill{display:none}.hero-grid{grid-template-columns:1fr}.entity-card{min-height:390px}.right-stack{grid-template-columns:1fr 1fr;grid-template-rows:auto}.signal-card{min-height:180px;padding:15px}.signal-value{font-size:29px;margin-top:18px}.metric-grid{gap:5px}.metric{padding:8px 7px}.section-grid{grid-template-columns:1fr}.section-card{min-height:0}.command-card{margin-bottom:92px}.footer{padding-bottom:90px}.footer span:last-child{display:none}}
+@media(max-width:420px){.brand-sub{font-size:8px}.brand-name{font-size:13px}.avatar{width:32px;height:32px}.right-stack{grid-template-columns:1fr 1fr;gap:9px}.signal-card{padding:13px 12px}.signal-value{font-size:25px}.metric-grid{grid-template-columns:1fr 1fr}.metric-grid .metric:last-child{display:none}.entity-card{min-height:355px}.scene-wrap{inset:28px 0 34px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<div class="ambient a"></div><div class="ambient b"></div><div class="cursor-glow"></div>
+<div class="shell">
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark"><svg viewBox="0 0 32 32" fill="none"><path d="M16 3.5 27 10v12L16 28.5 5 22V10L16 3.5Z" stroke="#9AF4FA" stroke-width="1.2"/><path d="m16 8 6.8 4v8L16 24l-6.8-4v-8L16 8Z" stroke="#829AFF" stroke-width="1.1"/><circle cx="16" cy="16" r="3.3" fill="#C9FFFF"/><path d="M16 1v5M16 26v5M1 16h5M26 16h5" stroke="#8BE9F2" stroke-linecap="round"/></svg></div>
+    <div><div class="brand-name">A U R A</div><span class="brand-sub">LIVING INTELLIGENCE / LAB</span></div>
+  </div>
+  <div class="top-center"><i class="live-dot"></i> LOCAL SYSTEM ONLINE <span style="color:#4d5b78">/</span> VISUAL PROTOTYPE</div>
+  <div class="top-right"><div class="timebox"><strong id="clock">--:--:--</strong><span id="date">INITIALIZING</span></div><div class="avatar">A</div></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+  <div class="side-label">WORKSPACE</div>
+  <nav class="nav">
+    <button class="active" data-tab="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="11" width="7" height="10" rx="2"/><rect x="3" y="14" width="8" height="7" rx="2"/></svg>Overview<span class="count">01</span></button>
+    <button data-tab="entity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M1 12h2M21 12h2"/></svg>Entity<span class="count">02</span></button>
+    <button data-tab="systems"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="8" cy="7" r="2" fill="#0c142b"/><circle cx="16" cy="12" r="2" fill="#0c142b"/><circle cx="10" cy="17" r="2" fill="#0c142b"/></svg>Systems<span class="count">04</span></button>
+    <button data-tab="memory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4.5a4 4 0 0 0-4 4v7a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4v-7a4 4 0 0 0-4-4"/><path d="M8 4.5a4 4 0 0 1 8 0M9 10h6M9 14h6"/></svg>Memory<span class="count">03</span></button>
+  </nav>
+  <div class="side-label" style="margin-top:28px">CONTROL</div>
+  <nav class="nav">
+    <button id="focusBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>Focus mode</button>
+    <button id="motionBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Motion: ON</button>
+  </nav>
+  <div class="side-card"><small>ENTITY SIGNATURE</small><strong>AX-01 / AURA</strong><p>A responsive visual core. Curious by design. Calm under pressure.</p></div>
+  <div class="side-foot">BUILD 0.9.7 — LAB ENVIRONMENT</div>
+</aside>
+<main class="main">
+  <div class="page-head">
+    <div><div class="eyebrow">COMMAND DECK / <span id="sectionName">OVERVIEW</span></div><h1 id="pageTitle">A living system.</h1><p id="pageDesc">One core. Multiple signals. A world that responds.</p></div>
+    <div class="head-actions"><div class="pill"><i class="tiny-dot"></i>DEMO ENVIRONMENT</div><button class="btn" id="scanBtn">↗ &nbsp; RUN SYSTEM SCAN</button></div>
+  </div>
+  <div class="hero-grid">
+    <section class="glass entity-card" id="entityCard">
+      <div class="entity-top"><span class="eyebrow">01 — CENTRAL INTELLIGENCE</span><div class="entity-state"><i></i><span id="entityMode">PRESENT / AWAKE</span></div></div>
+      <div class="scene-wrap" id="sceneWrap"><div class="orb-fallback" id="orbFallback"></div><canvas id="scene" aria-label="Animated 3D AURA entity"></canvas></div>
+      <div class="entity-caption"><div class="name">A U R A</div><div class="desc" id="entityCaption">AWARENESS IS A FORM OF MOTION</div></div>
+      <div class="entity-bottom"><span class="micro">AX-01 &nbsp;·&nbsp; CORE FREQUENCY <b id="frequency" style="color:#bfefff;font-weight:400">7.83</b> Hz</span><div class="entity-buttons">
+        <button class="icon-btn" id="awakenBtn" title="Awaken entity" aria-label="Awaken entity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2v10M6.5 5.5a8 8 0 1 0 11 0"/></svg></button>
+        <button class="icon-btn" id="pulseBtn" title="Send pulse" aria-label="Send pulse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg></button>
+        <button class="icon-btn" id="focusEntityBtn" title="Focus entity" aria-label="Focus entity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3"/></svg></button>
+      </div></div>
+    </section>
+    <div class="right-stack">
+      <section class="glass signal-card">
+        <div class="card-head"><span class="card-kicker">COGNITIVE ACTIVITY</span><span class="more">⌁</span></div>
+        <div class="signal-value"><span id="activityValue">84</span><span> / 100</span></div><div class="signal-caption">Simulated activity index · illustrative</div>
+        <svg class="spark" viewBox="0 0 300 48" preserveAspectRatio="none"><defs><linearGradient id="sparkFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#8be9f2" stop-opacity=".25"/><stop offset="1" stop-color="#8be9f2" stop-opacity="0"/></linearGradient></defs><path d="M0 34 C18 31 17 18 34 23 S57 37 74 25 S97 14 112 20 S134 36 151 23 S171 8 188 18 S210 34 224 21 S248 8 262 16 S283 24 300 5 V48 H0Z" fill="url(#sparkFill)"/><path d="M0 34 C18 31 17 18 34 23 S57 37 74 25 S97 14 112 20 S134 36 151 23 S171 8 188 18 S210 34 224 21 S248 8 262 16 S283 24 300 5" fill="none" stroke="#8be9f2" stroke-width="1.7" vector-effect="non-scaling-stroke"/></svg>
+        <div class="metric-row"><span>LIVE SIMULATION</span><span id="activityDelta">+4.2%</span></div>
+      </section>
+      <section class="glass signal-card">
+        <div class="card-head"><span class="card-kicker">SYSTEM INTEGRITY</span><span class="more">◈</span></div>
+        <div class="signal-value" style="color:#9bf4d4"><span id="integrityValue">99.8</span><span>%</span></div><div class="signal-caption">Prototype health · local browser session</div>
+        <div class="mini-bar"><i style="--w:99.8%;width:99.8%"></i></div>
+        <div class="metric-grid"><div class="metric"><b id="uptime">00:00</b><small>SESSION</small></div><div class="metric"><b id="online">ONLINE</b><small>NETWORK</small></div><div class="metric"><b id="signals">128</b><small>DEMO SIGNALS</small></div></div>
+      </section>
+    </div>
+  </div>
+  <div class="section-grid">
+    <section class="glass section-card">
+      <div class="section-title"><h2>System constellation</h2><span>04 MODULES / LOCAL DEMO</span></div>
+      <div class="system-list">
+        <div class="system"><div class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 4 7v5c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg></div><div class="sys-info"><b>Core orchestration</b><small>Visual runtime · browser side</small></div><span class="sys-status">NOMINAL</span><div class="pulse-track"><i style="width:92%"></i></div></div>
+        <div class="system"><div class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5m0 14h16M7 15l4-5 3 2 5-7"/></svg></div><div class="sys-info"><b>Signal processing</b><small>Animated telemetry stream</small></div><span class="sys-status">ACTIVE</span><div class="pulse-track"><i style="width:78%"></i></div></div>
+        <div class="system"><div class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg></div><div class="sys-info"><b>Memory lattice</b><small>Session-only interaction log</small></div><span class="sys-status">READY</span><div class="pulse-track"><i style="width:66%"></i></div></div>
+        <div class="system"><div class="sys-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></div><div class="sys-info"><b>External connectivity</b><small id="networkDetail">Browser network status</small></div><span class="sys-status" id="networkState">CHECKING</span><div class="pulse-track"><i id="networkBar" style="width:88%"></i></div></div>
+      </div>
+    </section>
+    <section class="glass section-card">
+      <div class="section-title"><h2>Recent activity</h2><span>SESSION EVENT STREAM</span></div>
+      <div class="activity-list" id="activityList">
+        <div class="activity"><i class="bullet"></i><p><strong>Entity awakened.</strong> AURA core is present.</p><time>NOW</time></div>
+        <div class="activity"><i class="bullet"></i><p><strong>Visual layer initialized.</strong> Atmosphere online.</p><time>− 01M</time></div>
+        <div class="activity"><i class="bullet"></i><p><strong>Session established.</strong> Local runtime ready.</p><time>− 02M</time></div>
+      </div>
+    </section>
+  </div>
+  <section class="glass command-card">
+    <div class="command-top"><h2>Command interface</h2><span>LOCAL INTERACTION / NO BACKEND</span></div>
+    <div class="terminal">
+      <div class="terminal-log" id="terminalLog" aria-live="polite"><div><span class="dim">[BOOT]</span> AURA visual runtime initialized.</div><div><span class="ok">[OK]</span> 3D scene, event stream and controls ready.</div><div><span class="accent">[INFO]</span> Type <b>help</b> to explore available demo commands.</div></div>
+      <form class="terminal-form" id="terminalForm"><span class="prompt">AURA ›</span><input id="commandInput" autocomplete="off" spellcheck="false" placeholder="Enter a command… (try: help)"><button type="submit">EXECUTE ↗</button></form>
+    </div>
+  </section>
+  <div class="footer"><span>© AURA LAB / INTERACTIVE CONCEPT</span><span>ALL TELEMETRY IS SIMULATED · THIS PAGE RUNS LOCALLY IN YOUR BROWSER</span></div>
 </main>
+</div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script>
-const $=id=>document.getElementById(id);const zone=$('zone');
-try{const saved=localStorage.getItem('aura-clock-zone');if(saved)zone.value=saved}catch(e){}
-function getParts(date,tz){const opts={timeZone:tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23',weekday:'long',day:'numeric',month:'long',year:'numeric'};const parts=new Intl.DateTimeFormat('el-GR',opts).formatToParts(date);return Object.fromEntries(parts.map(p=>[p.type,p.value]))}
-function update(){const now=new Date(),tz=zone.value==='local'?Intl.DateTimeFormat().resolvedOptions().timeZone:zone.value,p=getParts(now,tz);let h=Number(p.hour),m=Number(p.minute),s=Number(p.second);$('hour').style.transform='translateX(-50%) rotate('+(h%12*30+m*.5)+'deg)';$('minute').style.transform='translateX(-50%) rotate('+(m*6+s*.1)+'deg)';$('second').style.transform='translateX(-50%) rotate('+(s*6)+'deg)';$('hhmm').textContent=p.hour+':'+p.minute;$('ss').textContent=':'+p.second;$('ampm').textContent=tz.toUpperCase().replace('_',' ')+' '+(h>=12?'PM':'AM');$('date').textContent=p.weekday.charAt(0).toLocaleUpperCase('el-GR')+p.weekday.slice(1)+' · '+p.day+' '+p.month+' '+p.year;
-const offsetParts=new Intl.DateTimeFormat('en-US',{timeZone:tz,timeZoneName:'longOffset'}).formatToParts(now);const offset=offsetParts.find(x=>x.type==='timeZoneName')?.value||'GMT';$('utc').textContent=offset.replace('GMT','UTC').replace('UTC','UTC ');const start=new Date(now.getFullYear(),0,0);$('day').textContent=String(Math.floor((now-start)/86400000)).padStart(3,'0');}
-zone.addEventListener('change',()=>{try{localStorage.setItem('aura-clock-zone',zone.value)}catch(e){}update()});update();setInterval(update,250);
-</script></body></html>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const start=Date.now();
+const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let motion=!reduced,toastTimer,entityPulse=0,activity=84,signals=128,entityAwake=true;
+const timeNow=()=>new Date().toLocaleTimeString('el-GR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+function clock(){const d=new Date();$('clock').textContent=timeNow();$('date').textContent=d.toLocaleDateString('el-GR',{weekday:'short',day:'2-digit',month:'short',year:'numeric'}).toUpperCase()}
+clock();setInterval(clock,1000);
+function notify(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2400)}
+function log(message,kind='accent'){const box=$('terminalLog'),line=document.createElement('div'),stamp=timeNow();line.innerHTML='<span class="dim">['+stamp+']</span> <span class="'+kind+'"></span>';line.lastChild.textContent=message;box.appendChild(line);while(box.children.length>9)box.removeChild(box.firstChild);box.scrollTop=box.scrollHeight}
+function event(message){const list=$('activityList'),item=document.createElement('div'),p=document.createElement('p'),strong=document.createElement('strong'),time=document.createElement('time');item.className='activity';const dot=document.createElement('i');dot.className='bullet';strong.textContent=message.split(' ')[0];p.append(strong,document.createTextNode(' '+message.split(' ').slice(1).join(' ')));time.textContent='NOW';item.append(dot,p,time);list.prepend(item);while(list.children.length>4)list.removeChild(list.lastChild)}
+function pulse(){entityPulse=1.8;signals+=1;$('signals').textContent=signals;$('frequency').textContent=(7.83+Math.random()*.32).toFixed(2);if(group){group.scale.setScalar(1.12)}log('Pulse transmitted to visual core.','ok');event('Pulse sent. Entity responded to interaction.');notify('AURA responded to the pulse.')}
+function awaken(){entityAwake=!entityAwake;$('entityMode').textContent=entityAwake?'PRESENT / AWAKE':'RESTING / LOW POWER';$('entityCaption').textContent=entityAwake?'AWARENESS IS A FORM OF MOTION':'QUIET IS ALSO A STATE';document.querySelector('.live-dot').style.opacity=entityAwake?'1':'.35';if(group)group.scale.setScalar(entityAwake?1:0.86);log(entityAwake?'Entity awakened.':'Entity entered quiet mode.',entityAwake?'ok':'dim');event(entityAwake?'AURA awakened. Core presence restored.':'AURA is resting. Awaiting input.');notify(entityAwake?'Entity is awake.':'Quiet mode engaged.')}
+$('awakenBtn').addEventListener('click',awaken);$('pulseBtn').addEventListener('click',pulse);$('focusEntityBtn').addEventListener('click',()=>{document.body.classList.toggle('focus-mode');notify('Entity focus toggled.')});
+$('scanBtn').addEventListener('click',()=>{activity=91+Math.round(Math.random()*8);$('activityValue').textContent=activity;$('integrityValue').textContent=(99.6+Math.random()*.39).toFixed(1);signals+=4;$('signals').textContent=signals;log('System scan complete. All visual modules nominal.','ok');event('System scan complete. Visual modules nominal.');pulse();});
+$('focusBtn').addEventListener('click',()=>{document.body.classList.toggle('focus-mode');notify('Focus mode toggled.')});
+$('motionBtn').addEventListener('click',()=>{motion=!motion;document.body.classList.toggle('reduced',!motion);$('motionBtn').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Motion: '+(motion?'ON':'OFF');notify('Motion '+(motion?'enabled':'reduced'))});
+document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const tab=btn.dataset.tab;const info={overview:['OVERVIEW','A living system.','One core. Multiple signals. A world that responds.'],entity:['ENTITY','Meet the core.','AURA responds to attention, touch and movement.'],systems:['SYSTEMS','Everything in orbit.','A live visual map of this prototype’s modules.'],memory:['MEMORY','A moment, remembered.','This session keeps a small local event trail.']}[tab];$('sectionName').textContent=info[0];$('pageTitle').textContent=info[1];$('pageDesc').textContent=info[2];if(tab!=='overview'){document.getElementById(tab==='entity'?'entityCard':tab==='systems'?'activityList':'terminalLog').scrollIntoView({behavior:motion?'smooth':'auto',block:'center'});notify(info[0]+' view selected.')}else window.scrollTo({top:0,behavior:motion?'smooth':'auto'})}));
+$('terminalForm').addEventListener('submit',e=>{e.preventDefault();const input=$('commandInput'),cmd=input.value.trim().toLowerCase();if(!cmd)return;log('› '+cmd,'accent');input.value='';if(cmd==='help'){log('Commands: help · status · scan · awaken · pulse · calm · clear','ok')}else if(cmd==='status'){log('AURA PRESENT · 4 MODULES NOMINAL · LOCAL DEMO','ok')}else if(cmd==='scan'){ $('scanBtn').click();}else if(cmd==='awaken'){if(!entityAwake)awaken();else log('Entity is already awake.','ok')}else if(cmd==='pulse'){pulse()}else if(cmd==='calm'){if(entityAwake)awaken();log('Low-stimulation mode requested.','ok')}else if(cmd==='clear'){$('terminalLog').innerHTML='';log('Console cleared.','ok')}else{log('Unknown command. Type help for available actions.','dim')}});
+function uptime(){const s=Math.floor((Date.now()-start)/1000),m=Math.floor(s/60),h=Math.floor(m/60);$('uptime').textContent=(h?String(h).padStart(2,'0')+':':'')+String(m%60).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+setInterval(uptime,1000);function network(){const on=navigator.onLine;$('online').textContent=on?'ONLINE':'OFFLINE';$('networkState').textContent=on?'CONNECTED':'OFFLINE';$('networkDetail').textContent=on?'Browser reports network available':'No network connection detected';$('networkBar').style.width=on?'88%':'8%';$('networkBar').style.background=on?'linear-gradient(90deg,#687fe4,#8be9f2)':'#ff809d'}network();window.addEventListener('online',network);window.addEventListener('offline',network);
+setInterval(()=>{if(!motion)return;activity=Math.max(61,Math.min(99,activity+(Math.random()-.5)*5));$('activityValue').textContent=Math.round(activity);$('activityDelta').textContent=(Math.random()>.45?'+':'−')+(Math.random()*4.8).toFixed(1)+'%'},2500);
+const card=$('entityCard'),wrap=$('sceneWrap'),glow=document.querySelector('.cursor-glow');
+window.addEventListener('pointermove',e=>{document.documentElement.style.setProperty('--px',e.clientX+'px');document.documentElement.style.setProperty('--py',e.clientY+'px');if(!motion||e.pointerType==='touch')return;const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;if(e.clientY>=r.top&&e.clientY<=r.bottom&&e.clientX>=r.left&&e.clientX<=r.right){wrap.style.transform='rotateY('+(x*7)+'deg) rotateX('+(-y*6)+'deg) translateZ(12px)'}else wrap.style.transform='rotateY(0deg) rotateX(0deg)'});
+card.addEventListener('pointerleave',()=>wrap.style.transform='rotateY(0deg) rotateX(0deg)');
+let renderer,scene,camera,group,core,shader,particles,ringA,ringB,clock3;
+function init3D(){if(!window.THREE)return false;try{const T=window.THREE,canvas=$('scene');renderer=new T.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setSize(canvas.clientWidth,canvas.clientHeight,false);renderer.setClearColor(0x000000,0);scene=new T.Scene();camera=new T.PerspectiveCamera(34,canvas.clientWidth/canvas.clientHeight,.1,100);camera.position.set(0,0,8.2);group=new T.Group();scene.add(group);
+const geo=new T.IcosahedronGeometry(1.18,64);shader=new T.ShaderMaterial({transparent:true,uniforms:{uTime:{value:0},uPulse:{value:0},uAwake:{value:1}},vertexShader:'uniform float uTime; uniform float uPulse; varying vec3 vNormal; varying vec3 vPos; void main(){vNormal=normalize(normalMatrix*normal);float wave=sin(position.y*5.0+uTime*1.2)*0.025+sin(position.x*7.0-uTime*.8)*.018;vec3 p=position+normal*(wave+uPulse*.12);vPos=p;gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.0);}',fragmentShader:'uniform float uTime; varying vec3 vNormal; varying vec3 vPos; void main(){float fres=pow(1.0-max(dot(normalize(vNormal),vec3(0.0,0.0,1.0)),0.0),2.0);float bands=.5+.5*sin(vPos.y*17.0+uTime*1.5+sin(vPos.x*7.0));vec3 deep=vec3(.045,.12,.31);vec3 cyan=vec3(.32,.91,1.0);vec3 violet=vec3(.53,.38,1.0);vec3 col=mix(deep,cyan,bands*.43+fres*.75);col=mix(col,violet,fres*.35);float alpha=.74+fres*.26;gl_FragColor=vec4(col*1.15,alpha);}'});
+core=new T.Mesh(geo,shader);group.add(core);
+const wire=new T.Mesh(new T.IcosahedronGeometry(1.205,3),new T.MeshBasicMaterial({color:0x8be9f2,wireframe:true,transparent:true,opacity:.075}));group.add(wire);
+ringA=new T.Mesh(new T.TorusGeometry(1.62,.008,8,180),new T.MeshBasicMaterial({color:0x83eaf4,transparent:true,opacity:.57}));ringA.rotation.x=1.16;ringA.rotation.y=.27;group.add(ringA);
+ringB=new T.Mesh(new T.TorusGeometry(1.88,.005,8,180),new T.MeshBasicMaterial({color:0xa78cff,transparent:true,opacity:.38}));ringB.rotation.x=1.8;ringB.rotation.y=-.48;group.add(ringB);
+const count=1300,positions=new Float32Array(count*3);for(let i=0;i<count;i++){const radius=2.1+Math.random()*2.1,theta=Math.random()*Math.PI*2,phi=Math.acos(2*Math.random()-1);positions[i*3]=radius*Math.sin(phi)*Math.cos(theta);positions[i*3+1]=radius*Math.sin(phi)*Math.sin(theta);positions[i*3+2]=radius*Math.cos(phi)}
+const pg=new T.BufferGeometry();pg.setAttribute('position',new T.BufferAttribute(positions,3));particles=new T.Points(pg,new T.PointsMaterial({color:0x9edfff,size:.018,transparent:true,opacity:.65,sizeAttenuation:true}));group.add(particles);
+const halo=new T.Mesh(new T.SphereGeometry(1.38,48,48),new T.MeshBasicMaterial({color:0x529cff,transparent:true,opacity:.045,side:T.BackSide}));group.add(halo);
+scene.add(new T.AmbientLight(0x829aff,1.4));const light=new T.PointLight(0x7defff,16,12);light.position.set(2,2,4);scene.add(light);
+clock3=new T.Clock();$('orbFallback').style.display='none';
+function resize(){const w=canvas.clientWidth||canvas.parentElement.clientWidth,h=canvas.clientHeight||canvas.parentElement.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+window.addEventListener('resize',resize);resize();
+function animate(){requestAnimationFrame(animate);if(!renderer)return;const t=clock3.getElapsedTime(),delta=clock3.getDelta();if(motion){group.rotation.y=Math.sin(t*.18)*.22;group.rotation.x=Math.cos(t*.13)*.10;core.rotation.y=t*.09;ringA.rotation.z=t*.12;ringB.rotation.z=-t*.08;particles.rotation.y=t*.018;particles.rotation.x=Math.sin(t*.08)*.05;group.position.y=Math.sin(t*.65)*.045;entityPulse=Math.max(0,entityPulse-delta*1.5)}shader.uniforms.uTime.value=t;shader.uniforms.uPulse.value=entityPulse;shader.uniforms.uAwake.value=entityAwake?1:0.4;renderer.render(scene,camera)}animate();return true}catch(err){console.warn('3D unavailable; fallback active',err);$('scene').style.display='none';return false}}
+init3D();
+})();
+</script>
+</body>
+</html>
