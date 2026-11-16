@@ -1,0 +1,12 @@
+{
+  "name": "AURA Wallet Intelligence",
+  "short_name": "AURA Wallet",
+  "description": "Watch-only Solana wallet intelligence for Android.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#07110f",
+  "theme_color": "#07110f",
+  "icons": [{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
