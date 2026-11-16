@@ -59,10 +59,38 @@
 .market-freshness{font-size:10px;letter-spacing:.08em;color:#9bb7a8}
 @media(min-width:650px){.market-kpis{grid-template-columns:repeat(4,minmax(0,1fr))}.market-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.market-shell{padding:22px}.market-token{grid-template-columns:35px minmax(0,1fr) 125px 68px 15px;gap:12px}.market-token-main b{font-size:14px}}
 
-</style></head><body>
-<header><div class="eyebrow">AURA / SHARED INTELLIGENCE</div><h1>Wallet Intelligence</h1><div class="row"><span class="pill ok">WATCH-ONLY</span><span class="pill">SOLANA MAINNET</span><span class="pill">ANDROID FIRST</span></div><p>See a wallet clearly. Keep control of every key and every transaction.</p></header>
+</style><link rel="stylesheet" href="./intelligence.css"></head><body>
+<header><div class="eyebrow">AURA OS / EXPERIMENTAL COMMAND SYSTEM</div><h1>AURA Intelligence</h1><div class="row"><span class="pill ok">WATCH-ONLY</span><span class="pill">SOLANA MAINNET</span><span class="pill">ANDROID FIRST</span></div><p>One intelligence surface for market discovery, explainable signals and a private, watch-only wallet.</p></header>
 <main><nav class="tabs" id="primary-tabs"><button class="active" data-tab="market">Market</button><button data-tab="wallet">Wallet</button></nav>
 <section id="tab-market" class="market-shell">
+<section class="aura-intel" aria-label="AURA intelligence radar" id="aura-radar">
+  <div class="intel-hero">
+    <div class="intel-hero-copy">
+      <div class="intel-eyebrow"><span class="intel-dot"></span> AURA SIGNAL ENGINE / EXPERIMENTAL v0.3</div>
+      <h2>Find the signal.<br><em>Respect uncertainty.</em></h2>
+      <p>A screening intelligence layer over observed Solana DEX pools. Explainable ranking, conditional momentum outlooks and visible risk gates — without simulated profits or trades.</p>
+      <div class="intel-hero-controls"><button id="intel-scan" type="button">⟳ &nbsp; SCAN MARKET</button><span id="intel-engine-status">AWAITING MARKET TELEMETRY</span></div>
+    </div>
+    <div class="intel-presence" role="img" aria-label="Abstract luminous AURA intelligence orb with orbital rings"><span class="intel-ring ring-a"></span><span class="intel-ring ring-b"></span><span class="intel-heart"><span>A</span></span></div>
+  </div>
+  <div class="intel-statbar">
+    <div class="intel-stat"><span>POOLS IN SAMPLE</span><strong id="intel-screened">—</strong><small>Not the entire market</small></div>
+    <div class="intel-stat"><span>ELIGIBLE TO REVIEW</span><strong id="intel-qualified">—</strong><small>After minimum data &amp; risk gates</small></div>
+    <div class="intel-stat"><span>24H SAMPLE BREADTH</span><strong id="intel-breadth">—</strong><small id="intel-breadth-context">Awaiting observations</small></div>
+    <div class="intel-stat"><span>SCORABLE COVERAGE</span><strong id="intel-coverage">—</strong><small id="intel-coverage-context">Required telemetry missing</small></div>
+  </div>
+  <div class="intel-layout">
+    <div class="intel-panel"><div class="intel-panel-head"><div><span class="intel-kicker">RANKED OBSERVATIONS</span><h3>Candidate Radar</h3></div><small>SCREENING / 100</small></div>
+      <div id="intel-candidates"><div class="intel-empty">Waiting for a source-stamped Solana pool snapshot. No candidates will be invented.</div></div>
+      <div class="intel-panel-foot" id="intel-feed-label">Awaiting provider sample</div>
+    </div>
+    <aside class="intel-panel" aria-label="Evidence analysis"><div class="intel-analysis" id="intel-analysis"><div class="intel-empty">Select a candidate to inspect its evidence and risk flags.</div></div></aside>
+  </div>
+  <details class="intel-methodology" id="intel-method"><summary>Methodology, data limits &amp; safeguards</summary><div class="intel-methodology-content">
+    <strong>Transparent heuristic (not a predictive model):</strong> up to 30 points liquidity, 20 trading volume, 20 observed price momentum, 15 buy/sell transaction count, 15 pool maturity, minus penalties for extreme turnover, price spikes and immature pools. Eligibility requires observed liquidity ≥$25K, 24h volume ≥$10K, pool age ≥24 hours, adequate field coverage and no severe numerical red flags. The score is not the probability of a positive return.<br>
+    <strong>Scope:</strong> the selected feed is a provider-curated pool sample, not an exhaustive ranking of Solana tokens. Missing values stay unknown; market bias describes observed price direction, not future price or target. No contract audit, holder concentration analysis or independently validated backtest is performed. Free-tier responses may be cached or delayed. No wallet connection or trading authority.
+  </div></details>
+</section>
   <div class="market-topline"><div><div class="market-section-label">AURA / SOLANA MARKET INTELLIGENCE</div><h2 style="margin:5px 0;font-size:23px">Market Pulse</h2><div class="muted small">Live market discovery · independent from wallet connection</div></div><div class="row"><span id="market-status" class="pill warn">CONNECTING</span><button id="market-refresh" class="primary">Refresh</button></div></div>
   <div class="market-kpis">
     <div class="market-kpi"><small>SOL / USD</small><b id="market-sol-price">—</b><span id="market-sol-change" class="metric-change muted">—</span></div>
@@ -71,15 +99,15 @@
     <div class="market-kpi"><small>Last update</small><b id="market-updated" style="font-size:13px;margin-top:11px">Waiting…</b><span class="muted small">Provider timestamp</span></div>
   </div>
   <div class="market-section-label">DISCOVERY FEEDS</div>
-  <div class="market-feeds"><button class="active" data-market-feed="trending">Trending · 1h</button><button data-market-feed="organic">Organic activity · 5m</button><button data-market-feed="recent">Newly pooled</button><button data-market-feed="toptraded">Top traded · 1h</button></div>
+  <div class="market-feeds"><button class="active" data-market-feed="trending">Trending pools</button><button data-market-feed="momentum">Momentum · 1h</button><button data-market-feed="recent">Newly pooled</button><button data-market-feed="toptraded">Top volume in sample</button></div>
   <div class="market-toolbar"><input id="market-search" placeholder="Search token, symbol or mint" autocapitalize="off" autocomplete="off" spellcheck="false"><button id="market-search-button">Search</button></div>
   <div id="market-search-results" class="market-search-results"></div>
   <div class="row spread"><div><b>Solana token feed</b><div id="market-source" class="market-source">Waiting for provider</div></div><div style="max-width:135px"><label for="market-min-liquidity">Min liquidity</label><select id="market-min-liquidity" style="width:100%;background:#07120f;color:#e8f4ed;border:1px solid #35574a;border-radius:10px;padding:9px"><option value="0">Any</option><option value="10000">$10K+</option><option value="50000">$50K+</option><option value="100000">$100K+</option></select></div></div>
   <div id="market-list" class="empty">Loading live Solana market data…</div>
   <div class="market-detail" id="market-detail"><div class="empty">Select any token to inspect market data, liquidity, activity and its chart.</div></div>
   <div class="item"><b class="small">Your market watchlist</b><div id="market-watchlist" class="market-watchlist"><span class="muted small">No saved tokens yet.</span></div></div>
-  <div class="notice" style="margin-top:14px">Market prices are third-party market observations, not guaranteed execution prices. Organic score and verification are screening signals, not proof that a token is safe. This dashboard is read-only and cannot buy, sell or sign transactions.</div>
-  <p class="market-freshness">SOURCES: JUPITER · DEX SCREENER · GECKOTERMINAL</p>
+  <div class="notice" style="margin-top:14px">Market prices are third-party market observations, not guaranteed execution prices. Token verification and contract risk checks are not available from the current feed. This dashboard is read-only and cannot buy, sell or sign transactions.</div>
+  <p class="market-freshness">SOURCES: DEX SCREENER · GECKOTERMINAL · OBSERVATIONAL HEURISTIC</p>
 </section>
 <section id="tab-wallet" class="hidden">
 <section class="card"><div class="row spread"><div><strong>Your watchlist</strong><div class="muted small">Public addresses only · saved on this browser</div></div><span id="status" class="pill">READY</span></div><label for="address">Solana public address</label><input id="address" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste a public wallet address"><label for="label">Private label (stays on this device)</label><input id="label" maxlength="40" placeholder="e.g. Main watch wallet"><div class="actions"><button class="primary" id="add">Add address</button><button id="refreshAll">Refresh all</button></div><div id="wallets" class="small muted" style="margin-top:12px">No addresses saved yet.</div></section>
@@ -89,5 +117,5 @@
 <section id="tab-activity" class="card hidden"><strong>Recent activity</strong><p class="muted small">Movements remain unclassified. Balance changes alone cannot reliably distinguish swaps from transfers or calculate P&amp;L.</p><div id="activity" class="empty">No transaction history loaded.</div></section>
 <section id="tab-context" class="card hidden"><strong>AI context packet</strong><p class="muted small">Paste this source-stamped summary into ChatGPT. It does not automatically connect this page to your session.</p><textarea id="context" rows="12" style="width:100%;background:#07110f;color:#d9eee2;border:1px solid var(--line);border-radius:12px;padding:12px" readonly placeholder="Refresh a wallet to generate context."></textarea><div class="actions"><button id="copyContext2">Copy context</button><button id="downloadContext">Download JSON</button></div></section>
 <section id="tab-security" class="card hidden"><strong>Privacy, safety & backup</strong><div class="notice" style="margin-top:12px">Watch-only: no wallet connection, signing, buying, selling or withdrawals. Never enter a seed phrase, private key, recovery phrase or exchange secret.</div><div class="notice danger" style="margin-top:10px">Addresses and snapshots are stored in this browser's IndexedDB without application-level encryption. Anyone with access to your unlocked browser profile/device may inspect them. The public RPC provider receives the address and request metadata when you refresh.</div><label for="passphrase">Backup passphrase (not stored)</label><input id="passphrase" type="password" autocomplete="new-password" placeholder="Use a unique, strong passphrase"><div class="actions"><button id="backup">Export encrypted backup</button><button id="restore">Restore encrypted backup</button><input id="backupFile" class="hidden" type="file" accept="application/json,.json"></div><p class="muted small">Backup uses PBKDF2-SHA256 and AES-256-GCM. The passphrase is never stored or transmitted. Losing it makes that backup unrecoverable. Keep the backup file and passphrase separately.</p><div class="actions"><button class="ghost" id="forget">Delete local wallet data</button></div></section>
-<div class="footer">AURA Market & Wallet Intelligence 0.2.0 · Market feeds · Local-first wallet · Read-only · No custody · No trading</div></section></main>
-<script src="./app.js" defer></script><script src="./market.js" defer></script></body></html>
+<div class="footer">AURA Market & Wallet Intelligence 0.3.0 · Market feeds · Local-first wallet · Read-only · No custody · No trading</div></section></main>
+<script src="./app.js" defer></script><script src="./market.js" defer></script><script type="module" src="./intelligence-ui.mjs"></script></body></html>
