@@ -1,0 +1,49 @@
+name: AURA Market Sampler
+
+on:
+  schedule:
+    # Every five minutes, offset from the top of the hour to reduce queue delays.
+    - cron: "3-58/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aura-market-sampler
+  cancel-in-progress: false
+
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout sampler branch
+        uses: actions/checkout@v4
+        with:
+          ref: crypto-signal-lab
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Validate sampler logic
+        run: node scripts/market-sampler.mjs --self-test
+
+      - name: Discover markets and capture due outcomes
+        run: node scripts/market-sampler.mjs
+
+      - name: Commit shared public market ledger
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/market-ledger.json
+          if git diff --cached --quiet; then
+            echo "No ledger changes to commit."
+          else
+            git commit -m "Update AURA market sampling ledger"
+            git push origin HEAD:refs/heads/crypto-signal-lab
+          fi
