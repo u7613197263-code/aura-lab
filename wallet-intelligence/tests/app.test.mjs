@@ -6,8 +6,12 @@ const app = await readFile(new URL("../app.js", import.meta.url), "utf8");
 const page = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const manifest = await readFile(new URL("../manifest.webmanifest", import.meta.url), "utf8");
 
-test("app parses and contains only the watch-only Solana RPC endpoint", () => {
+test("app parses and tries multiple read-only Solana RPC providers", () => {
+  assert.match(app, /https:\/\/solana-rpc\.publicnode\.com/);
+  assert.match(app, /https:\/\/api\.mainnet\.solana\.com/);
   assert.match(app, /https:\/\/api\.mainnet-beta\.solana\.com/);
+  assert.match(app, /All public Solana RPC endpoints failed/);
+  assert.match(page, /https:\/\/solana-rpc\.publicnode\.com/);
   assert.match(app, /getBalance/);
   assert.match(app, /getTokenAccountsByOwner/);
   assert.match(app, /getSignaturesForAddress/);
