@@ -4,6 +4,7 @@ on:
     branches: [feat/aura-wallet-watch-only-v0.1]
     paths:
       - "wallet-intelligence/**"
+      - "wallet-intelligence-api/**"
       - ".github/workflows/aura-wallet-intelligence.yml"
   pull_request:
     branches: [crypto-signal-lab]
@@ -22,5 +23,9 @@ jobs:
           node-version: "22"
       - name: Parse application JavaScript
         run: node --check wallet-intelligence/app.js
+      - name: Parse market client and API JavaScript
+        run: |
+          node --check wallet-intelligence/market.js
+          node --check wallet-intelligence-api/server.mjs
       - name: Run watch-only and privacy tests
         run: node --test wallet-intelligence/tests/app.test.mjs
