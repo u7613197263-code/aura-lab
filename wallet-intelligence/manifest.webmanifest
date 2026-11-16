@@ -1,7 +1,7 @@
 {
-  "name": "AURA Wallet Intelligence",
-  "short_name": "AURA Wallet",
-  "description": "Watch-only Solana wallet intelligence for Android.",
+  "name": "AURA Market & Wallet Intelligence",
+  "short_name": "AURA Intel",
+  "description": "Solana market intelligence and watch-only wallet monitoring for Android.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
