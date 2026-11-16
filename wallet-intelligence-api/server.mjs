@@ -5,6 +5,8 @@ const APP_ORIGIN = "https://aura-wallet-intelligence.onrender.com";
 const ALLOWED_ORIGINS = new Set([APP_ORIGIN, "http://localhost:4173", "http://127.0.0.1:4173"]);
 const CACHE = new Map();
 const INFLIGHT = new Map();
+const LAST_GOOD_FEEDS = new Map();
+let geckoCooldownUntil = 0;
 const REQUESTS = new Map();
 const CACHE_LIMIT = 250;
 const FEEDS = Object.freeze({
@@ -138,9 +140,7 @@ async function dexFallback(feedName) {
   }
   const items = [...itemMap.values()];
   if (!items.length) throw new Error("No priced Solana pairs in DEX Screener sample");
-  if (feedName === "momentum") items.sort((a,b)=>(b.stats1h.priceChange??-999)-(a.stats1h.priceChange??-999));
-  else if (feedName === "toptraded") items.sort((a,b)=>(b.volume24h??-1)-(a.volume24h??-1));
-  else items.sort((a,b)=>(b.liquidity??0)-(a.liquidity??0));
+  items.sort((a,b)=>(b.liquidity??0)-(a.liquidity??0));
   return {sampledAt:new Date().toISOString(),items,
     label:feedName === "recent"?"DEX Screener recently profiled Solana tokens":
       "DEX Screener recently boosted Solana tokens (promotional discovery sample)"};
@@ -206,20 +206,35 @@ async function route(req, res) {
       const feed = FEEDS[name];
       if (!feed) return json(res, 400, { error: "Unsupported feed." }, origin);
       try {
+        if (Date.now() < geckoCooldownUntil) throw new Error("GeckoTerminal in temporary rate-limit cooldown");
         const result = await cached("gecko:" + feed.path, feed.ttl, async () => ({
           sampledAt: new Date().toISOString(),
           payload: await fetchJson("https://api.geckoterminal.com/api/v2" + feed.path + "?include=base_token")
         }));
         const items = poolTokens(result.data.payload);
         if (!items.length) throw new Error("GeckoTerminal did not return usable Solana token metadata");
+        LAST_GOOD_FEEDS.set(feed.path,{items, sampledAt:result.data.sampledAt, storedAt:Date.now()});
         if (name === "momentum") items.sort((a, b) => (b.stats1h.priceChange ?? -999) - (a.stats1h.priceChange ?? -999));
         if (name === "toptraded") items.sort((a, b) => (b.volume24h ?? -1) - (a.volume24h ?? -1));
         return json(res, 200, {source:"GeckoTerminal", feed:name, label:feed.label,
           fetchedAt:result.data.sampledAt,cached:result.cached,items,fallback:false},origin);
       } catch (primaryError) {
+        if (primaryError?.status === 429) geckoCooldownUntil = Date.now() + 120000;
+        const last = LAST_GOOD_FEEDS.get(feed.path);
+        if (last && Date.now()-last.storedAt < 300000) {
+          const items = [...last.items];
+          if(name==="momentum")items.sort((a,b)=>(b.stats1h.priceChange??-999)-(a.stats1h.priceChange??-999));
+          if(name==="toptraded")items.sort((a,b)=>(b.volume24h??-1)-(a.volume24h??-1));
+          return json(res,200,{source:"GeckoTerminal",feed:name,label:feed.label,
+            fetchedAt:last.sampledAt,cached:true,stale:true,fallback:false,items,
+            providerWarning:"Primary provider rate-limited. Showing source-stamped last-good sample (up to 5 min old)."},origin);
+        }
         const secondary = await cached("dex-fallback:"+(name==="recent"?"recent":"boosted"),90000,()=>dexFallback(name));
+        const backupItems=[...secondary.data.items];
+        if(name==="momentum")backupItems.sort((a,b)=>(b.stats1h.priceChange??-999)-(a.stats1h.priceChange??-999));
+        if(name==="toptraded")backupItems.sort((a,b)=>(b.volume24h??-1)-(a.volume24h??-1));
         return json(res,200,{source:"DEX Screener",feed:name,label:secondary.data.label,
-          fetchedAt:secondary.data.sampledAt,cached:secondary.cached,items:secondary.data.items,
+          fetchedAt:secondary.data.sampledAt,cached:secondary.cached,items:backupItems,
           fallback:true,sourceScope:"promotional-or-profiled-sample",
           providerWarning:"Primary GeckoTerminal feed unavailable. Using a curated DEX Screener sample; it is not market-wide trending."},origin);
       }
