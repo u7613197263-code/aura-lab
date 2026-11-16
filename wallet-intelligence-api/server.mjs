@@ -8,8 +8,8 @@ const REQUESTS = new Map();
 const CACHE_LIMIT = 250;
 const FEEDS = Object.freeze({
   trending: { path: "/networks/solana/trending_pools", label: "GeckoTerminal trending pools", ttl: 60000 },
-  organic: { path: "/networks/solana/trending_pools", label: "GeckoTerminal trending pools (organic score unavailable)", ttl: 60000 },
-  toptraded: { path: "/networks/solana/trending_pools", label: "GeckoTerminal trending pools (not volume-ranked)", ttl: 60000 },
+  momentum: { path: "/networks/solana/trending_pools", label: "GeckoTerminal trending pools · sorted by 1h change", ttl: 60000 },
+  toptraded: { path: "/networks/solana/trending_pools", label: "GeckoTerminal trending sample · sorted by 24h volume", ttl: 60000 },
   recent: { path: "/networks/solana/new_pools", label: "GeckoTerminal new pools", ttl: 60000 }
 });
 
@@ -82,18 +82,24 @@ function poolTokens(payload) {
   const included = new Map((payload.included || []).map(x => [x.id, x]));
   return (payload.data || []).map(pool => {
     const a = pool.attributes || {};
-    const ref = (pool.relationships?.base_token?.data?.id || "");
-    const t = included.get(ref)?.attributes || {};
+    const ref = pool.relationships?.base_token?.data?.id || "";
+    const token = included.get(ref)?.attributes || {};
     const mint = ref.startsWith("solana_") ? ref.slice(7) : ref;
+    const tx = a.transactions?.h24 || {};
+    const ageDate = a.pool_created_at ? Date.parse(a.pool_created_at) : NaN;
+    const numeric = value => value == null || value === "" ? null : (Number.isFinite(Number(value)) ? Number(value) : null);
     return {
-      id: mint, address: mint, name: t.name || a.name || "Solana pool",
-      symbol: t.symbol || a.name?.split(" / ")[0] || "TOKEN",
-      usdPrice: Number(a.base_token_price_usd) || null,
-      liquidity: Number(a.reserve_in_usd) || 0,
-      stats1h: {priceChange: Number(a.price_change_percentage?.h1) || null},
-      stats24h: {priceChange: Number(a.price_change_percentage?.h24) || null},
-      organicScore: null, isVerified: null,
-      poolAddress: a.address, source: "GeckoTerminal"
+      id: mint, address: mint, name: token.name || a.name || "Unknown asset",
+      symbol: token.symbol || a.name?.split(" / ")[0] || "TOKEN",
+      usdPrice: numeric(a.base_token_price_usd),
+      liquidity: numeric(a.reserve_in_usd),
+      volume24h: numeric(a.volume_usd?.h24),
+      buys24h: numeric(tx.buys), sells24h: numeric(tx.sells),
+      poolCreatedAt: Number.isFinite(ageDate) ? ageDate : null,
+      poolAddress: a.address || null,
+      stats1h: {priceChange: numeric(a.price_change_percentage?.h1)},
+      stats24h: {priceChange: numeric(a.price_change_percentage?.h24)},
+      organicScore: null, isVerified: null, source: "GeckoTerminal"
     };
   }).filter(x => validMint(x.id));
 }
@@ -157,16 +163,16 @@ async function route(req, res) {
       const name = safeText(url.searchParams.get("feed") || "trending", 20);
       const feed = FEEDS[name];
       if (!feed) return json(res, 400, { error: "Unsupported feed." }, origin);
-      const result = await cached("feed:" + name, feed.ttl, () =>
-        fetchJson("https://api.geckoterminal.com/api/v2" + feed.path + "?include=base_token")
-      );
+      const result = await cached("gecko:" + feed.path, feed.ttl, async () => ({
+        sampledAt: new Date().toISOString(),
+        payload: await fetchJson("https://api.geckoterminal.com/api/v2" + feed.path + "?include=base_token")
+      }));
+      const items = poolTokens(result.data.payload);
+      if (name === "momentum") items.sort((a, b) => (b.stats1h.priceChange ?? -999) - (a.stats1h.priceChange ?? -999));
+      if (name === "toptraded") items.sort((a, b) => (b.volume24h ?? -1) - (a.volume24h ?? -1));
       return json(res, 200, {
-        source: "GeckoTerminal",
-        feed: name,
-        label: feed.label,
-        fetchedAt: new Date().toISOString(),
-        cached: result.cached,
-        items: poolTokens(result.data)
+        source: "GeckoTerminal", feed: name, label: feed.label,
+        fetchedAt: result.data.sampledAt, cached: result.cached, items
       }, origin);
     }
 
