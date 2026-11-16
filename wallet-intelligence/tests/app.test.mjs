@@ -45,7 +45,7 @@ test("page has no wallet-connect or secret-entry flow", () => {
 
 test("service worker invalidates old cached RPC client", async () => {
   const sw = await readFile(new URL("../sw.js", import.meta.url), "utf8");
-  assert.match(sw, /aura-wallet-intelligence-0\.1\.1/);
+  assert.match(sw, /aura-wallet-intelligence-0\.3\.0/);
 });
 
 test("PWA manifest is standalone and Android-friendly", () => {
