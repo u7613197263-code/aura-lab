@@ -85,7 +85,7 @@ function init(){
     status("REFRESH REQUESTED","neutral");
     $("market-refresh")?.click();
   });
-  $("intel-method")?.addEventListener("click",()=>{});
+  if(window.__auraMarketSnapshot)receive({detail:window.__auraMarketSnapshot});
   status("AWAITING MARKET TELEMETRY");
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init); else init();
