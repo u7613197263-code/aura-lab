@@ -10,7 +10,7 @@ Android-first, watch-only Solana wallet monitor. Static PWA; no backend, wallet 
 - Never enter a seed phrase, private key, keystore, recovery phrase or exchange secret.
 
 ## Data limitations
-- Uses Solana public RPC at `https://api.mainnet-beta.solana.com`; shared public endpoint, rate-limited and no SLA.
+- Uses ordered public RPC failover: PublicNode (`https://solana-rpc.publicnode.com`), Solana mainnet (`https://api.mainnet.solana.com`), then mainnet-beta (`https://api.mainnet-beta.solana.com`). Each is shared infrastructure; rate limits, CORS/IP blocking and availability can change. No endpoint has an SLA in this app.
 - Refresh reads SOL balance, SPL Token and Token-2022 accounts, latest 12 signatures, then attempts transaction detail for each signature.
 - All transaction rows remain `UNCLASSIFIED`; no swap/transfer/P&L inference is performed.
 - No market prices or cost basis are calculated. No profitability claims are made.
