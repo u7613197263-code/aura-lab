@@ -4,6 +4,7 @@ const PORT = Number(process.env.PORT || 10000);
 const APP_ORIGIN = "https://aura-wallet-intelligence.onrender.com";
 const ALLOWED_ORIGINS = new Set([APP_ORIGIN, "http://localhost:4173", "http://127.0.0.1:4173"]);
 const CACHE = new Map();
+const INFLIGHT = new Map();
 const REQUESTS = new Map();
 const CACHE_LIMIT = 250;
 const FEEDS = Object.freeze({
@@ -49,9 +50,11 @@ function cacheSet(key, value, ttl) {
 async function cached(key, ttl, loader) {
   const hit = cacheGet(key);
   if (hit !== null) return { data: hit, cached: true };
-  const value = await loader();
-  cacheSet(key, value, ttl);
-  return { data: value, cached: false };
+  if (INFLIGHT.has(key)) return { data: await INFLIGHT.get(key), cached: true };
+  const promise = Promise.resolve().then(loader).then(value => cacheSet(key, value, ttl));
+  INFLIGHT.set(key, promise);
+  try { return { data: await promise, cached: false }; }
+  finally { INFLIGHT.delete(key); }
 }
 
 function fetchJson(url, timeoutMs = 8500) {
@@ -102,6 +105,45 @@ function poolTokens(payload) {
       organicScore: null, isVerified: null, source: "GeckoTerminal"
     };
   }).filter(x => validMint(x.id));
+}
+
+async function dexFallback(feedName) {
+  // This is an explicitly promotional / profiled discovery sample, never called market-wide trending.
+  const profilePath = feedName === "recent" ? "/token-profiles/latest/v1" : "/token-boosts/latest/v1";
+  const profiles = await fetchJson("https://api.dexscreener.com" + profilePath);
+  if (!Array.isArray(profiles)) throw new Error("DEX Screener returned no discovery profiles");
+  const mints = [...new Set(profiles.filter(x => x.chainId === "solana" && validMint(x.tokenAddress)).map(x => x.tokenAddress))].slice(0, 30);
+  if (!mints.length) throw new Error("No Solana tokens in DEX Screener discovery sample");
+  const pairs = await fetchJson("https://api.dexscreener.com/tokens/v1/solana/" + mints.join(","));
+  const rows = Array.isArray(pairs) ? pairs : [];
+  const wanted = new Set(mints);
+  const itemMap = new Map();
+  const numeric = value => value == null || value === "" || !Number.isFinite(Number(value)) ? null : Number(value);
+  for (const p of rows) {
+    const mint = p.baseToken?.address;
+    if (!wanted.has(mint) || !validMint(mint)) continue;
+    const t = {
+      id: mint, address: mint, name: p.baseToken?.name || "Unknown asset",
+      symbol: p.baseToken?.symbol || "TOKEN",
+      usdPrice: numeric(p.priceUsd), liquidity: numeric(p.liquidity?.usd),
+      volume24h: numeric(p.volume?.h24),
+      buys24h: numeric(p.txns?.h24?.buys), sells24h: numeric(p.txns?.h24?.sells),
+      poolCreatedAt: numeric(p.pairCreatedAt), poolAddress: p.pairAddress || null,
+      stats1h: {priceChange: numeric(p.priceChange?.h1)},
+      stats24h: {priceChange: numeric(p.priceChange?.h24)},
+      organicScore: null, isVerified: null, source: "DEX Screener"
+    };
+    const previous = itemMap.get(mint);
+    if (!previous || (t.liquidity ?? 0) > (previous.liquidity ?? 0)) itemMap.set(mint, t);
+  }
+  const items = [...itemMap.values()];
+  if (!items.length) throw new Error("No priced Solana pairs in DEX Screener sample");
+  if (feedName === "momentum") items.sort((a,b)=>(b.stats1h.priceChange??-999)-(a.stats1h.priceChange??-999));
+  else if (feedName === "toptraded") items.sort((a,b)=>(b.volume24h??-1)-(a.volume24h??-1));
+  else items.sort((a,b)=>(b.liquidity??0)-(a.liquidity??0));
+  return {sampledAt:new Date().toISOString(),items,
+    label:feedName === "recent"?"DEX Screener recently profiled Solana tokens":
+      "DEX Screener recently boosted Solana tokens (promotional discovery sample)"};
 }
 
 function clientAllowed(req) {
@@ -163,17 +205,24 @@ async function route(req, res) {
       const name = safeText(url.searchParams.get("feed") || "trending", 20);
       const feed = FEEDS[name];
       if (!feed) return json(res, 400, { error: "Unsupported feed." }, origin);
-      const result = await cached("gecko:" + feed.path, feed.ttl, async () => ({
-        sampledAt: new Date().toISOString(),
-        payload: await fetchJson("https://api.geckoterminal.com/api/v2" + feed.path + "?include=base_token")
-      }));
-      const items = poolTokens(result.data.payload);
-      if (name === "momentum") items.sort((a, b) => (b.stats1h.priceChange ?? -999) - (a.stats1h.priceChange ?? -999));
-      if (name === "toptraded") items.sort((a, b) => (b.volume24h ?? -1) - (a.volume24h ?? -1));
-      return json(res, 200, {
-        source: "GeckoTerminal", feed: name, label: feed.label,
-        fetchedAt: result.data.sampledAt, cached: result.cached, items
-      }, origin);
+      try {
+        const result = await cached("gecko:" + feed.path, feed.ttl, async () => ({
+          sampledAt: new Date().toISOString(),
+          payload: await fetchJson("https://api.geckoterminal.com/api/v2" + feed.path + "?include=base_token")
+        }));
+        const items = poolTokens(result.data.payload);
+        if (!items.length) throw new Error("GeckoTerminal did not return usable Solana token metadata");
+        if (name === "momentum") items.sort((a, b) => (b.stats1h.priceChange ?? -999) - (a.stats1h.priceChange ?? -999));
+        if (name === "toptraded") items.sort((a, b) => (b.volume24h ?? -1) - (a.volume24h ?? -1));
+        return json(res, 200, {source:"GeckoTerminal", feed:name, label:feed.label,
+          fetchedAt:result.data.sampledAt,cached:result.cached,items,fallback:false},origin);
+      } catch (primaryError) {
+        const secondary = await cached("dex-fallback:"+(name==="recent"?"recent":"boosted"),90000,()=>dexFallback(name));
+        return json(res,200,{source:"DEX Screener",feed:name,label:secondary.data.label,
+          fetchedAt:secondary.data.sampledAt,cached:secondary.cached,items:secondary.data.items,
+          fallback:true,sourceScope:"promotional-or-profiled-sample",
+          providerWarning:"Primary GeckoTerminal feed unavailable. Using a curated DEX Screener sample; it is not market-wide trending."},origin);
+      }
     }
 
     if (url.pathname === "/api/market/price") {
