@@ -6,14 +6,11 @@ const ALLOWED_ORIGINS = new Set([APP_ORIGIN, "http://localhost:4173", "http://12
 const CACHE = new Map();
 const REQUESTS = new Map();
 const CACHE_LIMIT = 250;
-let lastJupiterRequest = 0;
-let jupiterQueue = Promise.resolve();
-
 const FEEDS = Object.freeze({
-  trending: { path: "/tokens/v2/toptrending/1h", label: "Jupiter trending · 1h", ttl: 30000 },
-  organic: { path: "/tokens/v2/toporganicscore/5m", label: "Jupiter organic activity · 5m", ttl: 30000 },
-  toptraded: { path: "/tokens/v2/toptraded/1h", label: "Jupiter top traded · 1h", ttl: 30000 },
-  recent: { path: "/tokens/v2/recent", label: "Jupiter recently pooled", ttl: 60000 }
+  trending: { path: "/networks/solana/trending_pools", label: "GeckoTerminal trending pools", ttl: 60000 },
+  organic: { path: "/networks/solana/trending_pools", label: "GeckoTerminal trending pools (organic score unavailable)", ttl: 60000 },
+  toptraded: { path: "/networks/solana/trending_pools", label: "GeckoTerminal trending pools (not volume-ranked)", ttl: 60000 },
+  recent: { path: "/networks/solana/new_pools", label: "GeckoTerminal new pools", ttl: 60000 }
 });
 
 function json(res, status, body, origin) {
@@ -81,16 +78,24 @@ function fetchJson(url, timeoutMs = 8500) {
   });
 }
 
-function jupiter(url) {
-  const run = async () => {
-    const wait = Math.max(0, 2100 - (Date.now() - lastJupiterRequest));
-    if (wait) await new Promise(resolve => setTimeout(resolve, wait));
-    lastJupiterRequest = Date.now();
-    return fetchJson(url);
-  };
-  const next = jupiterQueue.then(run, run);
-  jupiterQueue = next.catch(() => {});
-  return next;
+function poolTokens(payload) {
+  const included = new Map((payload.included || []).map(x => [x.id, x]));
+  return (payload.data || []).map(pool => {
+    const a = pool.attributes || {};
+    const ref = (pool.relationships?.base_token?.data?.id || "");
+    const t = included.get(ref)?.attributes || {};
+    const mint = ref.startsWith("solana_") ? ref.slice(7) : ref;
+    return {
+      id: mint, address: mint, name: t.name || a.name || "Solana pool",
+      symbol: t.symbol || a.name?.split(" / ")[0] || "TOKEN",
+      usdPrice: Number(a.base_token_price_usd) || null,
+      liquidity: Number(a.reserve_in_usd) || 0,
+      stats1h: {priceChange: Number(a.price_change_percentage?.h1) || null},
+      stats24h: {priceChange: Number(a.price_change_percentage?.h24) || null},
+      organicScore: null, isVerified: null,
+      poolAddress: a.address, source: "GeckoTerminal"
+    };
+  }).filter(x => validMint(x.id));
 }
 
 function clientAllowed(req) {
@@ -144,7 +149,7 @@ async function route(req, res) {
         version: "0.2.0",
         status: "ok",
         timestamp: new Date().toISOString(),
-        providers: ["Jupiter Tokens/Price API", "DEX Screener", "GeckoTerminal"]
+        providers: ["DEX Screener", "GeckoTerminal"]
       }, origin);
     }
 
@@ -153,47 +158,44 @@ async function route(req, res) {
       const feed = FEEDS[name];
       if (!feed) return json(res, 400, { error: "Unsupported feed." }, origin);
       const result = await cached("feed:" + name, feed.ttl, () =>
-        jupiter("https://api.jup.ag" + feed.path)
+        fetchJson("https://api.geckoterminal.com/api/v2" + feed.path + "?include=base_token")
       );
       return json(res, 200, {
-        source: "Jupiter Tokens V2",
+        source: "GeckoTerminal",
         feed: name,
         label: feed.label,
         fetchedAt: new Date().toISOString(),
         cached: result.cached,
-        items: asItems(result.data)
+        items: poolTokens(result.data)
       }, origin);
     }
 
     if (url.pathname === "/api/market/price") {
       const mint = safeText(url.searchParams.get("mint"), 50);
       if (!validMint(mint)) return json(res, 400, { error: "Invalid Solana mint address." }, origin);
-      const result = await cached("price:" + mint, 15000, () =>
-        jupiter("https://api.jup.ag/price/v3?ids=" + encodeURIComponent(mint))
+      const result = await cached("price:" + mint, 30000, () =>
+        fetchJson("https://api.dexscreener.com/tokens/v1/solana/" + encodeURIComponent(mint))
       );
-      const row = result.data?.[mint] || null;
-      return json(res, 200, {
-        source: "Jupiter Price V3",
+      const pairs = Array.isArray(result.data) ? result.data : [];
+      const pair = pairs.sort((a,b) => Number(b?.liquidity?.usd || 0) - Number(a?.liquidity?.usd || 0))[0];
+      return json(res, 200, { source: "DEX Screener", mint, cached: result.cached,
         fetchedAt: new Date().toISOString(),
-        cached: result.cached,
-        mint,
-        price: row
-      }, origin);
+        price: pair ? {usdPrice:Number(pair.priceUsd),priceChange24h:pair.priceChange?.h24} : null }, origin);
     }
 
     if (url.pathname === "/api/market/search") {
       const query = safeText(url.searchParams.get("q"), 64);
       if (query.length < 2) return json(res, 400, { error: "Enter at least two characters." }, origin);
-      const key = "search:" + query.toLowerCase();
-      const result = await cached(key, 15000, () =>
-        jupiter("https://api.jup.ag/tokens/v2/search?query=" + encodeURIComponent(query))
+      const result = await cached("search:" + query.toLowerCase(), 30000, () =>
+        fetchJson("https://api.dexscreener.com/latest/dex/search?q=" + encodeURIComponent(query))
       );
-      return json(res, 200, {
-        source: "Jupiter Tokens V2",
-        fetchedAt: new Date().toISOString(),
-        cached: result.cached,
-        items: asItems(result.data)
-      }, origin);
+      const pairs = (result.data?.pairs || []).filter(p => p.chainId === "solana");
+      const seen = new Set();
+      const items = pairs.map(p => ({id:p.baseToken?.address, name:p.baseToken?.name,
+        symbol:p.baseToken?.symbol, usdPrice:Number(p.priceUsd),
+        liquidity:Number(p.liquidity?.usd), stats24h:{priceChange:p.priceChange?.h24}}))
+        .filter(t => validMint(t.id) && !seen.has(t.id) && seen.add(t.id));
+      return json(res, 200, {source:"DEX Screener", fetchedAt:new Date().toISOString(),cached:result.cached,items}, origin);
     }
 
     if (url.pathname === "/api/market/token") {
@@ -213,7 +215,7 @@ async function route(req, res) {
         };
       });
       return json(res, 200, {
-        source: ["Jupiter Tokens V2", "DEX Screener"],
+        source: ["DEX Screener"],
         fetchedAt: new Date().toISOString(),
         cached: result.cached,
         mint,
