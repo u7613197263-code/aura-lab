@@ -1,4 +1,4 @@
-# AURA Wallet Intelligence 0.1.0
+# AURA Wallet Intelligence 0.1.1
 
 Android-first, watch-only Solana wallet monitor. Static PWA; no backend, wallet connection, signing, custody, trade execution or automated selling.
 
