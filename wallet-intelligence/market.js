@@ -3,13 +3,14 @@
   const API = "https://aura-market-api.onrender.com";
   const SOL_MINT = "So11111111111111111111111111111111111111112";
   const $ = id => document.getElementById(id);
-  const state = { feed: "trending", items: [], selected: null, detail: null, chart: "hour", timer: null, lastGood: null };
+  const state = { feed: "trending", items: [], selected: null, detail: null, chart: "hour:1", timer: null, lastGood: null, requestId: 0 };
   const WATCH_KEY = "aura-market-watchlist-v1";
 
   function esc(v) {
     return String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   }
   function num(v) {
+    if (v === null || v === undefined || v === "") return "—";
     const n = Number(v);
     if (!Number.isFinite(n)) return "—";
     if (Math.abs(n) >= 1e9) return "$" + (n / 1e9).toFixed(2) + "B";
@@ -18,6 +19,7 @@
     return "$" + n.toLocaleString(undefined, {maximumFractionDigits: n < 1 ? 8 : 2});
   }
   function pct(v) {
+    if (v === null || v === undefined || v === "") return "—";
     const n = Number(v);
     if (!Number.isFinite(n)) return "—";
     return (n > 0 ? "+" : "") + n.toFixed(2) + "%";
@@ -83,13 +85,13 @@
       const change = priceChange(t, "1h") ?? priceChange(t, "24h");
       const symbol = t.symbol || "TOKEN";
       const title = t.name || symbol;
-      const score = t.organicScore == null ? NaN : Number(t.organicScore);
+      const liq = t.liquidity ?? t.liquidityUsd ?? null;
       const verified = t.isVerified === true ? "VERIFIED" : t.isVerified === false ? "UNVERIFIED" : "STATUS UNKNOWN";
       return '<button class="market-token" type="button" data-token="' + esc(mint) + '">' +
         '<span class="market-rank">' + String(i + 1).padStart(2,"0") + '</span>' +
         '<span class="market-token-main"><b>' + esc(title) + '</b><small>' + esc(symbol) + ' · ' + esc(verified) + '</small></span>' +
         '<span class="market-token-price"><b>' + num(priceOf(t)) + '</b><small class="' + pctClass(change) + '">' + pct(change) + '</small></span>' +
-        '<span class="market-token-meta"><b>' + (Number.isFinite(score) ? score.toFixed(0) : "—") + '</b><small>organic</small></span>' +
+        '<span class="market-token-meta"><b>' + num(liq) + '</b><small>liquidity</small></span>' +
         '<span class="market-token-arrow">›</span></button>';
     }).join("");
     $("market-list").querySelectorAll("[data-token]").forEach(b => b.addEventListener("click", () => openToken(b.dataset.token)));
@@ -185,6 +187,7 @@
   }
   async function loadFeed(feed = state.feed) {
     state.feed = feed;
+    const requestId = ++state.requestId;
     document.querySelectorAll("[data-market-feed]").forEach(b => b.classList.toggle("active", b.dataset.marketFeed === feed));
     setStatus("UPDATING…","warn");
     try {
@@ -192,20 +195,25 @@
         api("/api/market/feeds?feed=" + encodeURIComponent(feed)),
         api("/api/market/price?mint=" + encodeURIComponent(SOL_MINT))
       ]);
+      if (requestId !== state.requestId) return;
       if (feedResult.status !== "fulfilled") throw feedResult.reason;
       const d = feedResult.value;
       const p = priceResult.status === "fulfilled" ? priceResult.value : {};
       state.items = d.items || [];
-      state.lastGood = d.fetchedAt || new Date().toISOString();
+      state.lastGood = d.fetchedAt || null;
+      window.__auraMarketSnapshot = {items:state.items,feed:d.feed,source:d.source,fetchedAt:state.lastGood};
+      document.dispatchEvent(new CustomEvent("aura:market-feed",{detail:window.__auraMarketSnapshot}));
       const sol = p.price?.usdPrice ?? p.price?.price ?? null;
       $("market-sol-price").textContent = sol === null ? "—" : num(sol);
       $("market-sol-change").textContent = p.price?.priceChange24h === undefined ? "—" : pct(p.price.priceChange24h);
       $("market-sol-change").className = "metric-change " + pctClass(p.price?.priceChange24h);
-      $("market-updated").textContent = "UPDATED " + new Date(state.lastGood).toLocaleTimeString();
+      $("market-updated").textContent = state.lastGood ? "SAMPLED " + new Date(state.lastGood).toLocaleTimeString() : "Sample time unavailable";
       $("market-source").textContent = d.source + " · " + d.label;
       renderFeed();
       setStatus("DATA RECEIVED","ok");
     } catch (e) {
+      if (requestId !== state.requestId) return;
+      document.dispatchEvent(new CustomEvent("aura:market-error",{detail:{message:e.message}}));
       setStatus("DATA DELAYED","bad");
       $("market-updated").textContent = "Waiting for market API";
       if (!state.items.length) empty("Market service may be waking from its free-tier idle state. Retry shortly. " + e.message);
@@ -258,6 +266,7 @@
   function start() {
     if (!$("market-list")) return;
     installTabs();
+    document.addEventListener("aura:inspect-token",e=>{if(e.detail?.mint)openToken(e.detail.mint);});
     document.querySelectorAll("[data-market-feed]").forEach(b => b.addEventListener("click", () => loadFeed(b.dataset.marketFeed)));
     $("market-refresh").addEventListener("click", () => loadFeed());
     $("market-min-liquidity").addEventListener("change", renderFeed);
