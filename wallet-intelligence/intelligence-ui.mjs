@@ -30,7 +30,7 @@ function renderDetail(x){
   const cues=x.reasons.length ? x.reasons.map(v=>'<li>'+esc(v)+'</li>').join("") : "<li>Insufficient market observations for an evidence-based assessment.</li>";
   host.innerHTML='<div class="intel-analysis-top"><span class="intel-kicker">AURA / EVIDENCE DOSSIER</span><span class="intel-confidence">'+esc(quality)+'</span></div>'+
     '<h3>'+esc(x.symbol)+' <span>'+esc(x.name)+'</span></h3>'+
-    '<div class="intel-bias '+(x.outlook==="Positive momentum"?"bull":x.outlook==="Weakening momentum"?"bear":"")+""><span>OBSERVED MARKET BIAS</span><strong>'+esc(x.outlook)+'</strong></div>'+
+    '<div class="intel-bias '+(x.outlook==="Positive momentum"?"bull":x.outlook==="Weakening momentum"?"bear":"") + '"><span>OBSERVED MARKET BIAS</span><strong>'+esc(x.outlook)+'</strong></div>'+
     '<div class="intel-analysis-grid"><div><span>1H CHANGE</span><strong>'+percentage(x.h1)+'</strong></div><div><span>24H CHANGE</span><strong>'+percentage(x.h24)+'</strong></div><div><span>24H VOLUME</span><strong>'+money(x.volume)+'</strong></div><div><span>POOL AGE</span><strong>'+(x.ageHours===null?"—":x.ageHours<24?x.ageHours.toFixed(1)+"h":Math.floor(x.ageHours/24)+"d")+'</strong></div></div>'+
     '<div class="intel-narrative"><span>WHAT THE DATA SUPPORTS</span><ul>'+cues+'</ul></div>'+
     '<div class="intel-narrative risk"><span>RISK & BLIND SPOTS</span><ul>'+flags+(x.missing.length?'<li>Missing: '+esc(x.missing.join(", "))+'</li>':"")+'</ul></div>'+
