@@ -27,5 +27,7 @@ jobs:
         run: |
           node --check wallet-intelligence/market.js
           node --check wallet-intelligence-api/server.mjs
+          node --check wallet-intelligence/intelligence-core.mjs
+          node --check wallet-intelligence/intelligence-ui.mjs
       - name: Run watch-only and privacy tests
-        run: node --test wallet-intelligence/tests/app.test.mjs
+        run: node --test wallet-intelligence/tests/*.test.mjs
