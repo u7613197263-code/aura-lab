@@ -348,11 +348,15 @@ async function run() {
   });
   ledger.assets = retained.slice(-MAX_ASSETS);
   ledger.generated_at = iso(now);
-  ledger.sampler.status = failed.length ? "partial" : (discovery.feeds.length ? "online" : "market_only");
+  const runOk = discovery.feeds.length > 0 || successful.size > 0;
+  const hasErrors = discovery.errors.length > 0 || failed.length > 0;
+  ledger.sampler.status = !runOk ? "unavailable" : hasErrors ? "partial" : "online";
   ledger.sampler.market_status = failed.length ? "partial" : (lookupMints.length ? "online" : "idle");
-  ledger.sampler.last_success_at = iso(now);
-  ledger.sampler.successful_runs = number(ledger.sampler.successful_runs) + 1;
-  ledger.sampler.last_error = [...discovery.errors, ...failed.map(item => item.error)].slice(0, 8).join(" | ") || null;
+  if (runOk) {
+    ledger.sampler.last_success_at = iso(now);
+    ledger.sampler.successful_runs = number(ledger.sampler.successful_runs) + 1;
+  }
+  ledger.sampler.last_error = [...discovery.errors, ...failed.map(item => item.error)].slice(0, 8).join(" | ") || (!runOk ? "No public market-data endpoint succeeded in this run." : null);
   ledger.sampler.last_discovery_count = candidates.length;
   ledger.sampler.new_assets_this_run = newAssets.length;
   ledger.sampler.due_assets_this_run = dueAssets.length;
@@ -372,7 +376,6 @@ async function run() {
     failed_batches: failed.length,
     summary: ledger.summary
   }, null, 2));
-  if (!discovery.feeds.length && !lookupMints.length) throw new Error("All discovery endpoints failed and there were no due assets to sample.");
 }
 if (process.argv.includes("--self-test")) selfTest();
 else run().catch(error => { console.error(error); process.exitCode = 1; });
