@@ -72,9 +72,9 @@ function receive(e){
   if(!Array.isArray(d.items))return;
   rows=d.items;
   sampleTime=d.fetchedAt || null;
-  sourceName=d.source || "Third-party data";
+  sourceName=(d.source || "Third-party data") + (d.fallback ? " · PROMOTIONAL / PROFILED SAMPLE" : d.stale ? " · LAST-GOOD SNAPSHOT" : "");
   candidates=rankCandidates(rows);
-  status("ANALYSIS UPDATED","good");
+  status(d.fallback ? "BACKUP / LIMITED SAMPLE" : d.stale ? "STALE / LAST GOOD" : "ANALYSIS UPDATED",d.fallback||d.stale?"warning":"good");
   render();
 }
 function init(){
