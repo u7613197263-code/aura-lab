@@ -2,9 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-const app = await readFile(new URL("./app.js", import.meta.url), "utf8");
-const page = await readFile(new URL("./index.html", import.meta.url), "utf8");
-const manifest = await readFile(new URL("./manifest.webmanifest", import.meta.url), "utf8");
+const app = await readFile(new URL("../app.js", import.meta.url), "utf8");
+const page = await readFile(new URL("../index.html", import.meta.url), "utf8");
+const manifest = await readFile(new URL("../manifest.webmanifest", import.meta.url), "utf8");
 
 test("app parses and contains only the watch-only Solana RPC endpoint", () => {
   assert.match(app, /https:\/\/api\.mainnet-beta\.solana\.com/);
