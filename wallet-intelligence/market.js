@@ -201,16 +201,16 @@
       const p = priceResult.status === "fulfilled" ? priceResult.value : {};
       state.items = d.items || [];
       state.lastGood = d.fetchedAt || null;
-      window.__auraMarketSnapshot = {items:state.items,feed:d.feed,source:d.source,fetchedAt:state.lastGood};
+      window.__auraMarketSnapshot = {items:state.items,feed:d.feed,source:d.source,fetchedAt:state.lastGood,fallback:!!d.fallback,stale:!!d.stale,providerWarning:d.providerWarning||null};
       document.dispatchEvent(new CustomEvent("aura:market-feed",{detail:window.__auraMarketSnapshot}));
       const sol = p.price?.usdPrice ?? p.price?.price ?? null;
       $("market-sol-price").textContent = sol === null ? "—" : num(sol);
       $("market-sol-change").textContent = p.price?.priceChange24h === undefined ? "—" : pct(p.price.priceChange24h);
       $("market-sol-change").className = "metric-change " + pctClass(p.price?.priceChange24h);
       $("market-updated").textContent = state.lastGood ? "SAMPLED " + new Date(state.lastGood).toLocaleTimeString() : "Sample time unavailable";
-      $("market-source").textContent = d.source + " · " + d.label;
+      $("market-source").textContent = d.source + " · " + d.label + (d.providerWarning ? " · " + d.providerWarning : "");
       renderFeed();
-      setStatus("DATA RECEIVED","ok");
+      setStatus(d.fallback ? "LIMITED SAMPLE" : d.stale ? "STALE SNAPSHOT" : "DATA RECEIVED", d.fallback || d.stale ? "warn" : "ok");
     } catch (e) {
       if (requestId !== state.requestId) return;
       document.dispatchEvent(new CustomEvent("aura:market-error",{detail:{message:e.message}}));
