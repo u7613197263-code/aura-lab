@@ -1,0 +1,14 @@
+{
+  "name": "AURA Crypto Signal Lab",
+  "short_name": "AURA Lab",
+  "description": "Solana market intelligence and local paper trading.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#07100f",
+  "theme_color": "#07100f",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
