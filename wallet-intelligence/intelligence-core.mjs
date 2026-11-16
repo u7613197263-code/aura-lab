@@ -46,7 +46,7 @@ export function assessToken(t, now=Date.now()) {
     score=Math.round(between(liquidityPart+volumePart+momentumPart+flowPart+agePart-penalty,0,100));
     if(ineligible)score=Math.min(score,45);
   }
-  const eligible=sufficient && !ineligible && (ageHours===null || ageHours>=24) && warnings.filter(x=>/Extreme|spike|drawdown/i.test(x)).length===0;
+  const eligible=sufficient && !ineligible && ageHours!==null && ageHours>=24 && warnings.filter(x=>/Extreme|spike|drawdown/i.test(x)).length===0;
   const reasons=[];
   if(liquidity!==null)reasons.push(liquidity>=100000?"Deep observed pool liquidity":liquidity>=50000?"Moderate observed liquidity":"Low observed liquidity");
   if(volume!==null)reasons.push(volume>=100000?"Strong 24h market turnover":volume>=10000?"Active 24h turnover":"Limited 24h turnover");
