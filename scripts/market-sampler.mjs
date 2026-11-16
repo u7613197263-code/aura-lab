@@ -198,7 +198,6 @@ async function getPairs(addresses) {
   for (const batch of chunks(unique(addresses), BATCH_SIZE)) {
     try {
       const pairs = await fetchJson(API + "/tokens/v1/solana/" + batch.join(","));
-      successful.add(...[]);
       for (const address of batch) successful.add(address);
       for (const [address, pair] of bestPairsByMint(pairs)) {
         const old = map.get(address);
