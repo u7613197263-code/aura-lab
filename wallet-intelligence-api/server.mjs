@@ -194,7 +194,7 @@ async function route(req, res) {
     if (url.pathname === "/api/health") {
       return json(res, 200, {
         service: "AURA Market API",
-        version: "0.3.0",
+        version: "0.3.1",
         status: "ok",
         timestamp: new Date().toISOString(),
         providers: ["DEX Screener", "GeckoTerminal"]
