@@ -1,6 +1,10 @@
 name: AURA Market Sampler
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/aura-market-sampler.yml
   schedule:
     # Every five minutes, offset from the top of the hour to reduce queue delays.
     - cron: "3-58/5 * * * *"
