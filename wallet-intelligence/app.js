@@ -1,4 +1,10 @@
-const RPC="https://api.mainnet-beta.solana.com";
+const RPC_ENDPOINTS=[
+  "https://solana-rpc.publicnode.com",
+  "https://api.mainnet.solana.com",
+  "https://api.mainnet-beta.solana.com"
+];
+let activeRpc=RPC_ENDPOINTS[0];
+let usedRpcProviders=new Set();
 const TOKEN_PROGRAM="TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 const TOKEN_2022="TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb";
 const $=s=>document.querySelector(s);
@@ -10,10 +16,35 @@ function validAddress(s){const b=base58Bytes(s.trim());return !!b&&b.length===32
 function openDB(){return new Promise((resolve,reject)=>{const q=indexedDB.open("aura-wallet-intelligence",1);q.onupgradeneeded=()=>{const d=q.result;if(!d.objectStoreNames.contains("wallets"))d.createObjectStore("wallets",{keyPath:"address"});if(!d.objectStoreNames.contains("snapshots"))d.createObjectStore("snapshots",{keyPath:"address"})};q.onsuccess=()=>resolve(q.result);q.onerror=()=>reject(q.error)})}
 function store(name,mode,fn){return new Promise((resolve,reject)=>{const tx=db.transaction(name,mode),s=tx.objectStore(name);let result;try{result=fn(s)}catch(e){reject(e);return}tx.oncomplete=()=>resolve(result?.result);tx.onerror=()=>reject(tx.error)})}
 async function all(name){return new Promise((resolve,reject)=>{const tx=db.transaction(name,"readonly"),q=tx.objectStore(name).getAll();q.onsuccess=()=>resolve(q.result);q.onerror=()=>reject(q.error)})}
-async function rpc(method,params){const r=await fetch(RPC,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:Date.now(),method,params})});if(!r.ok)throw Error("Solana RPC HTTP "+r.status);const j=await r.json();if(j.error)throw Error(j.error.message||"RPC error");return j.result}
+async function rpc(method,params){
+ const failures=[];
+ for(const endpoint of RPC_ENDPOINTS){
+  try{
+   const controller=new AbortController();
+   const timer=setTimeout(()=>controller.abort(),9000);
+   let r;
+   try{
+    r=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:Date.now(),method,params}),signal:controller.signal});
+   }finally{clearTimeout(timer)}
+   if(!r.ok){
+    failures.push(new URL(endpoint).host+" HTTP "+r.status);
+    if(r.status===403||r.status===429||r.status>=500)continue;
+    throw Error(new URL(endpoint).host+" HTTP "+r.status);
+   }
+   const j=await r.json();
+   if(j.error)throw Error(new URL(endpoint).host+" RPC error: "+(j.error.message||"unknown"));
+   activeRpc=endpoint;
+   usedRpcProviders.add(endpoint);
+   return j.result;
+  }catch(e){
+   failures.push(new URL(endpoint).host+" "+(e.name==="AbortError"?"timeout":e.message||"network/CORS failure"));
+  }
+ }
+ throw Error("All public Solana RPC endpoints failed: "+failures.join(" | "));
+}
 function amt(raw,dec){const v=BigInt(raw||"0"),d=Number(dec)||0;if(!d)return v.toString();const p=10n**BigInt(d),w=v/p,f=(v%p).toString().padStart(d,"0").replace(/0+$/,"");return f?w+"."+f:w.toString()}
 function normalizeAccounts(res){const m=new Map();for(const x of res.value||[]){const p=x.account?.data?.parsed?.info;if(!p?.mint||!p.tokenAmount)continue;const mint=p.mint,raw=p.tokenAmount.amount||"0",dec=Number(p.tokenAmount.decimals||0);let q=m.get(mint);if(!q){q={mint,raw:"0",decimals:dec,accounts:0,programs:[]};m.set(mint,q)}if(q.decimals!==dec)continue;q.raw=(BigInt(q.raw)+BigInt(raw)).toString();q.accounts++;if(!q.programs.includes(x.account.owner))q.programs.push(x.account.owner)}return [...m.values()].filter(x=>BigInt(x.raw)!==0n).map(x=>({...x,amount:amt(x.raw,x.decimals)})).sort((a,b)=>Number(BigInt(b.raw)>BigInt(a.raw)?1:BigInt(b.raw)<BigInt(a.raw)?-1:0))}
-async function collect(address){const [sol,t1,t2,sigs]=await Promise.all([rpc("getBalance",[address,{commitment:"confirmed"}]),rpc("getTokenAccountsByOwner",[address,{programId:TOKEN_PROGRAM},{encoding:"jsonParsed",commitment:"confirmed"}]),rpc("getTokenAccountsByOwner",[address,{programId:TOKEN_2022},{encoding:"jsonParsed",commitment:"confirmed"}]),rpc("getSignaturesForAddress",[address,{limit:12,commitment:"confirmed"}])]);const tokens=normalizeAccounts({value:[...(t1.value||[]),...(t2.value||[])]});const recent=[];let fees=0;for(const s of sigs||[]){let fee=null;try{const tx=await rpc("getTransaction",[s.signature,{encoding:"jsonParsed",commitment:"confirmed",maxSupportedTransactionVersion:0}]);fee=tx?.meta?.fee??null;if(Number.isFinite(fee))fees+=fee}catch(e){}recent.push({signature:s.signature,slot:s.slot,blockTime:s.blockTime||null,error:s.err||null,feeLamports:fee,classification:"UNCLASSIFIED"})}return {address,fetchedAt:new Date().toISOString(),source:RPC,commitment:"confirmed",slot:sol.context?.slot??null,solLamports:String(sol.value??0),sol:amt(String(sol.value??0),9),tokens,recentTransactions:recent,recentSignatureCount:(sigs||[]).length,observedRecentFeesLamports:fees,classificationPolicy:"All transaction classes remain UNCLASSIFIED. No swap/transfer/P&L inference.",priceData:null,costBasis:null,profitLoss:null}}
+async function collect(address){usedRpcProviders=new Set();const [sol,t1,t2,sigs]=await Promise.all([rpc("getBalance",[address,{commitment:"confirmed"}]),rpc("getTokenAccountsByOwner",[address,{programId:TOKEN_PROGRAM},{encoding:"jsonParsed",commitment:"confirmed"}]),rpc("getTokenAccountsByOwner",[address,{programId:TOKEN_2022},{encoding:"jsonParsed",commitment:"confirmed"}]),rpc("getSignaturesForAddress",[address,{limit:12,commitment:"confirmed"}])]);const tokens=normalizeAccounts({value:[...(t1.value||[]),...(t2.value||[])]});const recent=[];let fees=0;for(const s of sigs||[]){let fee=null;try{const tx=await rpc("getTransaction",[s.signature,{encoding:"jsonParsed",commitment:"confirmed",maxSupportedTransactionVersion:0}]);fee=tx?.meta?.fee??null;if(Number.isFinite(fee))fees+=fee}catch(e){}recent.push({signature:s.signature,slot:s.slot,blockTime:s.blockTime||null,error:s.err||null,feeLamports:fee,classification:"UNCLASSIFIED"})}return {address,fetchedAt:new Date().toISOString(),source:activeRpc,rpcProviders:[...usedRpcProviders],commitment:"confirmed",slot:sol.context?.slot??null,solLamports:String(sol.value??0),sol:amt(String(sol.value??0),9),tokens,recentTransactions:recent,recentSignatureCount:(sigs||[]).length,observedRecentFeesLamports:fees,classificationPolicy:"All transaction classes remain UNCLASSIFIED. No swap/transfer/P&L inference.",priceData:null,costBasis:null,profitLoss:null}}
 async function wallets(){return await all("wallets")}
 async function renderWallets(){const rows=await wallets();if(!rows.length){$("#wallets").innerHTML="No addresses saved yet.";return}$("#wallets").innerHTML=rows.map(w=>'<div class="item row spread"><div style="flex:1"><b>'+esc(w.label||"Watch wallet")+'</b><div class="mono">'+esc(w.address)+'</div></div><div class="actions"><button data-select="'+esc(w.address)+'">Open</button><button class="ghost" data-del="'+esc(w.address)+'">Remove</button></div></div>').join("");$("#wallets").querySelectorAll("[data-select]").forEach(b=>b.onclick=()=>selectWallet(b.dataset.select));$("#wallets").querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>removeWallet(b.dataset.del))}
 async function selectWallet(address){selected=address;const w=(await wallets()).find(x=>x.address===address);$("#selectedAddress").textContent=address+(w?.label?" · "+w.label:"");const snap=snapshots.get(address)||await getSnap(address);if(snap)renderSnapshot(snap)}
