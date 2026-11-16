@@ -44,6 +44,7 @@
     const list = getWatchlist();
     const next = list.includes(mint) ? list.filter(x => x !== mint) : [...list, mint].slice(-100);
     localStorage.setItem(WATCH_KEY, JSON.stringify(next));
+    loadWatchlist();
     renderDetail();
     renderFeed();
   }
@@ -238,11 +239,17 @@
     document.querySelectorAll("[data-tab]").forEach(b => {
       b.onclick = () => {
         document.querySelectorAll("[data-tab]").forEach(x => x.classList.toggle("active", x === b));
-        document.querySelectorAll('main section[id^="tab-"]').forEach(s => s.classList.toggle("hidden", s.id !== "tab-" + b.dataset.tab));
+        document.querySelectorAll('main > section[id^="tab-"]').forEach(s => s.classList.toggle("hidden", s.id !== "tab-" + b.dataset.tab));
         if (b.dataset.tab === "market") {
           loadWatchlist();
           if (!state.lastGood) loadFeed();
         }
+      };
+    });
+    document.querySelectorAll("[data-wallet-tab]").forEach(b => {
+      b.onclick = () => {
+        document.querySelectorAll("[data-wallet-tab]").forEach(x => x.classList.toggle("active", x === b));
+        ["assets","activity","context","security"].forEach(t => $("tab-" + t).classList.toggle("hidden", t !== b.dataset.walletTab));
       };
     });
   }
