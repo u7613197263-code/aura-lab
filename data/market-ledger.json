@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-16T20:05:17.745Z",
+  "sampler": {
+    "status": "awaiting_first_run",
+    "interval_minutes": 5,
+    "last_run_at": null,
+    "last_success_at": null,
+    "run_count": 0,
+    "successful_runs": 0,
+    "discovery_status": "pending",
+    "market_status": "pending",
+    "last_error": null,
+    "note": "Best-effort background sampling. GitHub Actions schedule events can be delayed and public workflows may be disabled after 60 days without repository activity."
+  },
+  "summary": {
+    "tracked_assets": 0,
+    "captured_outcomes": 0,
+    "missed_outcomes": 0,
+    "pending_outcomes": 0
+  },
+  "assets": []
+}
