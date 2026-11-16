@@ -83,7 +83,7 @@
       const change = priceChange(t, "1h") ?? priceChange(t, "24h");
       const symbol = t.symbol || "TOKEN";
       const title = t.name || symbol;
-      const score = Number(t.organicScore);
+      const score = t.organicScore == null ? NaN : Number(t.organicScore);
       const verified = t.isVerified === true ? "VERIFIED" : t.isVerified === false ? "UNVERIFIED" : "STATUS UNKNOWN";
       return '<button class="market-token" type="button" data-token="' + esc(mint) + '">' +
         '<span class="market-rank">' + String(i + 1).padStart(2,"0") + '</span>' +
@@ -99,10 +99,10 @@
     const liq = Number(pair?.liquidity?.usd ?? token?.liquidity ?? 0);
     const vol = Number(pair?.volume?.h24 ?? token?.stats24h?.volume ?? 0);
     const mcap = Number(pair?.marketCap ?? pair?.fdv ?? token?.mcap ?? token?.fdv ?? 0);
-    const verified = token?.isVerified === true ? "Jupiter verified" : token?.isVerified === false ? "Unverified" : "Verification unknown";
+    const verified = token?.isVerified === true ? "Provider verified" : token?.isVerified === false ? "Unverified" : "Verification unknown";
     const audit = token?.audit || {};
     const sus = Object.prototype.hasOwnProperty.call(audit, "isSus") && audit.isSus === true;
-    const score = Number(token?.organicScore);
+    const score = token?.organicScore == null ? NaN : Number(token.organicScore);
     const mintAuthority = audit.mintAuthority;
     const freezeAuthority = audit.freezeAuthority;
     let flags = '<span class="risk-chip">' + esc(verified) + '</span>';
@@ -111,12 +111,12 @@
     if (mintAuthority !== undefined) flags += '<span class="risk-chip ' + (mintAuthority ? "danger" : "") + '">Mint authority ' + (mintAuthority ? "active" : "revoked") + '</span>';
     if (freezeAuthority !== undefined) flags += '<span class="risk-chip ' + (freezeAuthority ? "danger" : "") + '">Freeze authority ' + (freezeAuthority ? "active" : "revoked") + '</span>';
     const changes = pair?.priceChange || {};
-    const pairLink = pair?.url || ("https://dexscreener.com/solana/" + encodeURIComponent(pair?.pairAddress || ""));
+    const pairLink = (typeof pair?.url === "string" && pair.url.startsWith("https://dexscreener.com/") ? pair.url : null) || ("https://dexscreener.com/solana/" + encodeURIComponent(pair?.pairAddress || ""));
     return '<div class="row spread"><div><div class="market-section-label">SELECTED ASSET</div><h3>' + esc(token?.name || pair?.baseToken?.name || token?.symbol || "Solana token") + ' <span class="muted">' + esc(token?.symbol || pair?.baseToken?.symbol || "") + '</span></h3></div><button class="ghost" id="market-watch">' + (isWatched(mint) ? "★ Watching" : "☆ Watch") + '</button></div>' +
       '<div class="market-detail-price">' + num(pair?.priceUsd ?? token?.usdPrice) + ' <span class="' + pctClass(changes.h24) + '">' + pct(changes.h24) + ' · 24h</span></div>' +
       '<div class="market-detail-grid"><div><small>Liquidity</small><b>' + num(liq) + '</b></div><div><small>24h volume</small><b>' + num(vol) + '</b></div><div><small>Market cap / FDV</small><b>' + num(mcap) + '</b></div><div><small>Holders</small><b>' + (token?.holderCount ? Number(token.holderCount).toLocaleString() : "—") + '</b></div><div><small>5m change</small><b class="' + pctClass(changes.m5) + '">' + pct(changes.m5) + '</b></div><div><small>1h change</small><b class="' + pctClass(changes.h1) + '">' + pct(changes.h1) + '</b></div></div>' +
       '<div class="risk-list">' + flags + '</div>' +
-      '<p class="muted market-caveat">Signals are screening indicators, not a safety guarantee. Organic score is relative to the Solana token universe. Always inspect liquidity, holder concentration and contract authorities before taking risk.</p>' +
+      '<p class="muted market-caveat">Signals are screening indicators, not a safety guarantee. Organic score is unavailable without a verified provider. Always inspect liquidity, holder concentration and contract authorities before taking risk.</p>' +
       '<div class="row spread chart-heading"><b>Price history</b><span class="muted small">' + esc(pair?.dexId || "Pool chart") + '</span></div>' +
       '<div class="chart-controls"><button data-chart="minute:5" class="' + (state.chart === "minute:5" ? "active" : "") + '">5m</button><button data-chart="hour:1" class="' + (state.chart === "hour:1" ? "active" : "") + '">1h</button><button data-chart="day:1" class="' + (state.chart === "day:1" ? "active" : "") + '">1D</button></div>' +
       '<div id="market-chart" class="market-chart"><div class="empty">Loading chart…</div></div>' +
@@ -140,7 +140,6 @@
     wrap.querySelectorAll("[data-chart]").forEach(b => b.addEventListener("click", () => {
       state.chart = b.dataset.chart;
       renderDetail();
-      loadChart(p?.pairAddress);
     }));
     if (p?.pairAddress) loadChart(p.pairAddress);
     else $("market-chart").innerHTML = '<div class="empty">No indexed liquidity pool was returned for this token.</div>';
@@ -189,10 +188,13 @@
     document.querySelectorAll("[data-market-feed]").forEach(b => b.classList.toggle("active", b.dataset.marketFeed === feed));
     setStatus("UPDATING…","warn");
     try {
-      const [d, p] = await Promise.all([
+      const [feedResult, priceResult] = await Promise.allSettled([
         api("/api/market/feeds?feed=" + encodeURIComponent(feed)),
         api("/api/market/price?mint=" + encodeURIComponent(SOL_MINT))
       ]);
+      if (feedResult.status !== "fulfilled") throw feedResult.reason;
+      const d = feedResult.value;
+      const p = priceResult.status === "fulfilled" ? priceResult.value : {};
       state.items = d.items || [];
       state.lastGood = d.fetchedAt || new Date().toISOString();
       const sol = p.price?.usdPrice ?? p.price?.price ?? null;
@@ -212,7 +214,7 @@
   async function search() {
     const q = $("market-search").value.trim();
     if (q.length < 2) return;
-    $("market-search-results").innerHTML = '<div class="empty">Searching Jupiter token index…</div>';
+    $("market-search-results").innerHTML = '<div class="empty">Searching DEX Screener token index…</div>';
     try {
       const d = await api("/api/market/search?q=" + encodeURIComponent(q));
       const items = d.items || [];
