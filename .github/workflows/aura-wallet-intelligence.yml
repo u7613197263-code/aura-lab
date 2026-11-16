@@ -1,0 +1,26 @@
+name: AURA Wallet Intelligence checks
+on:
+  push:
+    branches: [feat/aura-wallet-watch-only-v0.1]
+    paths:
+      - "wallet-intelligence/**"
+      - ".github/workflows/aura-wallet-intelligence.yml"
+  pull_request:
+    branches: [crypto-signal-lab]
+    paths:
+      - "wallet-intelligence/**"
+      - ".github/workflows/aura-wallet-intelligence.yml"
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Parse application JavaScript
+        run: node --check wallet-intelligence/app.js
+      - name: Run watch-only and privacy tests
+        run: node --test wallet-intelligence/tests/app.test.mjs
