@@ -1,8 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#07100f"/>
-  <rect x="28" y="28" width="456" height="456" rx="92" fill="#0d2019" stroke="#315e48" stroke-width="5"/>
-  <path d="M256 78 414 256 256 434 98 256Z" fill="none" stroke="#9ce6bd" stroke-width="12"/>
-  <path d="M256 134 364 256 256 378 148 256Z" fill="none" stroke="#d5c18a" stroke-width="8" opacity=".85"/>
-  <circle cx="256" cy="256" r="27" fill="#d6ffe6"/>
-  <circle cx="256" cy="256" r="52" fill="none" stroke="#9ce6bd" stroke-width="4" opacity=".35"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="AURA Market">
+<defs><radialGradient id="bg" cx=".2" cy=".1" r="1"><stop stop-color="#1d5260"/><stop offset=".7" stop-color="#0a1930"/><stop offset="1" stop-color="#040b15"/></radialGradient><linearGradient id="stroke" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#56a7e5"/><stop offset="1" stop-color="#88f5d4"/></linearGradient></defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<circle cx="256" cy="256" r="172" fill="none" stroke="#355873" stroke-width="9"/><circle cx="256" cy="256" r="120" fill="none" stroke="#2a5060" stroke-width="5" stroke-dasharray="7 13"/>
+<path d="M121 345 L186 279 L240 316 L306 185 L374 217 L402 159" stroke="url(#stroke)" stroke-width="23" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<circle cx="306" cy="185" r="16" fill="#b7ffeb"/><circle cx="402" cy="159" r="16" fill="#b7ffeb"/>
 </svg>
