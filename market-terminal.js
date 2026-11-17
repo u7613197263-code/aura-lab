@@ -136,7 +136,7 @@
   }
   function onTab(tab){
     market.view=tab;
-    $("terminal-page-name").textContent=({overview:"Market Pulse",scanner:"Discover",research:"Asset Research",lab:"Outcome Lab",portfolio:"Paper Portfolio",about:"Method & Privacy"})[tab]||"AURA Market";
+    $("terminal-page-name").textContent=({overview:"Market Pulse",scanner:"Discover",research:"Asset Research",lab:"Outcome Lab",portfolio:"Paper Portfolio",intelligence:"Intelligence Lab",about:"Method & Privacy"})[tab]||"AURA Market";
   }
   function init(){
     $("terminal-chart-tabs")?.querySelectorAll("button").forEach(el=>el.addEventListener("click",()=>selectChart(el.dataset.timeframe)));
