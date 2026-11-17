@@ -62,6 +62,13 @@ test("Promotion never increases score, ranked list prioritizes eligible research
  const rs=ranking([{...good,address:mint2,liquidity:{usd:1200}},good],now);
  assert.equal(rs[0].mint,mint);
 });
+test("Search results lead to research, and untrusted token metadata cannot inject image attributes",()=>{
+ assert.match(page,/switchTab\("research"\);toast\("Token loaded from public DEX data/);
+ assert.match(page,/src="'\+esc\(t\.image\)\+'/);
+ assert.match(page,/Invalid Solana mint address/);
+ assert.match(page,/Not scorable/);
+ assert.match(page,/separate phone-local storage/);
+});
 test("Live data is not fabricated; signals are caveated, charts are source-backed",()=>{
  assert.match(terminal,/GeckoTerminal OHLCV|GeckoTerminal/);
  assert.match(terminal,/No observed tokens passed all research gates/);
