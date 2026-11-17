@@ -1,14 +1,19 @@
 {
-  "name": "AURA Crypto Signal Lab",
-  "short_name": "AURA Lab",
-  "description": "Solana market intelligence and local paper trading.",
+  "name": "AURA Market — Intelligence Terminal",
+  "short_name": "AURA Market",
+  "description": "Standalone Solana market scanner, research and outcome-validation lab. Read-only market data and local paper trading.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#07100f",
-  "theme_color": "#07100f",
+  "background_color": "#050a11",
+  "theme_color": "#050a11",
   "icons": [
-    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
   ]
 }
