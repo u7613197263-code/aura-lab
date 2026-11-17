@@ -21,7 +21,7 @@ test("Market PWA uses unique standalone identity and 5 focused Android screens",
  for(const id of ["tokenRows","inspector","terminal-research","terminal-candidates","positions","globalOutcomeRows"]) assert.equal(page.split('id="'+id+'"').length-1,1,id);
  assert.match(page,/market-ui\.css/);assert.match(page,/market-terminal\.js/);
  assert.match(styles,/position:fixed/);assert.match(styles,/safe-area-inset-bottom/);assert.match(styles,/prefers-reduced-motion/);
- assert.match(sw,/aura-market-terminal-1\\.1\\.0/);
+ assert.match(sw,/aura-market-terminal-1\.1\.0/);
 });
 test("Legacy Crypto Signal Lab functionality is preserved and separated from Wallet",()=>{
  for(const feature of ["PAPER PORTFOLIO","Run on-chain checks","SHARED FORWARD OUTCOMES","Download local backup","Copy research brief"])assert.ok(page.includes(feature),feature);
@@ -82,9 +82,9 @@ test("Intelligence Lab source compiles and has an actionable native screen", asy
  new vm.Script(intel);
  for(const id of ["intelligence","aurx-auto","aurx-run","aurx-wallet-add","aurx-wallets","aurx-note-add","aurx-note-input","aurx-decision-rows","aurx-health","aurx-export","aurx-import"])assert.equal(page.split('id="'+id+'"').length-1,1,id);
  assert.match(page,/data-tab="intelligence"/);
- assert.match(page,/intelligence-lab\\.css/);assert.match(page,/intelligence-lab\\.js/);
+ assert.match(page,/intelligence-lab\.css/);assert.match(page,/intelligence-lab\.js/);
  assert.match(styles+css,/prefers-reduced-motion/);
- assert.match(sw,/intelligence-lab\\.js/);
+ assert.match(sw,/intelligence-lab\.js/);
 });
 test("Intelligence rules reject ineligible assets and never authorize transactions",async()=>{
  const intel=await readFile(new URL("intelligence-lab.js",root),"utf8");
