@@ -80,7 +80,7 @@
             decisionAt:stamp,mint:x.mint,symbol:String(x.symbol||"?").slice(0,36),
             policy,modelVersion:"rule-"+VERSION,action:p.action,reason:p.reason,
             entryPrice:price(x.t),liquidityUsd:x.liq,score:x.score,flags:take(x.flags,12),
-            discoveryScope:"DEX Screener promotional/profiled sample",
+            discoveryScope:snapshot.origin||"DEX Screener promotional/profiled sample",
             provenance:"browser reception timestamp; source as-of unknown",
             outcomes:p.action==="WATCH"?{}:null
           };
@@ -198,6 +198,85 @@
       db={...empty(),decisions:d.decisions,wallets:d.wallets,notes:d.notes,auto:Boolean(d.auto),lastScan:d.lastScan||null};
       persist();render();toast("Research archive restored locally.");
     }catch(e){toast("Import rejected: "+String(e.message||e).slice(0,120));}
+  }
+
+  async function fetchNewPools(){
+    const target=$("aurx-recent"),label=$("aurx-organic-source"),stamp=$("aurx-recent-time");
+    if(!target||!label)return;
+    target.innerHTML='<div class="aurx-empty">Requesting source-backed new-pool data…</div>';
+    label.textContent="FETCHING";
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),13000);
+    try{
+      const r=await fetch("https://aura-market-api.onrender.com/api/market/feeds?feed=recent",{signal:controller.signal,cache:"no-store"});
+      if(!r.ok)throw new Error("HTTP "+r.status);
+      const d=await r.json();
+      if(!Array.isArray(d.items))throw new Error("Malformed provider response");
+      const fallback=!!d.fallback,origin=String(d.source||"Unknown source")+(fallback?" (promotional fallback)":" (new-pool sample)");
+      label.textContent=fallback?"PROMOTIONAL FALLBACK":"GECKO NEW POOLS";
+      stamp.textContent="Provider snapshot: "+prettyTime(d.fetchedAt)+" · "+(d.cached?"cached":"network")+" · "+(d.providerWarning||"");
+      const tokens=d.items.filter(x=>ADDR.test(String(x.id||""))).slice(0,30);
+      target.innerHTML=tokens.length?tokens.slice(0,12).map(x=>{
+        const mint=x.id,liq=safeNum(x.liquidity),vol=safeNum(x.volume24h),px=safeNum(x.usdPrice),age=x.poolCreatedAt?Math.max(0,(Date.now()-Number(x.poolCreatedAt))/3600000):null;
+        return '<div class="aurx-pool"><div><b>'+esc(x.symbol||"TOKEN")+'</b><small>'+esc(x.name||"Unknown")+'</small><span>'+esc(mint.slice(0,7))+'…'+esc(mint.slice(-5))+'</span></div><div class="aurx-poolmeta"><b>
+    renderDecisions();renderWallets();renderNotes();renderHealth();
+  }
+  function init(){
+    if(!$("aurx-decision-rows"))return;
+    $("aurx-auto").addEventListener("change",e=>{db.auto=e.target.checked;persist();toast(db.auto?"Research decisions automatically recorded on new scans.":"Automatic research decisions paused.");});
+    $("aurx-run").addEventListener("click",()=>{const b=$("scanBtn");if(b){b.click();toast("Requested a live market scan. New evidence will be logged when received.");}});
+    $("aurx-export").addEventListener("click",exportArchive);
+    $("aurx-import").addEventListener("change",e=>{importArchive(e.target.files?.[0]);e.target.value="";});
+    $("aurx-wallet-add").addEventListener("click",addWallet);
+    $("aurx-wallets").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const r=b.getAttribute("data-watch-read"),d=b.getAttribute("data-watch-delete");if(r)readWallet(r);if(d){db.wallets=db.wallets.filter(w=>w.address!==d);persist();renderWallets();toast("Wallet removed from local watchlist.");}});
+    $("aurx-note-add").addEventListener("click",addNote);
+    $("aurx-recent-fetch").addEventListener("click",fetchNewPools);
+    $("aurx-recent").addEventListener("click",e=>{const b=e.target.closest("button[data-aurx-mint]");if(!b)return;const mint=b.getAttribute("data-aurx-mint");if(!ADDR.test(mint))return;const q=$("searchInput");if(q)q.value=mint;if(typeof window.switchTab==="function")window.switchTab("scanner");$("searchBtn")?.click();});
+    $("aurx-refresh-health").addEventListener("click",readSampler);
+    if(window.AuraMarket&&typeof window.AuraMarket.refresh==="function"){
+      const old=window.AuraMarket.refresh;
+      window.AuraMarket.refresh=function(snapshot){const out=old.apply(this,arguments);try{ingest(snapshot);}catch(e){toast("Research addon error: "+String(e.message||e).slice(0,80));}return out;};
+    }
+    render();readSampler();
+    setInterval(()=>{if(document.visibilityState==="visible"&&navigator.onLine&&db.auto&&!scanBusy&&(!db.lastScan||Date.now()-Date.parse(db.lastScan)>5*60000)){
+      const btn=$("scanBtn");if(btn&&!btn.disabled){scanBusy=true;btn.click();setTimeout(()=>{scanBusy=false;},20000);}
+    }},300000);
+  }
+  window.AuraLabCore={policyDecision};
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+})();
++nf(liq,0)+'</b><small>LIQUIDITY</small><small>24h volume 
+    renderDecisions();renderWallets();renderNotes();renderHealth();
+  }
+  function init(){
+    if(!$("aurx-decision-rows"))return;
+    $("aurx-auto").addEventListener("change",e=>{db.auto=e.target.checked;persist();toast(db.auto?"Research decisions automatically recorded on new scans.":"Automatic research decisions paused.");});
+    $("aurx-run").addEventListener("click",()=>{const b=$("scanBtn");if(b){b.click();toast("Requested a live market scan. New evidence will be logged when received.");}});
+    $("aurx-export").addEventListener("click",exportArchive);
+    $("aurx-import").addEventListener("change",e=>{importArchive(e.target.files?.[0]);e.target.value="";});
+    $("aurx-wallet-add").addEventListener("click",addWallet);
+    $("aurx-wallets").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const r=b.getAttribute("data-watch-read"),d=b.getAttribute("data-watch-delete");if(r)readWallet(r);if(d){db.wallets=db.wallets.filter(w=>w.address!==d);persist();renderWallets();toast("Wallet removed from local watchlist.");}});
+    $("aurx-note-add").addEventListener("click",addNote);
+    $("aurx-refresh-health").addEventListener("click",readSampler);
+    if(window.AuraMarket&&typeof window.AuraMarket.refresh==="function"){
+      const old=window.AuraMarket.refresh;
+      window.AuraMarket.refresh=function(snapshot){const out=old.apply(this,arguments);try{ingest(snapshot);}catch(e){toast("Research addon error: "+String(e.message||e).slice(0,80));}return out;};
+    }
+    render();readSampler();
+    setInterval(()=>{if(document.visibilityState==="visible"&&navigator.onLine&&db.auto&&!scanBusy&&(!db.lastScan||Date.now()-Date.parse(db.lastScan)>5*60000)){
+      const btn=$("scanBtn");if(btn&&!btn.disabled){scanBusy=true;btn.click();setTimeout(()=>{scanBusy=false;},20000);}
+    }},300000);
+  }
+  window.AuraLabCore={policyDecision};
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+})();
++nf(vol,0)+'</small><small>Age '+nf(age,1)+'h</small><button data-aurx-mint="'+esc(mint)+'" type="button">Research token</button></div></div>';
+      }).join(""):'<div class="aurx-empty">No token identities provided by this source.</div>';
+      if(db.auto&&tokens.length){
+        const mapped=tokens.map(x=>({address:x.id,symbol:x.symbol,name:x.name,price:x.usdPrice,priceUsd:x.usdPrice,liquidity:{usd:x.liquidity},volume:{h1:null,h24:x.volume24h},priceChange:{h1:x.stats1h?.priceChange,h24:x.stats24h?.priceChange},txns:{h1:{buys:null,sells:null}},pairCreatedAt:x.poolCreatedAt,boost:fallback?1:0,pairAddress:x.poolAddress}));
+        ingest({tokens:mapped,scanTime:d.fetchedAt||nowIso(),origin});
+      }
+    }catch(e){label.textContent="UNAVAILABLE";target.innerHTML='<div class="aurx-empty">Provider unavailable: '+esc(String(e.message||e).slice(0,150))+'. No new-pool list was fabricated.</div>';}
+    finally{clearTimeout(timer);}
   }
   function render(){
     renderDecisions();renderWallets();renderNotes();renderHealth();
