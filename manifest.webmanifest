@@ -1,7 +1,7 @@
 {
   "name": "AURA Market — Intelligence Terminal",
   "short_name": "AURA Market",
-  "description": "Standalone Solana market scanner, research and outcome-validation lab. Read-only market data and local paper trading.",
+  "description": "AURA Market research terminal with tracked strategies, public wallet watchlists, outcome quality diagnostics and local evidence memory. No real trading.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
