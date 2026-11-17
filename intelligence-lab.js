@@ -56,6 +56,10 @@
         // DEX Screener snapshot provides retrieval-time data only; this is not an exact-time verified fill.
         const pct=(price(t)/d.entryPrice-1)*100;
         d.outcomes[h.key]={status:"UNVERIFIED_MARKOUT",at:stamp,priceUsd:price(t),returnPct:pct,netProxyPct:pct-1.5,source:"DEX Screener browser snapshot; provider as-of unknown"};
+        if(h.key==="h1"&&pct<=-15&&db.notes.length<600){
+          const noteId=d.id+":failure-review-h1";
+          if(!db.notes.some(n=>n.id===noteId))db.notes.push({id:noteId,kind:"HYPOTHESIS",text:"RESEARCH FAILURE REVIEW: 1-hour receipt-time price difference "+nf(pct,2)+"% for a WATCH hypothesis from "+d.policy+". Reported initial risk flags: "+(d.flags?.join(", ")||"none recorded")+". Examine liquidity changes, wallet activity, pool migration and provider data before assigning causes. Observed spot prices are not verified transaction fills; this note is not a causal finding.",reference:d.mint,at:stamp,source:"automatic local rule-based review",revision:"append-only"});
+        }
         changed++;
       }
     }
@@ -193,6 +197,7 @@
       const d=pack.data||{};
       if(!Array.isArray(d.decisions)||!Array.isArray(d.wallets)||!Array.isArray(d.notes)||d.decisions.length>1400||d.wallets.length>100||d.notes.length>600)throw new Error("Invalid archive contents");
       if(!d.wallets.every(w=>typeof w.address==="string"&&ADDR.test(w.address)))throw new Error("Invalid stored wallet address");
+      if(!d.decisions.every(x=>x&&typeof x.mint==="string"&&ADDR.test(x.mint)&&typeof x.policy==="string"&&typeof x.decisionAt==="string"&&typeof x.action==="string"))throw new Error("Invalid saved decision identity");
       if(!d.notes.every(n=>typeof n.text==="string"&&n.text.length<=3000))throw new Error("Invalid stored note");
       if(!window.confirm("Replace this device's Intelligence Lab research with the backup? Export current data first."))return;
       db={...empty(),decisions:d.decisions,wallets:d.wallets,notes:d.notes,auto:Boolean(d.auto),lastScan:d.lastScan||null};
