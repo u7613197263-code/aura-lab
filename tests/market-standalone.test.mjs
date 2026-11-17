@@ -21,7 +21,7 @@ test("Market PWA uses unique standalone identity and 5 focused Android screens",
  for(const id of ["tokenRows","inspector","terminal-research","terminal-candidates","positions","globalOutcomeRows"]) assert.equal(page.split('id="'+id+'"').length-1,1,id);
  assert.match(page,/market-ui\.css/);assert.match(page,/market-terminal\.js/);
  assert.match(styles,/position:fixed/);assert.match(styles,/safe-area-inset-bottom/);assert.match(styles,/prefers-reduced-motion/);
- assert.match(sw,/aura-market-terminal-1\.0\.0/);
+ assert.match(sw,/aura-market-terminal-1\\.1\\.0/);
 });
 test("Legacy Crypto Signal Lab functionality is preserved and separated from Wallet",()=>{
  for(const feature of ["PAPER PORTFOLIO","Run on-chain checks","SHARED FORWARD OUTCOMES","Download local backup","Copy research brief"])assert.ok(page.includes(feature),feature);
@@ -74,4 +74,33 @@ test("Live data is not fabricated; signals are caveated, charts are source-backe
  assert.match(terminal,/No observed tokens passed all research gates/);
  assert.match(terminal,/not a calibrated probability/);
  assert.match(terminal,/No substitute data|no substitute data/);
+});
+
+test("Intelligence Lab source compiles and has an actionable native screen", async()=>{
+ const intel=await readFile(new URL("intelligence-lab.js",root),"utf8");
+ const css=await readFile(new URL("intelligence-lab.css",root),"utf8");
+ new vm.Script(intel);
+ for(const id of ["intelligence","aurx-auto","aurx-run","aurx-wallet-add","aurx-wallets","aurx-note-add","aurx-note-input","aurx-decision-rows","aurx-health","aurx-export","aurx-import"])assert.equal(page.split('id="'+id+'"').length-1,1,id);
+ assert.match(page,/data-tab="intelligence"/);
+ assert.match(page,/intelligence-lab\\.css/);assert.match(page,/intelligence-lab\\.js/);
+ assert.match(styles+css,/prefers-reduced-motion/);
+ assert.match(sw,/intelligence-lab\\.js/);
+});
+test("Intelligence rules reject ineligible assets and never authorize transactions",async()=>{
+ const intel=await readFile(new URL("intelligence-lab.js",root),"utf8");
+ const context={window:{},document:{readyState:"loading",addEventListener(){}},localStorage:{getItem(){return null}}};
+ vm.runInNewContext(intel,context,{timeout:1000});
+ const decide=context.window.AuraLabCore.policyDecision;
+ const allowed={mint, t:{price:1,boost:0},liq:120000,vol1:6000,age:36,score:70,gate:true,h1:5,h24:13,balance:.65};
+ assert.equal(decide(allowed,"Risk first").action,"WATCH");
+ assert.equal(decide({...allowed,liq:2000},"Risk first").action,"NO_TRADE");
+ assert.equal(decide({...allowed,t:{price:null}},"Risk first").action,"NO_TRADE");
+ assert.equal(decide({...allowed,gate:false},"Momentum confirmed").action,"NO_TRADE");
+ assert.equal(decide({...allowed,h24:-8},"Momentum confirmed").action,"NO_TRADE");
+ assert.doesNotMatch(intel,/signTransaction|sendTransaction|walletconnect/i);
+});
+test("Research notebook persists locally, never claims learning, and marks unverified markouts",async()=>{
+ const intel=await readFile(new URL("intelligence-lab.js",root),"utf8");
+ for(const marker of ["localStorage","UNVERIFIED_MARKOUT","MISSED_WINDOW","NO_TRADE","HYPOTHESIS","RETRACTION","aura-market-intelligence-backup","provider as-of unknown","source as-of unknown"])assert.ok(intel.includes(marker),marker);
+ assert.match(page,/not a trained forecasting model|trained forecasting model/i);
 });
