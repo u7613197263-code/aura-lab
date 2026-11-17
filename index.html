@@ -124,6 +124,12 @@ footer{padding:24px 0 32px;color:var(--dim);font-size:9px;line-height:1.7;displa
   </div>
   <div class="aurx-grid">
     <section class="aurx-card aurx-wide">
+      <div class="aurx-head"><div><h3>00 / New Pool Watch</h3><p class="aurx-sub">Independent GeckoTerminal recent Solana pools. Different discovery source from paid DEX Screener profiles; neither feed represents every Solana launch. Select an asset to research using the existing scanner.</p></div><span class="aurx-pill" id="aurx-organic-source">NOT FETCHED</span></div>
+      <div class="aurx-toolbar"><button type="button" id="aurx-recent-fetch" class="aurx-btn">Check recently created pools</button><span class="aurx-caption" id="aurx-recent-time">No source data yet</span></div>
+      <div id="aurx-recent" class="aurx-recent-grid"><div class="aurx-empty">Choose Check recently created pools to request actual source-backed token and liquidity data.</div></div>
+      <p class="aurx-fineprint">When GeckoTerminal is unavailable, the existing free backend may return a promotional DEX Screener fallback: the provider and fallback status will always be identified. Tokens may be unsellable, malicious or falsely described by third-party metadata.</p>
+    </section>
+    <section class="aurx-card aurx-wide">
       <div class="aurx-head"><div><h3>01 / Prospective Strategy Arena</h3><p class="aurx-sub">Three competing, fixed rule sets: Risk First · Momentum Confirmed · Early Research. Each scan records WATCH or NO_TRADE with the original input context. Hypothetical markouts use observed future snapshots; they are not exchange fills or realized P&amp;L.</p></div><span class="aurx-pill">NO REAL TRADING</span></div>
       <div class="aurx-toolbar"><label class="aurx-autolabel"><input id="aurx-auto" type="checkbox" checked> Auto-record experimental decisions on every scan; refresh at most every 5 minutes while this page stays visible</label></div>
       <div class="aurx-caption">Last observed scan: <span id="aurx-sample-age">Not scanned</span>. An asterisk (*) means the markout has unknown provider-as-of time and unverified execution. It is never a proven five-minute fill.</div>
