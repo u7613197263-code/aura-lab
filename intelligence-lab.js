@@ -203,21 +203,43 @@
   async function fetchNewPools(){
     const target=$("aurx-recent"),label=$("aurx-organic-source"),stamp=$("aurx-recent-time");
     if(!target||!label)return;
-    target.innerHTML='<div class="aurx-empty">Requesting source-backed new-pool data…</div>';
+    target.textContent="Requesting source-backed new-pool data...";
     label.textContent="FETCHING";
     const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),13000);
     try{
-      const r=await fetch("https://aura-market-api.onrender.com/api/market/feeds?feed=recent",{signal:controller.signal,cache:"no-store"});
-      if(!r.ok)throw new Error("HTTP "+r.status);
-      const d=await r.json();
-      if(!Array.isArray(d.items))throw new Error("Malformed provider response");
-      const fallback=!!d.fallback,origin=String(d.source||"Unknown source")+(fallback?" (promotional fallback)":" (new-pool sample)");
+      const response=await fetch("https://aura-market-api.onrender.com/api/market/feeds?feed=recent",{signal:controller.signal,cache:"no-store"});
+      if(!response.ok)throw new Error("HTTP "+response.status);
+      const data=await response.json();
+      if(!Array.isArray(data.items))throw new Error("Malformed provider response");
+      const fallback=!!data.fallback,origin=String(data.source||"Unknown source")+(fallback?" (promotional fallback)":" (new-pool sample)");
       label.textContent=fallback?"PROMOTIONAL FALLBACK":"GECKO NEW POOLS";
-      stamp.textContent="Provider snapshot: "+prettyTime(d.fetchedAt)+" · "+(d.cached?"cached":"network")+" · "+(d.providerWarning||"");
-      const tokens=d.items.filter(x=>ADDR.test(String(x.id||""))).slice(0,30);
-      target.innerHTML=tokens.length?tokens.slice(0,12).map(x=>{
-        const mint=x.id,liq=safeNum(x.liquidity),vol=safeNum(x.volume24h),px=safeNum(x.usdPrice),age=x.poolCreatedAt?Math.max(0,(Date.now()-Number(x.poolCreatedAt))/3600000):null;
-        return '<div class="aurx-pool"><div><b>'+esc(x.symbol||"TOKEN")+'</b><small>'+esc(x.name||"Unknown")+'</small><span>'+esc(mint.slice(0,7))+'…'+esc(mint.slice(-5))+'</span></div><div class="aurx-poolmeta"><b>
+      stamp.textContent="Provider snapshot: "+prettyTime(data.fetchedAt)+" / "+(data.cached?"cached":"network")+" / "+(data.providerWarning||"");
+      const tokens=data.items.filter(x=>ADDR.test(String(x.id||""))).slice(0,30);
+      const renderPool=x=>{
+        const mint=x.id,liq=safeNum(x.liquidity),vol=safeNum(x.volume24h);
+        const age=x.poolCreatedAt?Math.max(0,(Date.now()-Number(x.poolCreatedAt))/3600000):null;
+        const name=esc(x.name||"Unknown"),ticker=esc(x.symbol||"TOKEN");
+        return ['<div class="aurx-pool"><div><b>',ticker,'</b><small>',name,'</small><span>',esc(mint.slice(0,7)),'...',esc(mint.slice(-5)),
+          '</span></div><div class="aurx-poolmeta"><b>USD ',nf(liq,0),'</b><small>LIQUIDITY</small><small>24h volume USD ',nf(vol,0),
+          '</small><small>Age ',nf(age,1),'h</small><button data-aurx-mint="',esc(mint),'" type="button">Research token</button></div></div>'].join('');
+      };
+      target.innerHTML=tokens.length?tokens.slice(0,12).map(renderPool).join(""):'<div class="aurx-empty">No token identities provided by this source.</div>';
+      if(db.auto&&tokens.length){
+        const mapped=tokens.map(x=>({
+          address:x.id,symbol:x.symbol,name:x.name,price:x.usdPrice,priceUsd:x.usdPrice,
+          liquidity:{usd:x.liquidity},volume:{h1:null,h24:x.volume24h},
+          priceChange:{h1:x.stats1h?.priceChange,h24:x.stats24h?.priceChange},
+          txns:{h1:{buys:null,sells:null}},pairCreatedAt:x.poolCreatedAt,
+          boost:fallback?1:0,pairAddress:x.poolAddress
+        }));
+        ingest({tokens:mapped,scanTime:data.fetchedAt||nowIso(),origin});
+      }
+    }catch(e){
+      label.textContent="UNAVAILABLE";
+      target.textContent="Provider unavailable: "+String(e.message||e).slice(0,150)+". No source data fabricated.";
+    }finally{clearTimeout(timer);}
+  }
+  function render(){
     renderDecisions();renderWallets();renderNotes();renderHealth();
   }
   function init(){
