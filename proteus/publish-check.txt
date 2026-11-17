@@ -1,0 +1,7 @@
+AURA OMNI PROTEUS — GitHub Pages diagnostic
+Public, static, no data collection.
+Expected location: /aura-lab/proteus/publish-check.txt
+Prototype entry: /aura-lab/proteus/index.html
+Build source: public aura-lab main.
+Purpose: verify path routing and trigger a fresh GitHub Pages deployment.
+Does not access AURA OS or any private service.
