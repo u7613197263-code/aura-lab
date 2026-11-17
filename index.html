@@ -25,14 +25,15 @@ footer{padding:24px 0 32px;color:var(--dim);font-size:9px;line-height:1.7;displa
 @media(max-width:540px){.tabview#overview .table-wrap table{min-width:0;table-layout:fixed;width:100%}.tabview#overview .table-wrap th:nth-child(4),.tabview#overview .table-wrap td:nth-child(4),.tabview#overview .table-wrap th:nth-child(5),.tabview#overview .table-wrap td:nth-child(5){display:none}.tabview#overview .table-wrap th,.tabview#overview .table-wrap td{padding:9px 5px;font-size:9px}.tabview#overview .token{gap:5px}.tabview#overview .token img,.tabview#overview .token .avatar{width:22px;height:22px}.tabview#overview .token b{font-size:9px}.tabview#overview .token small{font-size:8px}.wrap{padding:0 13px}.top{padding:13px 0}.brand h1{font-size:12px}.brand p{font-size:8px}.top-right .pill:nth-child(2){display:none}.nav{padding:9px 0}.nav button{padding:8px 10px}.intro{padding:20px 0 14px}.intro h2{font-size:26px}.intro p{font-size:11px}.actions .btn{flex:1;padding:10px 8px}.stats{gap:8px}.stat{padding:12px}.value{font-size:20px}.section,.inspect,.portfolio,.panel{padding:13px}.formrow{grid-template-columns:1fr}.value{letter-spacing:-.05em}footer{font-size:8px;flex-direction:column;gap:4px}}
 </style>
 <link rel="stylesheet" href="./market-ui.css">
+<link rel="stylesheet" href="./intelligence-lab.css">
 </head>
 <body>
 <div class="wrap">
 <header class="top">
  <div class="brand"><div class="logo" aria-hidden="true">◈</div><div><h1>AURA MARKET</h1><p>INTELLIGENCE TERMINAL · SOLANA</p></div></div>
- <div class="top-right"><span class="pill"><i class="dot" id="netDot"></i><span id="netLabel">CONNECTING</span></span><button class="btn small ghost" id="terminal-method" type="button">Method</button><span class="pill">INDEPENDENT PWA · 1.0</span></div>
+ <div class="top-right"><span class="pill"><i class="dot" id="netDot"></i><span id="netLabel">CONNECTING</span></span><button class="btn small ghost" id="terminal-method" type="button">Method</button><span class="pill">EXPERIMENTAL · 1.1</span></div>
 </header>
-<nav class="nav" id="nav" aria-label="Primary market navigation"><button type="button" class="active" data-tab="overview" aria-label="Pulse"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4 M12 18v4 M2 12h4 M18 12h4"/></svg><span class="nav-label">Pulse</span></button><button type="button" data-tab="scanner" aria-label="Discover"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5 M7 11h7 M10.5 7v7"/></svg><span class="nav-label">Discover</span></button><button type="button" data-tab="research" aria-label="Research"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h9l4 4v14H5V3z M16 3v5h5 M8 12h9 M8 16h7"/></svg><span class="nav-label">Research</span></button><button type="button" data-tab="lab" aria-label="Outcomes"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6 M11 3v8L4.5 20h15L13 11V3 M8 16h8"/></svg><span class="nav-label">Outcomes</span></button><button type="button" data-tab="portfolio" aria-label="Paper"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v14H4z M4 10h16 M15 15h3 M7 3h14"/></svg><span class="nav-label">Paper</span></button></nav>
+<nav class="nav" id="nav" aria-label="Primary market navigation"><button type="button" class="active" data-tab="overview" aria-label="Pulse"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4 M12 18v4 M2 12h4 M18 12h4"/></svg><span class="nav-label">Pulse</span></button><button type="button" data-tab="scanner" aria-label="Discover"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5 M7 11h7 M10.5 7v7"/></svg><span class="nav-label">Discover</span></button><button type="button" data-tab="research" aria-label="Research"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h9l4 4v14H5V3z M16 3v5h5 M8 12h9 M8 16h7"/></svg><span class="nav-label">Research</span></button><button type="button" data-tab="lab" aria-label="Outcomes"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6 M11 3v8L4.5 20h15L13 11V3 M8 16h8"/></svg><span class="nav-label">Outcomes</span></button><button type="button" data-tab="portfolio" aria-label="Paper"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v14H4z M4 10h16 M15 15h3 M7 3h14"/></svg><span class="nav-label">Paper</span></button><button type="button" class="intel-nav-item" data-tab="intelligence" aria-label="Intelligence Lab"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-36 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(36 12 12)"/></svg><span class="nav-label">Intel</span></button></nav>
 <section class="intro">
  <div><div class="eyebrow">AURA MARKET / RESEARCH-ONLY</div><h2 id="terminal-page-name">Market Pulse</h2><p>Market discovery, explainable asset research, forward outcomes and realistic paper simulations. Five focused screens. No real orders, no wallet access.</p></div>
  <div class="actions"><button class="btn primary" id="scanBtn">↻ Scan market</button><button class="btn" id="briefBtn">Copy research brief</button><button class="btn ghost" id="installBtn" hidden>＋ Install app</button></div>
@@ -103,6 +104,57 @@ footer{padding:24px 0 32px;color:var(--dim);font-size:9px;line-height:1.7;displa
   <div class="card section"><div class="sect-head"><div><h3>BACKTEST / METHODOLOGY</h3><p>What this version can and cannot establish</p></div></div><div class="feedlist"><div class="feeditem"><div>Heuristic ranking<small>Liquidity, volume, buys/sells, price change, age</small></div><span class="badge">ACTIVE</span></div><div class="feeditem"><div>Forward price tracking<small>Local snapshots at fixed horizons</small></div><span class="badge">ACTIVE</span></div><div class="feeditem"><div>Calibrated probability model<small>Requires adequate matured samples and out-of-sample tests</small></div><span class="badge">NOT ACTIVE</span></div><div class="feeditem"><div>Historical OHLCV backtest<small>Not implemented in this static PWA</small></div><span class="badge">NOT ACTIVE</span></div><div class="feeditem"><div>Real exchange execution<small>Intentionally excluded</small></div><span class="badge">DISABLED</span></div></div><button class="btn" id="exportData" style="margin-top:14px;width:100%">Export observations / CSV</button></div>
  </div>
 </div>
+<div id="intelligence" class="tabview hidden">
+<div class="aurx" aria-label="AURA Market Intelligence research laboratory">
+  <section class="aurx-hero">
+    <div class="aurx-hero-copy">
+      <div class="aurx-kicker">AURA // KNOWLEDGE ENGINE // EXPERIMENTAL v1.1</div>
+      <h2>Observe. Test.<br><span>Learn from evidence.</span></h2>
+      <p>Prospective strategy experiments, wallet watchlists, a permanent local research notebook and source-integrity diagnostics. Your intelligence layer never signs or submits a real trade.</p>
+      <div class="aurx-actions"><button class="aurx-btn aurx-btn-primary" id="aurx-run" type="button">Run market experiment</button><button class="aurx-btn" id="aurx-export" type="button">Export knowledge</button></div>
+      <div class="aurx-caption" style="margin-top:13px">Local computation while this Android page is active. Public provider snapshots are not executable trade quotes.</div>
+    </div>
+    <div class="aurx-reactor" aria-hidden="true"><div class="aurx-ring"></div><div class="aurx-ring aurx-ring-2"></div><div class="aurx-core"></div></div>
+  </section>
+  <div class="aurx-metrics" aria-label="Experimental intelligence statistics">
+    <div class="aurx-metric"><small>Recorded decisions</small><b id="aurx-decisions">0</b><em>Versioned strategy records</em></div>
+    <div class="aurx-metric"><small>Research watches</small><b id="aurx-watches">0</b><em>No real orders or fills</em></div>
+    <div class="aurx-metric"><small>Unverified markouts</small><b id="aurx-markouts">0</b><em>Snapshot returns, not profits</em></div>
+    <div class="aurx-metric"><small>Missed checks</small><b id="aurx-missed">0</b><em>Never backfilled as wins</em></div>
+  </div>
+  <div class="aurx-grid">
+    <section class="aurx-card aurx-wide">
+      <div class="aurx-head"><div><h3>01 / Prospective Strategy Arena</h3><p class="aurx-sub">Three competing, fixed rule sets: Risk First · Momentum Confirmed · Early Research. Each scan records WATCH or NO_TRADE with the original input context. Hypothetical markouts use observed future snapshots; they are not exchange fills or realized P&amp;L.</p></div><span class="aurx-pill">NO REAL TRADING</span></div>
+      <div class="aurx-toolbar"><label class="aurx-autolabel"><input id="aurx-auto" type="checkbox" checked> Auto-record experimental decisions on every scan; refresh at most every 5 minutes while this page stays visible</label></div>
+      <div class="aurx-caption">Last observed scan: <span id="aurx-sample-age">Not scanned</span>. An asterisk (*) means the markout has unknown provider-as-of time and unverified execution. It is never a proven five-minute fill.</div>
+      <div class="aurx-scroll"><table class="aurx-table"><thead><tr><th>Asset</th><th>Strategy</th><th>Decision / Rationale</th><th>5m markout</th><th>1h markout</th></tr></thead><tbody id="aurx-decision-rows"><tr><td colspan="5">No experiments yet.</td></tr></tbody></table></div>
+      <p class="aurx-fineprint">The cohort is selected from DEX Screener discovery feeds and can be promotion-biased. WATCH is a research hypothesis, not a purchase recommendation. Estimated round-trip friction is an illustrative 1.5% only; actual swap execution/route availability is not proven. Missing quotes never become invented results.</p>
+    </section>
+    <section class="aurx-card">
+      <div class="aurx-head"><div><h3>02 / Wallet Observatory</h3><p class="aurx-sub">Track public addresses and inspect recent finalized transaction signatures. No wallet connection, identity claims or fabricated smart-money P&amp;L.</p></div><span class="aurx-pill">READ ONLY</span></div>
+      <div class="aurx-fieldgrid"><input class="aurx-input" id="aurx-wallet-input" autocomplete="off" spellcheck="false" aria-label="Public Solana wallet address" placeholder="Solana wallet address"><input class="aurx-input" id="aurx-wallet-label" autocomplete="off" aria-label="Optional wallet research label" placeholder="Label / research tag"></div>
+      <div class="aurx-toolbar"><button class="aurx-btn" id="aurx-wallet-add" type="button">Add public wallet</button></div>
+      <div id="aurx-wallets"><div class="aurx-empty">No public wallet watchlist yet.</div></div>
+      <div class="aurx-card" id="aurx-wallet-activity" style="padding:12px;margin-top:13px;background:#081916">Choose Activity to request up to eight recent finalized Solana signatures. Public RPC may rate-limit requests.</div>
+      <p class="aurx-fineprint">Large balance or active transactions are not evidence of profitable smart money. Wallet ownership, trade decoding, realized cost basis and cluster inference require independent validation.</p>
+    </section>
+    <section class="aurx-card">
+      <div class="aurx-head"><div><h3>03 / Research Memory</h3><p class="aurx-sub">An append-only personal record of observations, hypotheses, corrections and retractions. Notes remain on your current device until explicitly exported.</p></div><span class="aurx-pill">DEVICE LOCAL</span></div>
+      <div class="aurx-fieldgrid"><select class="aurx-select" id="aurx-note-kind" aria-label="Evidence status"><option>OBSERVED FACT</option><option>HYPOTHESIS</option><option>CORRECTION</option><option>RETRACTION</option></select><input class="aurx-input" id="aurx-note-ref" aria-label="Token, wallet or event reference" placeholder="Token mint / wallet / event reference"></div>
+      <textarea class="aurx-textarea" id="aurx-note-input" maxlength="3000" placeholder="What happened? What evidence supports it? What is still unknown?" aria-label="Research note"></textarea>
+      <div class="aurx-toolbar"><button class="aurx-btn aurx-btn-primary" id="aurx-note-add" type="button">Save evidence note</button><label class="aurx-btn" for="aurx-import" style="cursor:pointer">Restore backup</label><input id="aurx-import" type="file" accept="application/json,.json" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden" aria-label="Import local intelligence backup"></div>
+      <div id="aurx-notes"></div>
+    </section>
+    <section class="aurx-card aurx-wide">
+      <div class="aurx-head"><div><h3>04 / Collector Integrity</h3><p class="aurx-sub">Directly inspects the original public sampler's historical ledger. An ONLINE status never proves fresh or accurately timed market evidence.</p></div><span class="aurx-pill aurx-pill-muted" id="aurx-collector">CHECKING</span></div>
+      <div class="aurx-health" id="aurx-health">Checking historical observation timestamps…</div>
+      <div class="aurx-toolbar"><button type="button" class="aurx-btn" id="aurx-refresh-health">Recheck shared sampler</button></div>
+      <p class="aurx-fineprint">Collector recovery needs real provider-as-of timestamps and a measured multi-day canary; GitHub Actions may miss scheduled runs. This version does not claim real-time 24/7 coverage, a trained forecasting model or proven self-recalibration.</p>
+    </section>
+    <div id="aurx-status" class="aurx-status" role="status" aria-live="polite"></div>
+  </div>
+</div>
+</div>
 <div id="about" class="tabview hidden">
  <div class="grid" style="grid-template-columns:1fr 1fr">
   <div class="card section"><div class="sect-head"><div><h3>SCORING MODEL</h3><p>Transparent heuristics, not AI prediction</p></div></div><p class="muted" style="font-size:11px;line-height:1.7">The signal score is a ranking aid calculated from liquidity, hourly volume relative to liquidity, buy/sell activity, price movement and pair age. It is not a probability, a recommendation or a claim of positive expected value.</p><div class="feedlist"><div class="feeditem"><div>Liquidity and depth proxy<small>Thin pools are penalised</small></div><span class="badge">INPUT</span></div><div class="feeditem"><div>Volume / liquidity<small>Activity relative to available pool depth</small></div><span class="badge">INPUT</span></div><div class="feeditem"><div>Buy / sell transactions<small>One-sided flow can also be suspicious</small></div><span class="badge">INPUT</span></div><div class="feeditem"><div>Pair age and price change<small>Newness and extreme moves add risk flags</small></div><span class="badge">INPUT</span></div></div></div>
@@ -110,7 +162,7 @@ footer{padding:24px 0 32px;color:var(--dim);font-size:9px;line-height:1.7;displa
  </div>
  <div class="card section panel"><div class="sect-head"><div><h3>PRIVACY / DEVICE STORAGE</h3><p>All paper data remains on this device</p></div><span class="tag good">LOCAL-FIRST</span></div><button class="btn" id="downloadBackup">Download local backup</button> <button class="btn ghost" id="restoreBackupBtn">Restore backup</button><input id="restoreFile" type="file" accept="application/json" hidden></div>
 </div>
-<footer><span>AURA CRYPTO SIGNAL LAB / PUBLIC BETA · 0.2.4</span><span>RESEARCH TOOL ONLY · NOT FINANCIAL ADVICE · NO REAL TRADING</span></footer>
+<footer><span>AURA MARKET / PUBLIC LAB · 1.1</span><span>RESEARCH TOOL ONLY · NOT FINANCIAL ADVICE · NO REAL TRADING</span></footer>
 </div>
 <div class="toast" id="toast"></div>
 <script>
@@ -178,4 +230,5 @@ if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.ser
 function updateNetworkPill(){const online=navigator.onLine;$("netLabel").textContent=online?"NETWORK ONLINE":"NETWORK OFFLINE";$("netDot").className="dot "+(online?"ok":"bad")}async function boot(){updateNetworkPill();renderPortfolio();renderLab();renderSources();await Promise.allSettled([refreshFX(),getSol(),loadGlobalLedger()]);renderSources();renderPortfolio();await scan();setInterval(loadGlobalLedger,120000)}document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")loadGlobalLedger()});window.addEventListener("online",()=>{updateNetworkPill();loadGlobalLedger();toast("Network online.")});window.addEventListener("offline",()=>{updateNetworkPill();toast("Offline: cached shell may open; live feeds unavailable.")});boot();
 </script>
 <script src="./market-terminal.js" defer></script>
+<script src="./intelligence-lab.js" defer></script>
 </body></html>
