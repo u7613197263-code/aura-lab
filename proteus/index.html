@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050a13"><meta name="description" content="AURA OMNI — independent morphic interface research prototype"><title>AURA OMNI · PROTEUS</title><style>
+:root{color-scheme:dark;--ink:#f1faff;--muted:#8c9cb3;--accent:#a9e7ed;--line:rgba(170,207,228,.15);--panel:rgba(10,17,32,.59);font-family:Inter,"SF Pro Display",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-synthesis:none}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#050a13;color:var(--ink);overflow:hidden}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.37;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #9ef1f5;outline-offset:3px}.app{width:100%;height:100dvh;min-height:520px;isolation:isolate;position:relative;overflow:hidden;background:radial-gradient(circle at 53% 42%,#131f39,#040811 66%)}#world{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block;z-index:-3}.noise{position:absolute;inset:0;z-index:-2;pointer-events:none;opacity:.12;background-image:url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)" opacity=".28"/%3E%3C/svg%3E')}.vignette{position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(3,8,18,.63),transparent 33%,transparent 69%,rgba(3,8,18,.32)),linear-gradient(0deg,rgba(3,7,15,.81),transparent 31%,transparent 70%,rgba(2,6,15,.3))}
+.header{height:100px;padding:34px 5.5%;position:relative;display:flex;align-items:flex-start;justify-content:space-between;z-index:3}.logo-lockup{display:flex;align-items:center;gap:15px}.logo-symbol{width:37px;height:37px;border:1px solid rgba(174,241,249,.47);border-radius:14px;display:grid;place-content:center;transform:rotate(-24deg);position:relative;box-shadow:0 0 28px rgba(107,225,239,.16),inset 0 0 18px rgba(107,225,239,.15)}.logo-symbol span{position:absolute;left:11px;top:10px;width:15px;height:15px;border:1px solid rgba(200,251,255,.82);border-radius:40% 60% 45% 65%;transform:rotate(40deg)}.logo-symbol span:nth-child(2){transform:rotate(110deg);opacity:.65}.logo-symbol span:nth-child(3){transform:rotate(160deg);opacity:.43}.brand{font-size:17px;letter-spacing:.26em;font-weight:700;line-height:1.2;white-space:nowrap}.brand em{font-style:normal;font-weight:300;color:#b0dce8}.micro{font-size:9px;letter-spacing:.22em;font-weight:700;color:#778aa4;margin-top:6px}.header-right{display:flex;align-items:center;gap:15px}.dot{width:7px;height:7px;border-radius:50%;background:#7cddba;box-shadow:0 0 13px #55e7b1}.status-top{margin:0;color:#9bb2c6}.header-divider{height:22px;width:1px;background:var(--line);margin:0 10px}.icon-btn{border:1px solid var(--line);width:34px;height:34px;border-radius:50%;color:#b9d3e2;background:#17243b5c;font-size:18px;display:grid;place-items:center;transition:all .25s}.icon-btn:hover{background:#284560;border-color:#94e4f0}
+.workspace{position:absolute;top:0;bottom:0;left:0;right:0;pointer-events:none}.workspace>*{pointer-events:auto}.hero{position:absolute;top:30%;left:5.5%;width:min(37vw,520px);z-index:2;transition:top .8s ease}.eyebrow{display:flex;align-items:center;gap:13px;color:#8fabb9;font-size:10px;letter-spacing:.2em;font-weight:700;white-space:nowrap}.tiny-bar{width:20px;height:1px;background:#87e3e4}.eyebrow-rule{width:27px;height:1px;background:var(--line)}#sourceBadge{color:#b8c5d3;letter-spacing:.13em;font-size:8px}.hero-title{margin-top:24px}.hero-pre{font-size:12px;font-weight:600;color:#bed2e0;letter-spacing:.32em;margin-bottom:12px}h1{font-size:clamp(48px,5.9vw,112px);line-height:.95;letter-spacing:-.075em;font-weight:250;margin:0;text-shadow:0 1px 38px rgba(185,244,249,.15)}h1 i{font-style:normal;font-weight:650;background:linear-gradient(125deg,#f6feff 15%,#b0e2f5 50%,#62b6c4);color:transparent;background-clip:text}.hero-sub{font-size:11px;letter-spacing:.31em;color:#c3dce5;margin:22px 0 0;font-weight:600}.hero-desc{color:#91a4b8;line-height:1.9;font-size:14px;max-width:355px;margin-top:32px}.hero-actions{display:flex;gap:21px;margin-top:32px}.ghost-action{border:0;background:none;color:#9dbed0;padding:7px 0;font-size:10px;letter-spacing:.12em;font-weight:700}.ghost-action span{margin-right:8px;font-size:15px;color:#9decf2}.ghost-action:hover{color:#fff}.scene-meta{position:absolute;bottom:200px;left:5.5%;padding-left:13px;border-left:1px solid rgba(122,209,226,.32)}.meta-row{display:flex;gap:26px;align-items:center;justify-content:space-between;margin:9px 0;font-size:9px;letter-spacing:.12em}.meta-name{color:#748ba0}.meta-value{color:#b4d0d6;min-width:100px;text-align:right}.experience{position:absolute;right:5.5%;top:24%;width:min(34vw,510px);max-height:calc(100dvh - 395px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#2a5860 transparent;transition:all .65s ease;z-index:2}.experience:empty{display:none}.pane{padding:24px 27px;border:1px solid rgba(144,207,218,.18);background:linear-gradient(145deg,rgba(18,31,48,.74),rgba(11,22,37,.58));border-radius:17px;box-shadow:0 17px 65px #0005,inset 0 1px 1px rgba(218,250,255,.08);backdrop-filter:blur(22px)}.pane-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:18px;border-bottom:1px solid var(--line)}.pane-title{font-size:10px;letter-spacing:.22em;font-weight:700;color:#ccebf1}.pane-flag{font-size:9px;letter-spacing:.09em;padding:7px 10px;border:1px solid rgba(164,225,221,.18);border-radius:20px;color:#91b8c0;white-space:nowrap}.pane-main{padding-top:21px}.pane h2{margin:0;font-size:25px;font-weight:350;letter-spacing:-.04em}.pane-note{font-size:11px;line-height:1.8;color:#8fa4b8;margin:13px 0 0}.data-highlight{font-size:26px;font-weight:550;letter-spacing:-.055em;margin:12px 0 4px}.data-sub{font-size:10px;color:#84b6bc}.chart-svg{width:100%;height:auto;display:block;margin:14px 0 4px;overflow:visible}.chart-svg text{font-size:9px;fill:#83a3ae;font-family:monospace}.chart-svg .gridline{stroke:#99bfcc;opacity:.14}.chart-legend{display:flex;justify-content:space-between;gap:10px;font-size:10px;color:#9bb4bb;padding:11px 0}.legend-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#62dfbb;margin-right:7px}.legend-dot.eth{background:#dc92fb}.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:18px 0 4px}.mini-stat{border:1px solid var(--line);border-radius:10px;background:#0b1726a8;padding:12px}.mini-stat-label{display:block;color:#7891a5;font-size:9px;letter-spacing:.13em}.mini-stat-value{display:block;font-size:19px;font-weight:450;margin-top:5px}.positive{color:#77e3c0}.negative{color:#ff979e}.chart-svg:focus{outline:1px solid #8df5eb}.tool-field{display:block;margin-bottom:18px}.field-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px}.field-header label{font-size:12px;color:#bdcadb;text-transform:capitalize}.field-header input{width:112px;max-width:47%;border:1px solid #385164;border-radius:8px;padding:8px;background:#0a1626;color:#d8fff7;text-align:right;font-size:12px}.tool-field input[type=range]{width:100%;accent-color:#84ddd4;cursor:pointer;touch-action:pan-y}.result-wrap{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}.result{border:1px solid #32606373;background:linear-gradient(135deg,rgba(31,78,81,.28),rgba(12,24,42,.55));border-radius:10px;padding:13px;min-width:0}.result-name{display:block;text-transform:uppercase;font-size:9px;letter-spacing:.12em;color:#83bac0}.result-value{font-size:22px;display:block;margin-top:8px;overflow-wrap:anywhere;color:#dffbfa;letter-spacing:-.04em}.result:first-child{grid-column:span 2}.result:first-child .result-value{font-size:30px}.court-svg{width:100%;max-height:230px;display:block;margin:18px auto}.court-svg text{font-size:11px;fill:#b8d4df}.linklike{border:1px solid #496c7c;background:transparent;color:#cceef4;padding:9px 12px;font-size:10px;letter-spacing:.08em;border-radius:7px;margin-top:15px}.linklike:hover{background:#1b3c50}.feature-list{padding-left:17px;color:#9bb9c4;font-size:11px;line-height:2}.help-code{font-size:11px;color:#bfe1e8;background:#031020b9;padding:11px;line-height:1.65;border-radius:8px;overflow-wrap:anywhere}.spatial-guide{margin-top:8px;color:#8caeb5;font-size:10px;letter-spacing:.08em}
+.feedback{position:absolute;left:50%;transform:translateX(-50%);bottom:205px;max-width:60vw;text-align:center;font-size:11px;line-height:1.6;color:#a5ced1;letter-spacing:.05em;opacity:.9;pointer-events:none}.command-layer{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);width:min(770px,88vw);z-index:4}.command-caption{display:flex;gap:12px;align-items:center;color:#a1c8d3;font-size:10px;letter-spacing:.21em;margin:0 4px 13px}.pulse-star{font-size:19px;color:#8ad5de;animation:breath 4s ease-in-out infinite}@keyframes breath{50%{opacity:.38;transform:scale(.72)}}.caption-line{height:1px;background:rgba(156,225,230,.2);flex:1}.command{display:flex;align-items:center;gap:18px;padding:7px 9px 7px 25px;height:74px;background:linear-gradient(130deg,rgba(31,54,72,.84),rgba(13,24,41,.96));backdrop-filter:blur(27px);border:1px solid rgba(156,219,231,.33);border-radius:15px;box-shadow:0 25px 90px #0008,0 0 35px #3c909218,inset 0 1px rgba(247,255,255,.1)}.command-glyph{font-size:21px;color:#9fe5e3}.command input{border:0;outline:0!important;background:transparent;min-width:0;flex:1;color:#f1faff;font-weight:350;font-size:16px;letter-spacing:.005em}.command input::placeholder{color:#8fa3b8}.command button{height:54px;width:59px;background:linear-gradient(140deg,#9ef4e6,#53aecc);color:#102b38;border:0;border-radius:10px;font-size:29px;box-shadow:0 1px 16px rgba(95,224,214,.19);transition:transform .2s}.command button:hover{transform:translateY(-2px)}.examples{margin-top:15px;display:flex;justify-content:center;align-items:center;gap:13px;color:#72869c;font-size:11px;flex-wrap:wrap}.examples button{color:#a7bdc8;border:0;background:transparent;font-size:11px;padding:2px 0}.examples button:hover{color:#c9f8fa}.example-prefix{font-size:9px;letter-spacing:.18em;color:#61818b}.command-hint{text-align:center;color:#587385;letter-spacing:.18em;font-size:8px;margin-top:17px}.drawer{z-index:12;position:absolute;right:20px;top:95px;bottom:40px;width:min(390px,calc(100vw - 40px));padding:25px;background:linear-gradient(160deg,#142439f2,#090f1ef5);border:1px solid #375463;border-radius:16px;backdrop-filter:blur(18px);box-shadow:0 30px 100px #000b;overflow-y:auto}.drawer[hidden]{display:none}.drawer-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:25px;border-bottom:1px solid var(--line)}.drawer h2{font-size:24px;font-weight:400;margin:7px 0 0}.drawer .micro{margin:0}.history-record{display:block;width:100%;text-align:left;border:0;background:transparent;border-bottom:1px solid var(--line);color:#d7f2f5;padding:17px 0;font-size:15px}.history-record small{display:block;font-size:10px;letter-spacing:.18em;margin-top:7px;color:#7794a7}.history-record:hover{color:#91f2e8}.small-note{color:#89a6b5;line-height:1.7;font-size:11px;margin-top:24px}.setting{display:flex;align-items:center;justify-content:space-between;padding:19px 0;gap:15px;border-bottom:1px solid var(--line);font-size:12px;color:#a9c5d3}.setting select{max-width:55%;background:#13283e;border:1px solid #355569;border-radius:7px;padding:8px;color:#e0faff}.setting input{accent-color:#6cddd0}.visually-hidden{position:absolute!important;clip:rect(0,0,0,0);height:1px;width:1px;overflow:hidden;white-space:nowrap}
+@media (max-width:1100px){.hero{top:23%;width:42vw}.experience{width:42vw;top:22%;max-height:calc(100dvh - 390px)}.scene-meta{bottom:210px}.hero-desc{max-width:310px}}
+@media (max-width:700px){.app{min-height:500px}.header{padding:22px 20px;height:75px}.brand{font-size:13px;letter-spacing:.2em}.micro{font-size:8px;letter-spacing:.13em}.logo-symbol{height:30px;width:30px;border-radius:10px}.logo-symbol span{left:7px;top:7px}.status-top,.header-divider{display:none}.header-right{gap:8px}.icon-btn{width:30px;height:30px}.hero{left:22px;top:110px;width:calc(100vw - 44px)}.eyebrow{font-size:8px;letter-spacing:.13em;gap:8px}.hero-title{margin-top:14px}h1{font-size:clamp(41px,12vw,74px)}.hero-pre{font-size:9px;letter-spacing:.2em}.hero-sub{font-size:9px;letter-spacing:.18em;margin:12px 0}.hero-desc{font-size:11px;max-width:250px;line-height:1.6;margin-top:18px}.hero-actions{margin-top:10px;gap:16px}.ghost-action{font-size:9px}.scene-meta{display:none}.experience{left:16px;right:16px;top:auto;bottom:216px;width:auto;max-height:min(34dvh,290px);overflow-y:auto}.experience:empty{display:none}.pane{padding:14px 16px;border-radius:14px}.pane-head{padding-bottom:11px}.pane-main{padding-top:11px}.pane-title{font-size:9px}.pane h2{font-size:19px}.pane-note{font-size:10px}.data-highlight{font-size:22px}.chart-svg{max-height:135px}.chart-legend,.mini-stats{margin:5px 0}.mini-stat{padding:9px}.mini-stat-value{font-size:15px}.result-wrap{margin-top:8px}.result{padding:8px}.result-value{font-size:18px}.result:first-child .result-value{font-size:22px}.feedback{bottom:192px;font-size:10px;max-width:92vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.command-layer{width:calc(100vw - 32px);bottom:12px}.command-caption{font-size:8px;margin-bottom:8px}.command{height:58px;border-radius:12px;padding:5px 5px 5px 12px;gap:9px}.command input{font-size:13px}.command-glyph{font-size:18px}.command button{height:45px;width:45px;font-size:24px}.examples{gap:7px;margin-top:11px}.examples button{font-size:9px}.command-hint{font-size:7px;letter-spacing:.04em;margin-top:10px}.court-svg{max-height:150px;margin:4px auto}.pane .tool-field{margin-bottom:9px}.field-header{margin-bottom:5px}.field-header label{font-size:10px}.field-header input{padding:4px;font-size:11px}.tool-field input[type=range]{margin:0}}
+@media (max-width:700px) and (max-height:720px){.hero{top:84px}.hero-desc{display:none}.hero-actions{display:none}.experience{bottom:180px;max-height:34dvh}.feedback{bottom:166px}.command-caption{display:none}.examples{display:none}.command-hint{margin-top:7px}}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+/* Contextual composition: protect the active instrument and command dock. */
+@media (min-width:701px){
+ .app[data-domain]:not([data-domain="presence"]) .hero{top:26%;width:36vw}
+ .app[data-domain]:not([data-domain="presence"]) .hero h1{font-size:clamp(38px,4.15vw,66px);line-height:1.04;letter-spacing:-.065em}
+ .app[data-domain]:not([data-domain="presence"]) .hero .hero-desc{max-width:300px;margin-top:20px}
+ .app[data-domain]:not([data-domain="presence"]) .scene-meta{display:none}
+ .app[data-domain]:not([data-domain="presence"]) .feedback{left:5.5%;transform:none;max-width:34vw;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .app[data-domain]:not([data-domain="presence"]) .experience{top:17.5%;max-height:calc(100dvh - 340px)}
+}
+@media (max-width:700px){
+ .app[data-domain]:not([data-domain="presence"]) .hero{top:92px}
+ .app[data-domain]:not([data-domain="presence"]) .hero h1{font-size:clamp(29px,7.8vw,45px);line-height:1.04;letter-spacing:-.055em}
+ .app[data-domain]:not([data-domain="presence"]) .hero-title{margin-top:8px}
+ .app[data-domain]:not([data-domain="presence"]) .hero-pre{font-size:8px;margin-bottom:7px}
+ .app[data-domain]:not([data-domain="presence"]) .hero-sub{margin-top:9px}
+ .app[data-domain]:not([data-domain="presence"]) .hero-desc,
+ .app[data-domain]:not([data-domain="presence"]) .hero-actions{display:none}
+ .app[data-domain]:not([data-domain="presence"]) .experience{bottom:198px;max-height:32dvh}
+ .app[data-domain]:not([data-domain="presence"]) .feedback{bottom:180px}
+}
+/* The important result precedes controls, especially on handheld screens. */
+.app[data-domain="instrument"] .result-wrap{margin:13px 0 18px}
+.app[data-domain="instrument"] .tool-controls{border-top:1px solid var(--line);padding-top:16px}
+@media (max-width:700px){
+ .app[data-domain="instrument"] .pane-head{padding-bottom:8px}
+ .app[data-domain="instrument"] .pane-main{padding-top:8px}
+ .app[data-domain="instrument"] .pane h2{font-size:17px}
+ .app[data-domain="instrument"] .pane-note{font-size:9px;line-height:1.5;margin:8px 0}
+ .app[data-domain="instrument"] .result-wrap{margin:9px 0 11px;gap:5px}
+ .app[data-domain="instrument"] .result{padding:7px}
+ .app[data-domain="instrument"] .result:first-child{padding:8px 10px}
+ .app[data-domain="instrument"] .result:first-child .result-value{font-size:25px;margin-top:4px}
+ .app[data-domain="instrument"] .result-name{font-size:8px}
+ .app[data-domain="instrument"] .tool-controls{padding-top:10px}
+}
+</style></head>
+<body>
+<div id="app" class="app">
+  <canvas id="world" aria-label="Interactive procedural 3D presence and spatial scene" role="img"></canvas>
+  <div class="noise" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
+  <header class="header">
+    <div class="logo-lockup" aria-label="AURA OMNI"><div class="logo-symbol"><span></span><span></span><span></span></div><div><div class="brand">AURA <em>OMNI</em></div><div class="micro" id="edition">PROTEUS / RESEARCH BUILD 0.1</div></div></div>
+    <div class="header-right"><div class="dot"></div><span class="micro status-top" id="topStatus">PRESENCE · STANDBY</span><span class="header-divider"></span><button class="icon-btn" id="historyBtn" title="Scene history" aria-label="Scene history">↶</button><button class="icon-btn" id="settingsBtn" title="Visual controls" aria-label="Visual controls">◈</button></div>
+  </header>
+  <main class="workspace" id="workspace">
+    <section class="hero" aria-label="Current experience">
+      <div class="eyebrow"><span class="tiny-bar"></span><span id="sceneIndex">01 / PRESENCE</span><span class="eyebrow-rule"></span><span id="sourceBadge">DEMONSTRATION</span></div>
+      <div class="hero-title"><div class="hero-pre">IT'S NOT AN APP.</div><h1 id="heroTitle">AURA <i>OMNI</i></h1></div>
+      <p class="hero-sub" id="heroSub">THE MORPHIC INTELLIGENCE</p>
+      <p class="hero-desc" id="heroDescription">An environment that becomes the instrument you need. Begin with a thought.</p>
+      <div class="hero-actions" id="heroActions"><button id="homeBtn" class="ghost-action" type="button"><span>◌</span> ORIGINAL FORM</button><button id="backBtn" class="ghost-action" type="button" disabled><span>↶</span> PREVIOUS</button></div>
+    </section>
+    <section class="experience" id="experience" aria-label="Contextual experience" aria-live="polite"></section>
+    <aside class="scene-meta" aria-label="Live diagnostics"><div class="meta-row"><span class="meta-name">SCENE GRAPH</span><span class="meta-value" id="nodeCount">01 NODE</span></div><div class="meta-row"><span class="meta-name">RENDERER</span><span class="meta-value" id="rendererStatus">CHECKING...</span></div><div class="meta-row"><span class="meta-name">FRAMERATE</span><span class="meta-value" id="fps">—</span></div><div class="meta-row"><span class="meta-name">EXECUTION</span><span class="meta-value">LOCAL ONLY</span></div></aside>
+  </main>
+  <div id="feedback" class="feedback" role="status" aria-live="polite">Awaiting intent.</div>
+  <footer class="command-layer"><div class="command-caption"><span class="pulse-star">✦</span><span>INTENT → EXPERIENCE</span><span class="caption-line"></span><span id="inputState">READY</span></div>
+    <form id="commandForm" class="command" autocomplete="off"><label for="commandInput" class="visually-hidden">Describe what AURA OMNI should create</label><div class="command-glyph">⌘</div><input id="commandInput" type="text" maxlength="800" placeholder="Ask AURA to become anything…" aria-describedby="commandHint"><button id="submitBtn" type="submit" aria-label="Send command"><span>↗</span></button></form>
+    <div class="examples" id="suggestions"><span class="example-prefix">TRY</span><button data-command="Show me the solar system" type="button">Solar system</button><span>·</span><button data-command="Show me Bitcoin's performance over the last 24 hours" type="button">Bitcoin analysis</button><span>·</span><button data-command="Build a motorcycle financing calculator" type="button">Build an instrument</button></div>
+    <div class="command-hint" id="commandHint">FREE-FORM COMMANDS · NO CLOUD CONNECTION · DEMONSTRATION DATA MARKED</div>
+  </footer>
+  <section id="historyPanel" class="drawer" aria-label="Scene history" hidden><div class="drawer-header"><div><span class="micro">NAVIGATION</span><h2>Scene memory</h2></div><button class="icon-btn" data-close="historyPanel" aria-label="Close history">×</button></div><div id="historyList"></div><p class="small-note">The session history is reversible. Long-term browser storage happens only when you choose Save.</p></section>
+  <section id="settingsPanel" class="drawer" aria-label="Visual settings" hidden><div class="drawer-header"><div><span class="micro">CONTROLS</span><h2>Visual engine</h2></div><button class="icon-btn" data-close="settingsPanel" aria-label="Close settings">×</button></div><label class="setting"><span>Rendering quality</span><select id="quality"><option value="auto">Adaptive</option><option value="low">Economy</option><option value="high">High</option></select></label><label class="setting"><span>Presence material</span><select id="material"><option value="glass">Translucent membrane</option><option value="opaque">Luminous solid</option><option value="wireframe">Signal lattice</option></select></label><label class="setting"><span>Reduced motion</span><input id="reduceMotion" type="checkbox" /></label><p class="small-note">WebGL2 and Canvas 2D are supported. WebGPU, photorealistic avatars, remote data and arbitrary generated code are not enabled.</p></section>
+  <div id="a11yLive" class="visually-hidden" aria-live="assertive"></div>
+</div>
+<script type="module">
+// ======================== contracts ========================
+function createLocalId() { if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
+    return crypto.randomUUID(); const data = new Uint8Array(16); if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+    crypto.getRandomValues(data);
+    return 'local-' + Array.from(data, x => x.toString(16).padStart(2, '0')).join('');
+} return 'local-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2); }
+const origin = { x: 0, y: 0, z: 0 };
+const baseCamera = () => ({ yaw: 0.2, pitch: 0.18, distance: 8.5, target: { ...origin } });
+function makeScene(domain, title, subtitle, objects, source = 'DEMONSTRATION', meta = {}) { return { id: createLocalId(), domain, title, subtitle, objects, camera: baseCamera(), parameters: { speed: 1 }, presentation: 'spatial', source, createdAt: Date.now(), meta }; }
+
+
+// ======================== scene ========================
+const originalPresence = () => makeScene('presence', 'AURA OMNI', 'THE MORPHIC INTELLIGENCE', [{ id: 'identity:presence', concept: 'persistent abstract intelligence presence', shape: 'membrane', position: { x: 0, y: 0, z: 0 }, source: 'DEMONSTRATION', capabilities: ['react', 'transform', 'observe'] }]);
+function copy(data) { return structuredClone(data); }
+class SceneGraph {
+    identity = 'identity:presence';
+    scenes = [originalPresence()];
+    index = 0;
+    transition = null;
+    lastCommand = '';
+    get active() { return this.scenes[this.index]; }
+    get history() { return this.scenes.map(x => ({ id: x.id, domain: x.domain, title: x.title })); }
+    get canBack() { return this.index > 0; }
+    enter(next, now = performance.now()) {
+        const prev = this.active;
+        const strategy = next.domain === 'presence' ? 'return' : prev.domain === 'earth' && next.domain === 'finance' ? 'disassemble' : 'interpolate';
+        this.scenes = this.scenes.slice(0, this.index + 1);
+        this.scenes.push(copy(next));
+        this.index = this.scenes.length - 1;
+        this.transition = { from: prev.domain, to: next.domain, strategy, durationMs: 1400, startedAt: now };
+    }
+    back(now = performance.now()) {
+        if (!this.canBack)
+            return false;
+        const prev = this.active;
+        this.index--;
+        this.transition = { from: prev.domain, to: this.active.domain, strategy: 'interpolate', durationMs: 1100, startedAt: now };
+        return true;
+    }
+    restore(id, now = performance.now()) {
+        const target = this.scenes.find(s => s.id === id);
+        if (!target)
+            return false;
+        this.enter(copy(target), now);
+        return true;
+    }
+    mutate(f) { f(this.active); }
+    snapshot() { return copy(this.active); }
+    get progress() { if (!this.transition)
+        return 1; return Math.min(1, Math.max(0, (performance.now() - this.transition.startedAt) / this.transition.durationMs)); }
+    endTransition() { this.transition = null; }
+}
+
+
+// ======================== data ========================
+function obj(id, concept, shape, x, y, z) { return { id, concept, shape, position: { x, y, z }, source: 'DEMONSTRATION', capabilities: ['inspect', 'rotate'] }; }
+function solarScene() {
+    const objects = [obj('sun', 'Sun, star', 'sun', 0, 0, 0), ...['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'].map((name, i) => obj('planet:' + name.toLowerCase(), name + ' (illustrative orbit)', 'planet', i + 1, 0, 0))];
+    const s = makeScene('solar', 'THE SOLAR SYSTEM', 'EXPLORE THE ORBITAL ARCHITECTURE', objects, 'DEMONSTRATION', { accuracy: 'Positions and scales are illustrative, not ephemerides' });
+    s.camera.distance = 12;
+    return s;
+}
+function earthScene() {
+    const s = makeScene('earth', 'PLANET EARTH', 'ONE WORLD · MANY SYSTEMS', [obj('planet:earth', 'Earth (procedural illustrative globe)', 'planet', 0, 0, 0), obj('orbit:earth', 'Earth equatorial spatial reference', 'orbit', 0, 0, 0)], 'DEMONSTRATION', { accuracy: 'Procedural land imagery; not calibrated to satellite data' });
+    s.camera.distance = 6;
+    return s;
+}
+// Deterministic, synthetic values. They are NOT observations or market forecasts.
+function demoPrices() { const base = Date.UTC(2026, 10, 17, 0, 0); return Array.from({ length: 49 }, (_, i) => ({ minute: i * 30, time: new Date(base + i * 1800000).toISOString(), btc: 64000 + 1100 * Math.sin(i / 5.3) + 22 * i + 360 * Math.sin(i * .77), eth: 3100 + 90 * Math.cos(i / 5.8) + 2.6 * i + 45 * Math.sin(i * .65) })); }
+function financeScene(compare = false) {
+    const s = makeScene('finance', compare ? 'CROSS-ASSET ANALYSIS' : 'BITCOIN · 24 HOURS', compare ? 'BTC / ETH · NORMALIZED RETURN' : 'A MARKET MADE SPATIAL', [obj('asset:BTC', 'Bitcoin synthetic time-series', 'price-series', 0, 0, 0), ...(compare ? [obj('asset:ETH', 'Ethereum synthetic time-series', 'price-series', 0, 0, 0)] : [])], 'DEMONSTRATION', { compare, marketData: 'SYNTHETIC · fixed 2026-11-17 UTC sample' });
+    s.camera.distance = 8;
+    return s;
+}
+function sportsScene(team, showPlay = false) {
+    const s = makeScene('sports', team.toUpperCase(), 'BASKETBALL · SPATIAL ANALYSIS', [obj('court:half', 'Diagram of basketball court', 'court', 0, 0, 0), obj('ball:demo', 'Illustrative basketball positioning', 'ball', 0, 0, 0)], 'UNAVAILABLE', { team, showPlay, score: 'UNAVAILABLE', sourceNote: 'No authorized sports data connected; no game or play claimed' });
+    return s;
+}
+function instrumentScene(title, specId) { const s = makeScene('instrument', title.toUpperCase(), 'LIVE COMPILED INSTRUMENT', [obj('instrument:' + specId, 'Calculated outputs from typed formula graph', 'tool', 0, 0, 0)], 'LOCAL-COMPUTATION', { specId }); return s; }
+
+
+// ======================== compiler ========================
+const MAX_INPUTS = 12, MAX_OUTPUTS = 8, MAX_FORMULA_LENGTH = 200;
+const funcs = { sqrt: Math.sqrt, abs: Math.abs, sin: Math.sin, cos: Math.cos, tan: Math.tan, log: Math.log, exp: Math.exp, min: Math.min, max: Math.max, pow: Math.pow, round: Math.round };
+function tokenize(src) {
+    const out = [];
+    let i = 0;
+    while (i < src.length) {
+        if (/\s/.test(src[i])) {
+            i++;
+            continue;
+        }
+        const m = /^(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?/.exec(src.slice(i));
+        if (m) {
+            out.push({ kind: 'n', text: m[0] });
+            i += m[0].length;
+            continue;
+        }
+        const id = /^[A-Za-z_][A-Za-z_0-9]*/.exec(src.slice(i));
+        if (id) {
+            out.push({ kind: 'id', text: id[0] });
+            i += id[0].length;
+            continue;
+        }
+        const c = src[i++];
+        if ('+-*/^'.includes(c))
+            out.push({ kind: 'op', text: c });
+        else if ('()'.includes(c))
+            out.push({ kind: 'p', text: c });
+        else if (c === ',')
+            out.push({ kind: 'comma', text: c });
+        else
+            throw Error('Unsupported symbol in formula: ' + c);
+        if (out.length > 120)
+            throw Error('Expression is too complex');
+    }
+    return out;
+}
+function parse(expression, vars) {
+    const t = tokenize(expression);
+    let at = 0;
+    const peek = () => t[at]?.text;
+    function primary() {
+        const tok = t[at++];
+        if (!tok)
+            throw Error('Incomplete formula');
+        if (tok.text === '-')
+            return { type: 'unary', child: expr(3) };
+        if (tok.text === '+')
+            return expr(3);
+        if (tok.kind === 'n') {
+            const n = Number(tok.text);
+            if (!Number.isFinite(n))
+                throw Error('Invalid number');
+            return { type: 'number', value: n };
+        }
+        if (tok.text === '(') {
+            const v = expr(0);
+            if (t[at++]?.text !== ')')
+                throw Error('Missing closing parenthesis');
+            return v;
+        }
+        if (tok.kind === 'id') {
+            if (peek() === '(') {
+                if (!Object.hasOwn(funcs, tok.text))
+                    throw Error('Function not allowed: ' + tok.text);
+                at++;
+                const args = [];
+                if (peek() !== ')') {
+                    while (true) {
+                        args.push(expr(0));
+                        if (peek() !== ',')
+                            break;
+                        at++;
+                        if (args.length > 8)
+                            throw Error('Too many arguments');
+                    }
+                }
+                if (t[at++]?.text !== ')')
+                    throw Error('Missing closing parenthesis');
+                return { type: 'function', name: tok.text, args };
+            }
+            if (!vars.has(tok.text))
+                throw Error('Unknown variable: ' + tok.text);
+            return { type: 'variable', name: tok.text };
+        }
+        throw Error('Unexpected expression token ' + tok.text);
+    }
+    function expr(min) { let left = primary(); while (true) {
+        const op = peek();
+        const prec = op === '+' || op === '-' ? 1 : op === '*' || op === '/' ? 2 : op === '^' ? 4 : -1;
+        if (prec < min)
+            break;
+        at++;
+        const right = expr(prec + (op === '^' ? 0 : 1));
+        left = { type: 'binary', op: op, a: left, b: right };
+    } return left; }
+    const ast = expr(0);
+    if (at !== t.length)
+        throw Error('Unexpected trailing expression');
+    return ast;
+}
+function evalExpr(ast, values, budget) {
+    if (++budget.count > 500)
+        throw Error('Calculation budget exceeded');
+    switch (ast.type) {
+        case 'number': return ast.value;
+        case 'variable': return values[ast.name];
+        case 'unary': return -evalExpr(ast.child, values, budget);
+        case 'binary': {
+            const a = evalExpr(ast.a, values, budget), b = evalExpr(ast.b, values, budget);
+            const result = ast.op === '+' ? a + b : ast.op === '-' ? a - b : ast.op === '*' ? a * b : ast.op === '/' ? a / b : Math.pow(a, b);
+            if (!Number.isFinite(result))
+                throw Error('Non-finite result');
+            return result;
+        }
+        case 'function': {
+            const result = funcs[ast.name](...ast.args.map(x => evalExpr(x, values, budget)));
+            if (!Number.isFinite(result))
+                throw Error('Non-finite result');
+            return result;
+        }
+    }
+}
+const identifier = /^[a-zA-Z_][a-zA-Z0-9_]{0,31}$/;
+function compile(spec) {
+    if (spec.version !== 1 || spec.source !== 'LOCAL-COMPUTATION' || spec.externalPermissions.length)
+        throw Error('Unsupported capability or permission');
+    if (!identifier.test(spec.id.replace(/-/g, '_')) || spec.title.length > 100)
+        throw Error('Invalid tool identity');
+    if (!spec.inputs.length || spec.inputs.length > MAX_INPUTS || !spec.outputs.length || spec.outputs.length > MAX_OUTPUTS)
+        throw Error('Input/output limits exceeded');
+    const vars = new Set();
+    for (const x of spec.inputs) {
+        if (!identifier.test(x.id) || ['__proto__', 'constructor', 'prototype'].includes(x.id) || vars.has(x.id))
+            throw Error('Invalid or duplicate variable');
+        vars.add(x.id);
+        if (![x.min, x.max, x.value, x.step].every(Number.isFinite) || x.max <= x.min || x.value < x.min || x.value > x.max || x.step <= 0)
+            throw Error('Input values out of bounds');
+    }
+    const compiled = new Map();
+    for (const o of spec.outputs) {
+        if (!identifier.test(o.id) || o.formula.length > MAX_FORMULA_LENGTH || compiled.has(o.id))
+            throw Error('Invalid output');
+        compiled.set(o.id, parse(o.formula, vars));
+    }
+    return { spec, evaluate(values) { for (const i of spec.inputs) {
+            const n = values[i.id];
+            if (!Number.isFinite(n) || n < i.min || n > i.max)
+                throw Error('Input out of range: ' + i.id);
+        } const result = {}; for (const [id, ast] of compiled)
+            result[id] = evalExpr(ast, values, { count: 0 }); return result; } };
+}
+function spec(title, inputs, outputs, note = 'A locally computed model.') { return { version: 1, id: 'tool_' + Math.random().toString(36).slice(2, 10), title: title.slice(0, 100), purpose: 'Interactive arithmetic instrument', inputs, outputs, source: 'LOCAL-COMPUTATION', capabilities: ['compute', 'visualize', 'edit'], externalPermissions: [], note }; }
+const numberRange = /^([a-zA-Z_][\w]*)\s*=\s*(-?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?)\s*(?:\[\s*(-?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?)\s*\.\.\s*(-?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?)\s*\])?$/i;
+// Open-ended grammar, not a list of prescribed applications:
+// "create tool Kinetic energy; inputs: mass=3[0..100], velocity=4[0..100]; formula: 0.5*mass*velocity^2"
+function specFromCommand(text) {
+    const formulaMatch = /\bformula\s*:\s*([^;]+)/i.exec(text);
+    const inputsMatch = /\binputs\s*:\s*([^;]+)/i.exec(text);
+    if (!formulaMatch || !inputsMatch)
+        return null;
+    const raw = inputsMatch[1].split(',');
+    if (raw.length > MAX_INPUTS)
+        throw Error('Too many inputs');
+    const inputs = raw.map(part => { const m = numberRange.exec(part.trim()); if (!m)
+        throw Error('Input syntax: variable=value[min..max]'); const value = Number(m[2]); const lo = m[3] !== undefined ? Number(m[3]) : Math.min(0, value); const hi = m[4] !== undefined ? Number(m[4]) : Math.max(100, value * 3, 1); return { id: m[1], label: m[1].replaceAll('_', ' '), value, min: lo, max: hi, step: Math.max(.01, (hi - lo) / 200) }; });
+    const name = (/\b(?:create|build|make)\s+(?:a\s+|an\s+)?(?:tool|calculator|instrument)\s*(?:for\s+|to\s+)?([^;]+?)(?:\s+with\s+)?\s*;/i.exec(text)?.[1] || 'Custom instrument').replace(/[,.;]+$/, '').trim();
+    const model = spec(name, inputs, [{ id: 'result', label: 'Computed result', formula: formulaMatch[1].trim(), precision: 4 }], 'User-provided formula; mathematical calculation only, not an independently verified physical model.');
+    compile(model);
+    return model;
+}
+function loanSpec() {
+    const model = spec('Motorcycle financing', [
+        { id: 'price', label: 'Motorcycle price', value: 4200, min: 100, max: 50000, step: 50, unit: '€' },
+        { id: 'deposit', label: 'Deposit', value: 800, min: 0, max: 10000, step: 50, unit: '€' },
+        { id: 'annual_rate', label: 'APR', value: 8.5, min: 0, max: 35, step: .1, unit: '%' },
+        { id: 'months', label: 'Term', value: 48, min: 6, max: 84, step: 1, unit: 'months' }
+    ], [{ id: 'monthly', label: 'Monthly payment', formula: '(price-deposit)*((annual_rate/1200)+0.000000000001)/(1-pow(1+(annual_rate/1200)+0.000000000001,-months))', unit: '€', precision: 2 },
+        { id: 'principal', label: 'Principal', formula: 'max(0,price-deposit)', unit: '€', precision: 2 },
+        { id: 'total', label: 'Total paid (including deposit)', formula: 'deposit+months*(price-deposit)*((annual_rate/1200)+0.000000000001)/(1-pow(1+(annual_rate/1200)+0.000000000001,-months))', unit: '€', precision: 2 }], 'Indicative amortization. No fees, insurance or effective-rate adjustments. Deposit cannot exceed purchase price.');
+    compile(model);
+    return model;
+}
+
+
+// ======================== intent ========================
+class IntentInterpreter {
+    pendingTeam = false;
+    team = '';
+    currentToolId = '';
+    interpret(text, active) {
+        const raw = text.trim().slice(0, 800), q = raw.toLowerCase();
+        if (!raw)
+            return { kind: 'message', message: 'Describe an experience or computation to construct.' };
+        if (this.pendingTeam) {
+            this.pendingTeam = false;
+            this.team = raw.replace(/^my team is\s+/i, '').replace(/[.?!]+$/, '');
+            return { kind: 'scene', scene: sportsScene(this.team), message: 'Spatial basketball explainer ready. Live results unavailable; no scoring data will be fabricated.' };
+        }
+        if (/^(back|go back|previous scene|undo|επιστροφή)$/i.test(raw))
+            return { kind: 'restore', message: 'Restoring the preceding scene.' };
+        if (/\b(save|store|remember)\b.*\b(calculation|tool|instrument|this)\b/.test(q) && /\b(return|rest|yourself|original)\b/.test(q))
+            return { kind: 'save', message: 'Instrument saved locally; returning to persistent presence.', patch: { return: true } };
+        if (/^(save|store|remember)( this| my| the)? (calculation|tool|instrument|experience)/.test(q))
+            return { kind: 'save', message: 'Current experience saved in this browser.' };
+        if (/(return to (yourself|presence|original)|original form|resting form|go home|start over)/.test(q))
+            return { kind: 'scene', scene: originalPresence(), message: 'Returning to original form. Context is retained.' };
+        if (/\b(reopen|restore|show)\b.*\b(previous|saved)\b.*\b(calculator|instrument|tool)\b/.test(q))
+            return { kind: 'modify', message: 'RESTORE_SAVED_TOOL', patch: { restoreSaved: true } };
+        // Composable, user-defined expression language: arbitrary identifiers + bounds + expression.
+        if (/\bformula\s*:/.test(q) && /\binputs\s*:/.test(q)) {
+            try {
+                const spec = specFromCommand(raw);
+                if (spec)
+                    return { kind: 'tool', spec, scene: instrumentScene(spec.title, spec.id), message: 'Compiled a new bounded arithmetic instrument from your specification.' };
+            }
+            catch (e) {
+                return { kind: 'message', message: 'Compiler rejected the specification: ' + (e instanceof Error ? e.message : String(e)) };
+            }
+        }
+        if (/\b(3[ -]?year|three[ -]?year|36[ -]?month)\b/.test(q) && active.domain === 'instrument')
+            return { kind: 'modify', patch: { months: 36 }, message: 'Term changed to 36 months. Outputs recalculated without resetting the scene.' };
+        if (/\b(5[ -]?year|five[ -]?year|60[ -]?month)\b/.test(q) && active.domain === 'instrument')
+            return { kind: 'modify', patch: { months: 60 }, message: 'Term changed to 60 months.' };
+        if (/\b(make|set|change|adjust)\b.*\b(rate|interest|apr)\b.*?(\d+(?:\.\d+)?)\s*%/.test(q) && active.domain === 'instrument') {
+            const match = q.match(/(\d+(?:\.\d+)?)\s*%/);
+            return { kind: 'modify', patch: { annual_rate: match ? Number(match[1]) : 0 }, message: 'APR updated in active instrument.' };
+        }
+        if (/\b(zoom|closer)\b/.test(q))
+            return { kind: 'modify', message: 'Moving the camera closer.', patch: { cameraZoom: 0.8 } };
+        if (/\b(zoom out|farther|further)\b/.test(q))
+            return { kind: 'modify', message: 'Moving the camera back.', patch: { cameraZoom: 1.22 } };
+        if (/\b(slower|slow down)\b/.test(q))
+            return { kind: 'modify', message: 'Slowing scene motion.', patch: { speed: .45 } };
+        if (/\b(faster|speed up)\b/.test(q))
+            return { kind: 'modify', message: 'Increasing scene motion.', patch: { speed: 1.7 } };
+        if (/\b(pause|stop there|freeze)\b/.test(q))
+            return { kind: 'modify', message: 'Motion paused.', patch: { speed: 0 } };
+        if (/\b(resume|continue|animate)\b/.test(q))
+            return { kind: 'modify', message: 'Motion resumed.', patch: { speed: 1 } };
+        if (/\b(wireframe|transparent|translucent|opaque)\b/.test(q))
+            return { kind: 'modify', message: 'Changed the persistent presence material.', patch: { material: q.includes('wireframe') ? 'wireframe' : q.includes('opaque') ? 'opaque' : 'glass' } };
+        if (/\b(compare|comparison)\b.*\b(ethereum|eth)\b/.test(q) && active.domain === 'finance')
+            return { kind: 'scene', scene: financeScene(true), message: 'Comparison uses normalized percentage returns from explicitly synthetic data.' };
+        if (/\b(how (they|we) scored|show (me )?the (plays|shots|scoring|replay))\b/.test(q) && active.domain === 'sports')
+            return { kind: 'scene', scene: sportsScene(this.team || String(active.meta.team || 'UNSPECIFIED TEAM'), true), message: 'Illustrative court geometry only. No verified play-by-play or tracking feed is connected.' };
+        if (/\b(motorcycle|bike|scooter)\b.*\b(financ\w*|loan|payment|deposit|interest)\b|\b(loan|financ\w*)\b.*\b(motorcycle|bike|scooter)\b/.test(q)) {
+            const spec = loanSpec();
+            this.currentToolId = spec.id;
+            return { kind: 'tool', spec, scene: instrumentScene(spec.title, spec.id), message: 'Built a bounded amortization model from reusable numeric inputs and formula outputs.' };
+        }
+        if (/\b(earth|terra)\b/.test(q) && (/\b(take|go|zoom|planet|show|explore|visit|view)\b/.test(q) || active.domain === 'solar'))
+            return { kind: 'scene', scene: earthScene(), message: 'Procedural Earth ready. Rotate with drag or touch; scroll or pinch to zoom.' };
+        if (/\b(solar system|planets|astronomy|orbit)\b/.test(q))
+            return { kind: 'scene', scene: solarScene(), message: 'Procedural orbital model ready. Distances and positions are illustrative.' };
+        if (/\b(bitcoin|btc|crypto|ethereum|eth)\b/.test(q) && /\b(price|chart|performance|24 hours|last day|finance|market|compare|show)\b/.test(q))
+            return { kind: 'scene', scene: financeScene(/ethereum|\beth\b/.test(q)), message: 'Market-style chart generated using synthetic, timestamped sample data. Not a live feed.' };
+        if (/\b(basketball|nba|euroleague|my team|last game|game score|basketball team)\b/.test(q)) {
+            const match = /(?:for|team|about)\s+(panathinaikos|olympiacos|celtics|lakers|warriors|bulls|real madrid|fenerbahce)/i.exec(raw);
+            if (match)
+                this.team = match[1];
+            if (!this.team) {
+                this.pendingTeam = true;
+                return { kind: 'pending', message: 'Which basketball team should I use? Game scores are unavailable offline, but I can build its spatial explainer.' };
+            }
+            return { kind: 'scene', scene: sportsScene(this.team), message: 'Basketball court created. Verified match data is unavailable in this offline prototype.' };
+        }
+        return { kind: 'message', message: 'I can construct procedural space, charts, and constrained numeric instruments. For a new computation, use: Create tool Kinetic energy; inputs: mass=3[0..100], velocity=4[0..100]; formula: 0.5*mass*velocity^2. This is a real compiler, not arbitrary autonomous code generation.' };
+    }
+}
+
+
+// ======================== renderer ========================
+const VERT_BG = `#version 300 es
+in vec2 aPos;out vec2 vUV;void main(){vUV=aPos*.5+.5;gl_Position=vec4(aPos,0.,1.);}`;
+const FRAG_BG = `#version 300 es
+precision highp float;in vec2 vUV;out vec4 o;uniform float uTime,uAspect;uniform vec2 uPointer;uniform vec3 uTint;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+void main(){vec2 uv=vUV;vec2 c=(uv-.5)*vec2(uAspect,1.);float dist=length(c);float neb=sin(c.x*5.+uTime*.035)*sin(c.y*6.-uTime*.03);float st=pow(hash(floor(uv*vec2(1050.,750.))),44.);float grid=(1.-smoothstep(0.,.02,abs(fract((c.x+c.y*.12)*8.)-.5)))*.025;vec3 col=mix(vec3(.004,.010,.024),vec3(.018,.028,.063),(1.-smoothstep(0.,1.3,dist)));col+=uTint*(.06*exp(-dist*1.3)+.018*neb*neb)+vec3(.55,.72,1.)*st*.25;col+=vec3(.1,.19,.22)*grid*(1.-smoothstep(.0,1.7,dist));float bloom=exp(-length(c-(uPointer-.5)*vec2(uAspect,1.))*2.8)*.012;col+=uTint*bloom;col*=1.-.55*smoothstep(.2,1.8,dist);o=vec4(col,1.);}`;
+const VERT_PART = `#version 300 es
+precision highp float;in vec3 aFrom,aTo;in float aTone;uniform float uTime,uMorph,uAspect,uDist,uYaw,uPitch,uSpeed,uScatter,uSize,uStageShift;out float vTone;out float vDepth;
+mat3 ry(float a){float c=cos(a),s=sin(a);return mat3(c,0.,-s,0.,1.,0.,s,0.,c);}mat3 rx(float a){float c=cos(a),s=sin(a);return mat3(1.,0.,0.,0.,c,s,0.,-s,c);}
+void main(){float m=smoothstep(0.,1.,uMorph);vec3 p=mix(aFrom,aTo,m);float n=sin(float(gl_VertexID)*71.83);p+=vec3(sin(uTime*.29+n*3.),cos(uTime*.27+n*8.),sin(uTime*.19+n*9.))*.04*uSpeed;p+=vec3(n,cos(n*51.),sin(n*99.))*uScatter*sin(m*3.14159);vec3 v=rx(uPitch)*ry(uYaw)*p;float depth=max(1.5,uDist-v.z);gl_Position=vec4(v.xy*vec2(1.,uAspect)*1.55+vec2(0.,uStageShift*depth),0.,depth);gl_PointSize=clamp(uSize*(12./depth),1.,8.);vTone=aTone;vDepth=depth;}`;
+const FRAG_PART = `#version 300 es
+precision highp float;in float vTone,vDepth;out vec4 o;uniform vec3 uTint;void main(){float r=length(gl_PointCoord-.5);float opacity=(1.-smoothstep(.13,.5,r));vec3 col=mix(uTint,vec3(.86,.96,1.),vTone*.65);o=vec4(col,opacity*(.33+.55*vTone));}`;
+const VERT_SURFACE = `#version 300 es
+precision highp float;in vec3 aPos,aNormal;uniform float uTime,uAspect,uDist,uYaw,uPitch,uSpeed,uSize,uStageShift;uniform vec3 uOffset;out vec3 vNormal,vPosition;out float vGlint;
+mat3 ry(float a){float c=cos(a),s=sin(a);return mat3(c,0.,-s,0.,1.,0.,s,0.,c);}mat3 rx(float a){float c=cos(a),s=sin(a);return mat3(1.,0.,0.,0.,c,s,0.,-s,c);}
+void main(){float t=uTime*.24*uSpeed;float s=sin(aPos.x*4.5+aPos.y*3.4+t*1.3)*cos(aPos.z*6.-t);float f=.09*s+.025*sin(11.*aPos.x+t*2.);vec3 p=aPos+aNormal*f;p*=uSize;p+=uOffset;p=rx(uPitch)*ry(uYaw)*p;float depth=max(1.4,uDist-p.z);gl_Position=vec4(p.xy*vec2(1.,uAspect)*1.55+vec2(0.,uStageShift*depth),0.,depth);vPosition=p;vNormal=normalize(rx(uPitch)*ry(uYaw)*aNormal);vGlint=s;}`;
+const FRAG_SURFACE = `#version 300 es
+precision highp float;in vec3 vNormal,vPosition;in float vGlint;out vec4 o;uniform float uTime,uGlass,uWire;uniform vec3 uTint;
+void main(){vec3 n=normalize(vNormal);float edge=pow(1.-abs(dot(n,normalize(vec3(0.,0.,1.)))),2.1);float light=pow(max(0.,dot(n,normalize(vec3(-.4,.7,.95)))),6.);float sheen=pow(max(0.,dot(n,normalize(vec3(.7,-.6,.8)))),14.);float line=sin(vPosition.y*26.+vPosition.x*16.+uTime*.65);vec3 irid=mix(uTint,vec3(.74,.89,1.),.38+.32*sin(vGlint*4.+uTime*.15));vec3 col=irid*(.22+.55*edge)+vec3(.6,.95,1.)*light*.9+uTint*sheen*.4+uTint*line*.05;float a=mix(.91,.33+.52*edge,uGlass);if(uWire>.5){a*=smoothstep(.65,.98,abs(line));col*=1.4;}o=vec4(col,a);}`;
+const VERT_GLOBE = `#version 300 es
+precision highp float;in vec3 aPos,aNormal;uniform float uTime,uAspect,uDist,uYaw,uPitch,uSpeed,uRadius,uStageShift;uniform vec3 uOffset;out vec3 vNormal,vLocal;
+mat3 ry(float a){float c=cos(a),s=sin(a);return mat3(c,0.,-s,0.,1.,0.,s,0.,c);}mat3 rx(float a){float c=cos(a),s=sin(a);return mat3(1.,0.,0.,0.,c,s,0.,-s,c);}
+void main(){vec3 rotated=ry(uTime*.07*uSpeed)*aPos;vec3 p=uOffset+rotated*uRadius;p=rx(uPitch)*ry(uYaw)*p;float depth=max(1.4,uDist-p.z);gl_Position=vec4(p.xy*vec2(1.,uAspect)*1.55+vec2(0.,uStageShift*depth),0.,depth);vLocal=rotated;vNormal=normalize(rx(uPitch)*ry(uYaw)*rotated);}`;
+const FRAG_GLOBE = `#version 300 es
+precision highp float;in vec3 vLocal,vNormal;out vec4 o;uniform vec3 uTint;uniform float uPlanet;
+float hash(vec3 p){return fract(sin(dot(p,vec3(37.1,83.7,19.7)))*43758.5453);}
+float noise(vec3 p){vec3 a=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(mix(hash(a),hash(a+vec3(1,0,0)),f.x),mix(hash(a+vec3(0,1,0)),hash(a+vec3(1,1,0)),f.x),f.y),mix(mix(hash(a+vec3(0,0,1)),hash(a+vec3(1,0,1)),f.x),mix(hash(a+vec3(0,1,1)),hash(a+vec3(1,1,1)),f.x),f.y),f.z);}
+void main(){float n=noise(vLocal*2.9)*.58+noise(vLocal*8.)*.29+noise(vLocal*27.)*.13;float land=smoothstep(.49,.56,n+.09*sin(vLocal.z*2.));vec3 sea=mix(vec3(.009,.12,.29),vec3(.04,.48,.59),noise(vLocal*12.));vec3 ground=mix(vec3(.05,.22,.14),vec3(.48,.56,.33),noise(vLocal*10.));float polar=smoothstep(.72,.94,abs(vLocal.y));vec3 col=mix(sea,ground,land);col=mix(col,vec3(.75,.91,.97),polar*.75);if(uPlanet>.5)col=uTint*(.55+.45*n);float light=.16+.84*max(0.,dot(normalize(vNormal),normalize(vec3(-.5,.3,.8))));float atmo=pow(1.-abs(vNormal.z),3.);o=vec4(col*light+mix(vec3(.08,.45,.77),uTint,.6)*atmo*.42,1.);}`;
+function shader(gl, kind, src) { const s = gl.createShader(kind); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))
+    throw Error(gl.getShaderInfoLog(s) || 'Shader error'); return s; }
+function program(gl, v, f) { const p = gl.createProgram(); gl.attachShader(p, shader(gl, gl.VERTEX_SHADER, v)); gl.attachShader(p, shader(gl, gl.FRAGMENT_SHADER, f)); gl.linkProgram(p); if (!gl.getProgramParameter(p, gl.LINK_STATUS))
+    throw Error(gl.getProgramInfoLog(p) || 'Program error'); return p; }
+function hash(i) { return ((Math.sin(i * 127.1 + 43.7) * 43758.5453) % 1 + 1) % 1; }
+const COUNT = 8500;
+function shapePoints(domain) {
+    const out = new Float32Array(COUNT * 3);
+    for (let i = 0; i < COUNT; i++) {
+        const u = hash(i + 3), v = hash(i + 17), w = hash(i + 101), a = u * Math.PI * 2, b = v * Math.PI * 2;
+        let x = 0, y = 0, z = 0;
+        if (domain === 'presence') {
+            const c = 1.8 + .32 * Math.sin(3 * a), r = .4 + .3 * w;
+            x = (c + r * Math.cos(b)) * Math.cos(a);
+            y = (c + r * Math.cos(b)) * Math.sin(a) * .75;
+            z = r * Math.sin(b) * 1.7;
+        }
+        else if (domain === 'solar') {
+            const ring = 1 + Math.floor(v * 7), r = .7 + ring * .42;
+            x = r * Math.cos(a);
+            y = r * Math.sin(a) * .38;
+            z = (w - .5) * .16;
+        }
+        else if (domain === 'earth') {
+            const theta = a, phi = Math.acos(2 * v - 1);
+            x = 2.4 * Math.sin(phi) * Math.cos(theta);
+            y = 2.4 * Math.cos(phi);
+            z = 2.4 * Math.sin(phi) * Math.sin(theta);
+        }
+        else if (domain === 'finance') {
+            const t = u, yv = Math.sin(t * 15) * .9 + Math.sin(t * 42) * .25 + 1.35 * t;
+            x = (t - .5) * 8;
+            y = yv * 1.17 - .6 + (v - .5) * .6;
+            z = (w - .5) * 1.8;
+        }
+        else if (domain === 'sports') {
+            x = (u - .5) * 8;
+            y = (v - .5) * 4.6;
+            z = .15 * Math.sin(i * 2) + (w - .5) * .18;
+            if (i % 5 === 0) {
+                const angle = a;
+                x = 3.4 * Math.cos(angle);
+                y = 1.8 * Math.sin(angle);
+            }
+        }
+        else {
+            const r = .25 + v * 3.8;
+            x = r * Math.cos(a * 2.6);
+            y = r * Math.sin(a * 2.6) * .6;
+            z = (w - .5) * 2.1;
+        }
+        out.set([x, y, z], i * 3);
+    }
+    return out;
+}
+function makeMembrane() {
+    const rows = 310, cols = 27, pos = [], norm = [], idx = [];
+    // asymmetrical interlocked organic torus-knot ribbon, not a glowing sphere.
+    for (let i = 0; i <= rows; i++) {
+        const t = i / rows * Math.PI * 2;
+        const cx = (1.42 + .3 * Math.cos(3 * t)) * Math.cos(2 * t), cy = (1.18 + .19 * Math.sin(4 * t)) * Math.sin(2 * t), cz = .58 * Math.sin(3 * t);
+        const h = .007, tx = (((1.42 + .3 * Math.cos(3 * (t + h))) * Math.cos(2 * (t + h))) - cx) / h, ty = (((1.18 + .19 * Math.sin(4 * (t + h))) * Math.sin(2 * (t + h))) - cy) / h, tz = (.58 * Math.sin(3 * (t + h)) - cz) / h;
+        const tl = Math.hypot(tx, ty, tz);
+        const T = [tx / tl, ty / tl, tz / tl];
+        const N = [-T[1], T[0], 0];
+        const nl = Math.hypot(...N) || 1;
+        for (let j = 0; j <= cols; j++) {
+            const b = j / cols * Math.PI * 2, rr = (.37 + .11 * Math.sin(5 * t + 2 * b)) * (1 + .23 * Math.sin(t * 5));
+            const nx = Math.cos(b) * N[0] / nl + Math.sin(b) * (-T[2] * T[0]), ny = Math.cos(b) * N[1] / nl + Math.sin(b) * (-T[2] * T[1]), nz = Math.sin(b) * (1 - T[2] * T[2]);
+            const len = Math.hypot(nx, ny, nz) || 1;
+            pos.push(cx + rr * nx, cy + rr * ny, cz + rr * nz);
+            norm.push(nx / len, ny / len, nz / len);
+        }
+    }
+    for (let i = 0; i < rows; i++)
+        for (let j = 0; j < cols; j++) {
+            const a = i * (cols + 1) + j, b = a + cols + 1;
+            idx.push(a, b, a + 1, b, b + 1, a + 1);
+        }
+    return { pos: new Float32Array(pos), norm: new Float32Array(norm), idx: new Uint16Array(idx) };
+}
+function makeSphere() { const rows = 54, cols = 74, p = [], n = [], idx = []; for (let i = 0; i <= rows; i++)
+    for (let j = 0; j <= cols; j++) {
+        const phi = i / rows * Math.PI, theta = j / cols * Math.PI * 2;
+        const x = Math.sin(phi) * Math.cos(theta), y = Math.cos(phi), z = Math.sin(phi) * Math.sin(theta);
+        p.push(x, y, z);
+        n.push(x, y, z);
+    } for (let i = 0; i < rows; i++)
+    for (let j = 0; j < cols; j++) {
+        let k = i * (cols + 1) + j;
+        idx.push(k, k + cols + 1, k + 1, k + 1, k + cols + 1, k + cols + 2);
+    } return { pos: new Float32Array(p), norm: new Float32Array(n), idx: new Uint16Array(idx) }; }
+class MorphicRenderer {
+    canvas;
+    gl;
+    ctx = null;
+    programs = null;
+    buffers = {};
+    counts = { membrane: 0, globe: 0 };
+    from = shapePoints('presence');
+    to = shapePoints('presence');
+    morphStarted = performance.now();
+    morphDuration = 1300;
+    current = 'presence';
+    pointer = { x: .5, y: .5 };
+    fallbackCache = new Map();
+    frame = 0;
+    last = performance.now();
+    frames = [];
+    material = 'glass';
+    quality = 'auto';
+    isReducedMotion = false;
+    _error = '';
+    get backend() { return this.gl ? 'WebGL2' : this.ctx ? 'Canvas 2D' : 'UNAVAILABLE'; }
+    get error() { return this._error; }
+    get fps() { return this.frames.length ? Math.round(this.frames.reduce((a, b) => a + b, 0) / this.frames.length) : 0; }
+    constructor(canvas, forceFallback = false) {
+        this.canvas = canvas;
+        this.gl = forceFallback ? null : canvas.getContext('webgl2', { alpha: false, antialias: true, preserveDrawingBuffer: true, powerPreference: 'high-performance' });
+        if (this.gl)
+            try {
+                this.setup(this.gl);
+            }
+            catch (e) {
+                this._error = String(e);
+                this.gl = null;
+            }
+        if (!this.gl)
+            this.ctx = canvas.getContext('2d');
+        canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); this._error = 'WebGL context lost; reload to restore'; });
+    }
+    setup(gl) {
+        this.programs = { bg: program(gl, VERT_BG, FRAG_BG), particles: program(gl, VERT_PART, FRAG_PART), surface: program(gl, VERT_SURFACE, FRAG_SURFACE), globe: program(gl, VERT_GLOBE, FRAG_GLOBE) };
+        const buf = (name, src, usage = gl.STATIC_DRAW) => { let b = gl.createBuffer(); this.buffers[name] = b; gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, src, usage); };
+        buf('quad', new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]));
+        buf('from', this.from, gl.DYNAMIC_DRAW);
+        buf('to', this.to, gl.DYNAMIC_DRAW);
+        buf('tone', new Float32Array(Array.from({ length: COUNT }, (_, i) => hash(i + 2100))));
+        const m = makeMembrane(), s = makeSphere();
+        this.counts.membrane = m.idx.length;
+        this.counts.globe = s.idx.length;
+        buf('mPos', m.pos);
+        buf('mNorm', m.norm);
+        buf('sPos', s.pos);
+        buf('sNorm', s.norm);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, m.idx, gl.STATIC_DRAW);
+        this.buffers['mIndex'] = gl.getParameter(gl.ELEMENT_ARRAY_BUFFER_BINDING);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, s.idx, gl.STATIC_DRAW);
+        this.buffers['sIndex'] = gl.getParameter(gl.ELEMENT_ARRAY_BUFFER_BINDING);
+    }
+    setPointer(x, y) { this.pointer = { x, y }; }
+    setScene(next) { if (next === this.current)
+        return; const now = performance.now(); const p = Math.min(1, (now - this.morphStarted) / this.morphDuration); const smooth = p * p * (3 - 2 * p); for (let i = 0; i < this.from.length; i++)
+        this.from[i] = this.from[i] * (1 - smooth) + this.to[i] * smooth; this.to = shapePoints(next); this.current = next; this.morphStarted = now; this.morphDuration = this.isReducedMotion ? 1 : 1350; const gl = this.gl; if (gl) {
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.buffers.from);
+        gl.bufferData(gl.ARRAY_BUFFER, this.from, gl.DYNAMIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.buffers.to);
+        gl.bufferData(gl.ARRAY_BUFFER, this.to, gl.DYNAMIC_DRAW);
+    } }
+    attrib(gl, p, name, b, size) { const l = gl.getAttribLocation(p, name); if (l < 0)
+        return; gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l, size, gl.FLOAT, false, 0, 0); }
+    uniform(gl, p, name, v) { const l = gl.getUniformLocation(p, name); if (l === null)
+        return; if (typeof v === 'number')
+        gl.uniform1f(l, v);
+    else if (v.length === 2)
+        gl.uniform2f(l, v[0], v[1]);
+    else if (v.length === 3)
+        gl.uniform3f(l, v[0], v[1], v[2]); }
+    chooseTint(d) { return d === 'finance' ? [.15, .86, .65] : d === 'sports' ? [1, .47, .29] : d === 'earth' || d === 'solar' ? [.26, .66, 1] : d === 'instrument' ? [.9, .45, 1] : [.38, .77, .91]; }
+    draw(scene, t) {
+        const dt = t - this.last;
+        this.last = t;
+        if (dt > 0 && dt < 200) {
+            this.frames.push(1000 / dt);
+            if (this.frames.length > 50)
+                this.frames.shift();
+        }
+        this.frame++;
+        const dpr = this.quality === 'low' ? Math.min(devicePixelRatio, 1) : this.quality === 'high' ? Math.min(devicePixelRatio, 2) : Math.min(devicePixelRatio, innerWidth < 700 ? 1.3 : 1.8);
+        const width = Math.max(1, Math.round(this.canvas.clientWidth * dpr)), height = Math.max(1, Math.round(this.canvas.clientHeight * dpr));
+        if (this.canvas.width !== width || this.canvas.height !== height) {
+            this.canvas.width = width;
+            this.canvas.height = height;
+        }
+        const g = this.gl;
+        if (!g) {
+            this.drawFallback(scene, t);
+            return;
+        }
+        if (!this.programs)
+            return;
+        g.viewport(0, 0, width, height);
+        g.disable(g.DEPTH_TEST);
+        g.enable(g.BLEND);
+        g.blendFunc(g.SRC_ALPHA, g.ONE_MINUS_SRC_ALPHA);
+        const sec = t / 1000, tint = this.chooseTint(scene.domain), aspect = width / height;
+        const base = (p) => { g.useProgram(p); this.uniform(g, p, 'uTime', sec); this.uniform(g, p, 'uAspect', aspect); this.uniform(g, p, 'uTint', tint); this.uniform(g, p, 'uDist', scene.camera.distance); this.uniform(g, p, 'uYaw', scene.camera.yaw); this.uniform(g, p, 'uPitch', scene.camera.pitch); this.uniform(g, p, 'uSpeed', this.isReducedMotion ? 0 : (scene.parameters.speed ?? 1)); this.uniform(g, p, 'uStageShift', width < 850 && scene.domain !== 'presence' ? .17 : 0); };
+        const P = this.programs;
+        base(P.bg);
+        this.attrib(g, P.bg, 'aPos', this.buffers.quad, 2);
+        this.uniform(g, P.bg, 'uPointer', [this.pointer.x, this.pointer.y]);
+        g.drawArrays(g.TRIANGLE_STRIP, 0, 4);
+        // Stable, topologically continuous membrane identity remains present in every domain.
+        base(P.surface);
+        this.attrib(g, P.surface, 'aPos', this.buffers.mPos, 3);
+        this.attrib(g, P.surface, 'aNormal', this.buffers.mNorm, 3);
+        this.uniform(g, P.surface, 'uSize', scene.domain === 'presence' ? 1.06 : .36);
+        this.uniform(g, P.surface, 'uOffset', scene.domain === 'presence' ? [0, 0, 0] : [-3.4, -1.78, 0]);
+        this.uniform(g, P.surface, 'uGlass', this.material === 'glass' ? 1 : 0);
+        this.uniform(g, P.surface, 'uWire', this.material === 'wireframe' ? 1 : 0);
+        g.bindBuffer(g.ELEMENT_ARRAY_BUFFER, this.buffers.mIndex);
+        g.drawElements(g.TRIANGLES, this.counts.membrane, g.UNSIGNED_SHORT, 0);
+        if (scene.domain === 'earth' || scene.domain === 'solar') {
+            base(P.globe);
+            this.attrib(g, P.globe, 'aPos', this.buffers.sPos, 3);
+            this.attrib(g, P.globe, 'aNormal', this.buffers.sNorm, 3);
+            g.bindBuffer(g.ELEMENT_ARRAY_BUFFER, this.buffers.sIndex);
+            if (scene.domain === 'earth') {
+                this.uniform(g, P.globe, 'uOffset', [0, 0, .15]);
+                this.uniform(g, P.globe, 'uRadius', 2.33);
+                this.uniform(g, P.globe, 'uPlanet', 0);
+                g.drawElements(g.TRIANGLES, this.counts.globe, g.UNSIGNED_SHORT, 0);
+            }
+            else {
+                for (let i = 0; i < 8; i++) {
+                    const orbit = .85 + i * .45, angle = sec * (.16 / (i + 1)) + i * 2.3;
+                    this.uniform(g, P.globe, 'uOffset', [Math.cos(angle) * orbit, Math.sin(angle) * orbit * .38, 0]);
+                    this.uniform(g, P.globe, 'uRadius', [.14, .22, .25, .19, .42, .36, .27, .26][i]);
+                    this.uniform(g, P.globe, 'uPlanet', i === 2 ? 0 : 1);
+                    g.drawElements(g.TRIANGLES, this.counts.globe, g.UNSIGNED_SHORT, 0);
+                }
+            }
+        }
+        base(P.particles);
+        this.attrib(g, P.particles, 'aFrom', this.buffers.from, 3);
+        this.attrib(g, P.particles, 'aTo', this.buffers.to, 3);
+        this.attrib(g, P.particles, 'aTone', this.buffers.tone, 1);
+        const a = Math.min(1, (t - this.morphStarted) / this.morphDuration);
+        this.uniform(g, P.particles, 'uMorph', a);
+        this.uniform(g, P.particles, 'uScatter', scene.domain === 'presence' ? .15 : .8);
+        this.uniform(g, P.particles, 'uSize', this.quality === 'low' ? 1.5 : 2.2);
+        g.blendFunc(g.SRC_ALPHA, g.ONE);
+        g.drawArrays(g.POINTS, 0, this.quality === 'low' ? COUNT / 2 : COUNT);
+        g.blendFunc(g.SRC_ALPHA, g.ONE_MINUS_SRC_ALPHA);
+    }
+    drawFallback(scene, t) { const c = this.ctx; if (!c)
+        return; const w = this.canvas.width, h = this.canvas.height; c.clearRect(0, 0, w, h); let grd = c.createRadialGradient(w * .48, h * .46, 0, w * .5, h * .5, Math.max(w, h) * .7); grd.addColorStop(0, '#111c36'); grd.addColorStop(1, '#050812'); c.fillStyle = grd; c.fillRect(0, 0, w, h); let v = this.fallbackCache.get(scene.domain); if (!v) {
+        v = shapePoints(scene.domain);
+        this.fallbackCache.set(scene.domain, v);
+    } const tint = scene.domain === 'finance' ? '#41d6a8' : scene.domain === 'sports' ? '#f29678' : '#8ccff8'; c.fillStyle = tint; const scale = Math.min(w, h) / 10 * (8.5 / scene.camera.distance), yaw = scene.camera.yaw, pitch = scene.camera.pitch, cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch), centerY = scene.domain === 'presence' ? h * .5 : h * .35; for (let i = 0; i < v.length; i += scene.domain === 'presence' ? 24 : 18) {
+        const px = v[i] * cy + v[i + 2] * sy, pz = -v[i] * sy + v[i + 2] * cy, py = v[i + 1] * cp - pz * sp, x = w / 2 + px * scale, y = centerY - py * scale;
+        c.globalAlpha = .2 + .5 * hash(i + 123);
+        c.beginPath();
+        c.arc(x, y, 1 + .6 * hash(i), 0, Math.PI * 2);
+        c.fill();
+    } c.globalAlpha = 1; const sec = t / 1000; const size = scene.domain === 'presence' ? Math.min(w, h) * .21 : Math.min(w, h) * .065; const px = scene.domain === 'presence' ? w * .5 : w * .16, py = scene.domain === 'presence' ? h * .5 : h * .31; c.lineWidth = 2; c.strokeStyle = '#80e6f3'; for (let k = 0; k < 7; k++) {
+        c.globalAlpha = .15 + k * .07;
+        c.beginPath();
+        for (let i = 0; i <= 250; i++) {
+            const a = i / 250 * Math.PI * 2, r = size * (1 + .19 * Math.sin(a * 5 + sec * .4 + k));
+            const x = px + Math.cos(a * 2 + k * .1) * r * .8, y = py + Math.sin(a * 3 - k * .08) * r * .65;
+            if (i === 0)
+                c.moveTo(x, y);
+            else
+                c.lineTo(x, y);
+        }
+        c.stroke();
+    } c.globalAlpha = 1; }
+}
+
+
+// ======================== main ========================
+const el = (id) => { const node = document.getElementById(id); if (!node)
+    throw Error('Missing interface node: ' + id); return node; };
+const world = el('world'), graph = new SceneGraph(), interpreter = new IntentInterpreter();
+const renderer = new MorphicRenderer(world, new URLSearchParams(location.search).get('fallback') === '2d');
+const experience = el('experience'), feedback = el('feedback'), input = el('commandInput'), status = el('topStatus');
+let activeTool = null;
+let toolValues = {};
+const sessionTools = new Map();
+let savedTool = null;
+let currentMessage = 'Awaiting intent.';
+let commandCount = 0;
+try {
+    const persisted = localStorage.getItem('proteus:saved:instrument:v1');
+    if (persisted) {
+        const parsed = JSON.parse(persisted);
+        if (parsed && typeof parsed === 'object' && 'spec' in parsed && 'values' in parsed) {
+            const candidate = parsed;
+            const c = compile(candidate.spec);
+            c.evaluate(candidate.values);
+            savedTool = candidate;
+        }
+    }
+}
+catch { /* Local data never grants authority or breaks boot */ }
+function text(id, v) { el(id).textContent = v; }
+function setMessage(message) { currentMessage = message; feedback.textContent = message; el('a11yLive').textContent = message; }
+function add(parent, name, cls = '', txt) { const node = document.createElement(name); if (cls)
+    node.className = cls; if (txt !== undefined)
+    node.textContent = txt; parent.appendChild(node); return node; }
+function pane(label, flag) { experience.replaceChildren(); const root = add(experience, 'div', 'pane'); const head = add(root, 'div', 'pane-head'); add(head, 'span', 'pane-title', label); add(head, 'span', 'pane-flag', flag); const content = add(root, 'div', 'pane-main'); return { root, content }; }
+function sourceLabel(scene) { return scene.source === 'DEMONSTRATION' ? 'SYNTHETIC / ILLUSTRATIVE' : scene.source === 'UNAVAILABLE' ? 'VERIFIED DATA UNAVAILABLE' : scene.source === 'LOCAL-COMPUTATION' ? 'LOCAL MATH' : 'VERIFIED'; }
+function updateHeader() {
+    const s = graph.active;
+    const count = graph.history.length;
+    const prefix = s.domain === 'presence' ? '01' : String(count).padStart(2, '0');
+    text('sceneIndex', prefix + ' / ' + s.domain.toUpperCase());
+    text('sourceBadge', s.source);
+    text('heroTitle', s.title);
+    document.querySelector('.hero-pre').textContent = s.domain === 'presence' ? "IT'S NOT AN APP." : 'ONE WORLD. MANY FORMS.';
+    text('heroSub', s.subtitle);
+    text('heroDescription', s.domain === 'presence' ? 'An environment that becomes the instrument you need. Begin with a thought.' : s.domain === 'earth' ? 'Drag the world to rotate. Zoom with touch, wheel or voice command.' : s.domain === 'solar' ? 'Orbital dynamics rendered as an exploratory spatial illustration.' : s.domain === 'finance' ? 'Precise information lives in the chart, not in decorative 3D particles.' : s.domain === 'sports' ? 'A spatial explanation without invented scores, footage or tracking.' : 'A functioning instrument compiled from typed arithmetic primitives.');
+    status.textContent = s.domain.toUpperCase() + ' · ACTIVE';
+    text('nodeCount', String(s.objects.length).padStart(2, '0') + ' NODES');
+    text('rendererStatus', renderer.backend);
+    (el('backBtn')).disabled = !graph.canBack;
+    el('workspace').setAttribute('data-domain', s.domain);
+    el('app').setAttribute('data-domain', s.domain);
+}
+function format(n, precision = 2) { if (!Number.isFinite(n))
+    return 'UNDEFINED'; if (Math.abs(n) >= 1e9 || Math.abs(n) > 0 && Math.abs(n) < .0001)
+    return n.toExponential(3); return new Intl.NumberFormat('en-US', { maximumFractionDigits: precision, minimumFractionDigits: Math.min(precision, 2) }).format(n); }
+function updateInstrument() {
+    if (!activeTool)
+        return;
+    sessionTools.set(activeTool.spec.id, { spec: activeTool.spec, values: { ...toolValues } });
+    const result = el('outputs');
+    try {
+        const loan = activeTool.spec.title === 'Motorcycle financing';
+        if (loan && toolValues.deposit > toolValues.price) {
+            result.replaceChildren();
+            add(result, 'p', 'pane-note', 'Deposit cannot exceed the price. Lower the deposit or increase the price.');
+            return;
+        }
+        const values = activeTool.evaluate(toolValues);
+        result.replaceChildren();
+        for (const output of activeTool.spec.outputs) {
+            const box = add(result, 'div', 'result');
+            add(box, 'span', 'result-name', output.label);
+            add(box, 'strong', 'result-value', (output.unit === '€' ? '€' : '') + format(values[output.id], output.precision ?? 4) + (output.unit && output.unit !== '€' ? ' ' + output.unit : ''));
+        }
+    }
+    catch (error) {
+        result.replaceChildren();
+        add(result, 'p', 'pane-note', 'Calculation unavailable: ' + String(error instanceof Error ? error.message : error));
+    }
+}
+function renderTool() {
+    const c = activeTool;
+    if (!c) {
+        const { content } = pane('INSTRUMENT ENGINE', 'UNAVAILABLE');
+        add(content, 'p', 'pane-note', 'No compiled tool is active.');
+        return;
+    }
+    const { content } = pane('DYNAMIC COMPILER', 'LOCAL COMPUTATION');
+    add(content, 'h2', '', c.spec.title);
+    add(content, 'p', 'pane-note', c.spec.note);
+    const outputs = add(content, 'div', 'result-wrap');
+    outputs.id = 'outputs';
+    updateInstrument();
+    const controls = add(content, 'div', 'tool-controls');
+    for (const field of c.spec.inputs) {
+        const wrap = add(controls, 'div', 'tool-field');
+        const row = add(wrap, 'div', 'field-header');
+        const label = add(row, 'label', '', field.label + (field.unit ? ' · ' + field.unit : ''));
+        label.htmlFor = 'field-' + field.id;
+        const numeric = add(row, 'input');
+        numeric.type = 'number';
+        numeric.id = 'field-' + field.id;
+        numeric.min = String(field.min);
+        numeric.max = String(field.max);
+        numeric.step = 'any';
+        numeric.value = String(toolValues[field.id]);
+        numeric.setAttribute('aria-label', field.label + ' numeric value');
+        const slider = add(wrap, 'input');
+        slider.type = 'range';
+        slider.min = String(field.min);
+        slider.max = String(field.max);
+        slider.step = String(field.step);
+        slider.value = String(toolValues[field.id]);
+        slider.setAttribute('aria-label', field.label + ' slider');
+        const update = (value) => { if (!Number.isFinite(value))
+            return; const clipped = Math.max(field.min, Math.min(field.max, value)); toolValues[field.id] = clipped; slider.value = String(clipped); numeric.value = String(clipped); updateInstrument(); };
+        slider.addEventListener('input', () => update(Number(slider.value)));
+        numeric.addEventListener('change', () => update(Number(numeric.value)));
+    }
+    const action = add(content, 'button', 'linklike', 'SAVE THIS INSTRUMENT');
+    action.type = 'button';
+    action.addEventListener('click', saveCurrent);
+    const code = add(content, 'p', 'pane-note', 'Editable fields update mathematical outputs immediately. No tool code is evaluated or networked.');
+}
+function chartPath(values, min, max, width = 500, height = 218) { return values.map((value, i) => `${i ? 'L' : 'M'}${(48 + i / (values.length - 1) * 432).toFixed(2)},${(18 + (1 - (value - min) / (max - min)) * height).toFixed(2)}`).join(' '); }
+function svgElement(parent, name, attrs) { const n = document.createElementNS('http://www.w3.org/2000/svg', name); for (const [k, v] of Object.entries(attrs))
+    n.setAttribute(k, v); parent.appendChild(n); return n; }
+function renderFinance() {
+    const s = graph.active, compare = Boolean(s.meta.compare), series = demoPrices();
+    const { content } = pane('MARKET INTELLIGENCE', 'SYNTHETIC DATA');
+    const heading = add(content, 'div');
+    add(heading, 'h2', '', compare ? 'Two assets. One reference.' : 'Bitcoin / 24h');
+    add(heading, 'p', 'pane-note', 'Generated demonstration dataset · fixed UTC timestamps · NOT live, observed or forecast prices.');
+    const btc = series.map(x => x.btc), eth = series.map(x => x.eth);
+    const bmin = Math.min(...btc), bmax = Math.max(...btc), base = btc[0], last = btc.at(-1);
+    add(content, 'div', 'data-highlight', '€' + format(last, 0));
+    add(content, 'div', 'data-sub', 'Synthetic 24h change ' + ((last / base - 1) * 100).toFixed(2) + '% · 17 NOV 2026 UTC');
+    const svg = svgElement(content, 'svg', { viewBox: '0 0 510 285', class: 'chart-svg', role: 'img', tabindex: '0', 'aria-label': compare ? 'Normalized BTC and ETH synthetic percentage change lines' : 'Synthetic Bitcoin euro chart with timestamps, numeric scale and 24-hour labels' });
+    const values = compare ? btc.map(x => (x / base - 1) * 100) : btc;
+    const others = compare ? eth.map(x => (x / eth[0] - 1) * 100) : [];
+    const all = values.concat(others);
+    const min = Math.min(...all), max = Math.max(...all), pad = Math.max(.1, (max - min) * .15), lo = min - pad, hi = max + pad;
+    for (let i = 0; i < 5; i++) {
+        const y = 18 + i * 218 / 4;
+        svgElement(svg, 'line', { x1: '48', y1: String(y), x2: '480', y2: String(y), class: 'gridline' });
+        const label = svgElement(svg, 'text', { x: '42', y: String(y + 3), 'text-anchor': 'end' });
+        label.textContent = compare ? (hi - i * (hi - lo) / 4).toFixed(1) + '%' : '€' + format(hi - i * (hi - lo) / 4, 0);
+    }
+    const path = svgElement(svg, 'path', { d: chartPath(values, lo, hi), fill: 'none', stroke: '#73ebc2', 'stroke-width': '2.6', 'stroke-linejoin': 'round', 'stroke-linecap': 'round' });
+    path.style.filter = 'drop-shadow(0px 0px 5px #63d2ad88)';
+    if (compare)
+        svgElement(svg, 'path', { d: chartPath(others, lo, hi), fill: 'none', stroke: '#d799f4', 'stroke-width': '2.4', 'stroke-linejoin': 'round' });
+    const xs = ['00:00', '06:00', '12:00', '18:00', '00:00'];
+    xs.forEach((str, i) => { const label = svgElement(svg, 'text', { x: String(48 + i * 108), y: '260', 'text-anchor': 'middle' }); label.textContent = str; });
+    const timeLabel = svgElement(svg, 'text', { x: '260', y: '282', 'text-anchor': 'middle' });
+    timeLabel.textContent = '17 NOV — 18 NOV 2026 (UTC), SYNTHETIC';
+    const line = svgElement(svg, 'line', { x1: '480', y1: '18', x2: '480', y2: '236', stroke: '#b3f9e2', 'stroke-width': '1', 'stroke-dasharray': '4 5', opacity: '0' });
+    const hit = svgElement(svg, 'rect', { x: '48', y: '18', width: '432', height: '218', fill: 'transparent', tabindex: '0', role: 'slider', 'aria-label': 'Select synthetic time point', 'aria-valuemin': '0', 'aria-valuemax': '48', 'aria-valuenow': '48' });
+    const probe = add(content, 'div', 'chart-legend');
+    const a = add(probe, 'span', '', compare ? '● BTC demo' : '● BTC / EUR demo');
+    a.style.color = '#82dfbb';
+    if (compare) {
+        const b = add(probe, 'span', '', '● ETH demo');
+        b.style.color = '#d799f4';
+    }
+    const highlight = add(content, 'div', 'data-sub', 'Explore data with pointer or keyboard →');
+    const inspect = (i) => { i = Math.max(0, Math.min(48, i)); const x = 48 + i * 9; line.setAttribute('x1', String(x)); line.setAttribute('x2', String(x)); line.setAttribute('opacity', '1'); hit.setAttribute('aria-valuenow', String(i)); highlight.textContent = series[i].time.slice(0, 16).replace('T', ' ') + ' UTC · BTC €' + format(btc[i], 0) + (compare ? ' · ETH €' + format(eth[i], 0) : '') + ' · SYNTHETIC'; };
+    hit.addEventListener('pointermove', e => { const rect = svg.getBoundingClientRect(); const x = (e.clientX - rect.left) / rect.width * 510; inspect(Math.round((x - 48) / 9)); });
+    hit.addEventListener('keydown', e => { const cur = Number(hit.getAttribute('aria-valuenow')); if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        inspect(cur + (e.key === 'ArrowLeft' ? -1 : 1));
+    } });
+    const stats = add(content, 'div', 'mini-stats');
+    const v1 = add(stats, 'div', 'mini-stat');
+    add(v1, 'span', 'mini-stat-label', 'SAMPLE POINTS');
+    add(v1, 'span', 'mini-stat-value', '49 × 30m');
+    const v2 = add(stats, 'div', 'mini-stat');
+    add(v2, 'span', 'mini-stat-label', 'DATA PROVENANCE');
+    add(v2, 'span', 'mini-stat-value', 'Synthetic');
+    if (!compare) {
+        const btn = add(content, 'button', 'linklike', 'COMPARE WITH ETHEREUM');
+        btn.addEventListener('click', () => submit('Compare it with Ethereum and show percentage change'));
+    }
+}
+function renderSports() {
+    const s = graph.active, team = String(s.meta.team ?? 'UNSPECIFIED'), play = Boolean(s.meta.showPlay);
+    const { content } = pane('SPATIAL SPORTS ANALYSIS', 'RESULT UNAVAILABLE');
+    add(content, 'h2', '', team);
+    add(content, 'p', 'pane-note', 'No sports provider or verified last-game result is connected. This diagram is an instructional court, not a reconstructed play.');
+    const svg = svgElement(content, 'svg', { viewBox: '0 0 500 290', class: 'court-svg', role: 'img', 'aria-label': 'Basketball court diagram: rectangular court, center circle, three-point arc and key' });
+    svgElement(svg, 'rect', { x: '15', y: '15', width: '470', height: '260', rx: '4', fill: '#172b3a', stroke: '#8dd3ce', 'stroke-width': '2' });
+    svgElement(svg, 'line', { x1: '250', y1: '15', x2: '250', y2: '275', stroke: '#8dd3ce', 'stroke-width': '2' });
+    svgElement(svg, 'circle', { cx: '250', cy: '145', r: '43', fill: 'none', stroke: '#8dd3ce', 'stroke-width': '2' });
+    for (const left of [true, false]) {
+        const x = left ? 15 : 485, sgn = left ? 1 : -1;
+        svgElement(svg, 'rect', { x: String(left ? 15 : 395), y: '89', width: '90', height: '112', fill: 'none', stroke: '#7ababa', 'stroke-width': '2' });
+        svgElement(svg, 'path', { d: `M ${x + sgn * 30} 35 L ${x + sgn * 75} 35 A 110 110 0 0 ${left ? 1 : 0} ${x + sgn * 75} 255 L ${x + sgn * 30} 255`, fill: 'none', stroke: '#77c4bc', 'stroke-width': '2' });
+        svgElement(svg, 'circle', { cx: String(x + sgn * 28), cy: '145', r: '6', fill: 'none', stroke: '#ebbc8c', 'stroke-width': '2' });
+    }
+    if (play) {
+        svgElement(svg, 'path', { d: 'M 250 235 Q 310 120 405 145', fill: 'none', stroke: '#f5b887', 'stroke-width': '3', 'stroke-dasharray': '7 8' });
+        svgElement(svg, 'circle', { cx: '250', cy: '235', r: '8', fill: '#ebaa75' });
+        const tag = svgElement(svg, 'text', { x: '232', y: '266', 'text-anchor': 'middle' });
+        tag.textContent = 'ILLUSTRATIVE PATH · NOT MATCH DATA';
+    }
+    add(content, 'p', 'pane-note', play ? 'The dashed path illustrates movement only. No replay or play-by-play can be produced without verified tracking or event data.' : 'Ask “show me how they scored” for a clearly marked illustrative shot-path explanation.');
+    if (!play) {
+        const btn = add(content, 'button', 'linklike', 'EXPLAIN SHOT GEOMETRY');
+        btn.addEventListener('click', () => submit('Show me how they scored'));
+    }
+}
+function renderSolar() { const { content } = pane('ASTRONOMICAL SPACE', 'ILLUSTRATIVE'); add(content, 'h2', '', 'Eight planetary orbits'); add(content, 'p', 'pane-note', 'Procedural orbital model. Orbital distances, sizes, phases and time evolution are not to scale and do not represent real ephemeris.'); add(content, 'p', 'spatial-guide', 'DRAG · ROTATE     WHEEL · ZOOM     COMMAND · NAVIGATE'); const btn = add(content, 'button', 'linklike', 'TAKE ME TO EARTH'); btn.addEventListener('click', () => submit('Take me to Earth')); }
+function renderEarth() { const { content } = pane('SPATIAL EXPLORATION', 'PROCEDURAL GEOLOGY'); add(content, 'h2', '', 'Earth / interactive'); add(content, 'p', 'pane-note', 'The globe uses ' + renderer.backend + ' with procedural land colors and rotational motion. Land boundaries are illustrative, not geospatial data.'); add(content, 'p', 'spatial-guide', 'DRAG TO ROTATE  ·  PINCH TO ZOOM'); const btn = add(content, 'button', 'linklike', 'TRANSFORM INTO BITCOIN DATA'); btn.addEventListener('click', () => submit("Show me Bitcoin's performance over the last 24 hours")); }
+function updateExperience() { const domain = graph.active.domain; if (domain === 'instrument') {
+    const key = String(graph.active.meta.specId || '');
+    const stored = sessionTools.get(key);
+    if (stored) {
+        try {
+            activeTool = compile(stored.spec);
+            toolValues = { ...stored.values };
+        }
+        catch {
+            activeTool = null;
+            toolValues = {};
+        }
+    }
+} if (domain === 'presence')
+    experience.replaceChildren();
+else if (domain === 'finance')
+    renderFinance();
+else if (domain === 'sports')
+    renderSports();
+else if (domain === 'instrument')
+    renderTool();
+else if (domain === 'earth')
+    renderEarth();
+else
+    renderSolar(); }
+function navigate(scene) { if (graph.active.domain === 'instrument' && activeTool)
+    sessionTools.set(activeTool.spec.id, { spec: activeTool.spec, values: { ...toolValues } }); if (scene.domain === 'instrument' && activeTool)
+    sessionTools.set(activeTool.spec.id, { spec: activeTool.spec, values: { ...toolValues } }); graph.enter(scene); renderer.setScene(scene.domain); updateHeader(); updateExperience(); experience.scrollTop = 0; updateHistory(); }
+function saveCurrent() { if (graph.active.domain === 'instrument' && activeTool) {
+    savedTool = { spec: structuredClone(activeTool.spec), values: { ...toolValues } };
+    sessionTools.set(activeTool.spec.id, { spec: activeTool.spec, values: { ...toolValues } });
+    try {
+        localStorage.setItem('proteus:saved:instrument:v1', JSON.stringify(savedTool));
+        setMessage('Instrument saved to this browser (localStorage).');
+    }
+    catch {
+        setMessage('Browser storage unavailable; instrument retained for this session only.');
+    }
+}
+else {
+    try {
+        localStorage.setItem('proteus:saved:scene:v1', JSON.stringify(graph.snapshot()));
+        setMessage('Scene snapshot saved in this browser.');
+    }
+    catch {
+        setMessage('Browser storage unavailable; scene remains in session history only.');
+    }
+} }
+function restoreSavedTool() { if (!savedTool) {
+    setMessage('No previously saved instrument exists in this browser.');
+    return;
+} try {
+    activeTool = compile(savedTool.spec);
+    toolValues = { ...savedTool.values };
+    navigate({ ...graph.snapshot(), id: createLocalId(), domain: 'instrument', title: savedTool.spec.title.toUpperCase(), objects: [{ id: 'tool:' + savedTool.spec.id, concept: savedTool.spec.title, shape: 'tool', position: { x: 0, y: 0, z: 0 }, source: 'LOCAL-COMPUTATION', capabilities: ['compute', 'edit'] }], source: 'LOCAL-COMPUTATION', meta: { specId: savedTool.spec.id } });
+    setMessage('Recovered saved instrument with inputs intact.');
+}
+catch {
+    setMessage('Saved instrument failed validation and was not loaded.');
+} }
+function submit(command) {
+    command = command.trim();
+    if (!command)
+        return;
+    commandCount++;
+    graph.lastCommand = command;
+    const result = interpreter.interpret(command, graph.active);
+    input.value = '';
+    if (result.kind === 'restore') {
+        if (graph.back()) {
+            renderer.setScene(graph.active.domain);
+            updateHeader();
+            updateExperience();
+            experience.scrollTop = 0;
+            updateHistory();
+            setMessage(result.message);
+        }
+        else
+            setMessage('This is the first scene.');
+        return;
+    }
+    if (result.kind === 'save') {
+        saveCurrent();
+        if (result.patch?.return)
+            navigate(originalPresence());
+        return;
+    }
+    if (result.kind === 'tool' && result.spec && result.scene) {
+        try {
+            activeTool = compile(result.spec);
+            toolValues = Object.fromEntries(result.spec.inputs.map(x => [x.id, x.value]));
+            navigate(result.scene);
+            setMessage(result.message);
+        }
+        catch (e) {
+            setMessage('Compiler rejected an unsafe tool: ' + String(e));
+        }
+        return;
+    }
+    if (result.kind === 'scene' && result.scene) {
+        navigate(result.scene);
+        setMessage(result.message);
+        return;
+    }
+    if (result.kind === 'modify' && result.patch) {
+        if (result.patch.restoreSaved) {
+            restoreSavedTool();
+            return;
+        }
+        const p = result.patch;
+        graph.mutate(s => { if (typeof p.cameraZoom === 'number')
+            s.camera.distance = Math.min(22, Math.max(3, s.camera.distance * p.cameraZoom)); if (typeof p.speed === 'number')
+            s.parameters.speed = p.speed; });
+        if (typeof p.material === 'string') {
+            renderer.material = p.material === 'wireframe' ? 'wireframe' : p.material === 'opaque' ? 'opaque' : 'glass';
+            (el('material')).value = renderer.material;
+        }
+        if (activeTool) {
+            let changed = false;
+            for (const field of activeTool.spec.inputs) {
+                const v = p[field.id];
+                if (typeof v === 'number') {
+                    toolValues[field.id] = Math.max(field.min, Math.min(field.max, v));
+                    changed = true;
+                }
+            }
+            if (changed && graph.active.domain === 'instrument')
+                renderTool();
+        }
+        setMessage(result.message);
+        return;
+    }
+    setMessage(result.message);
+}
+function updateHistory() { const history = el('historyList'); history.replaceChildren(); graph.history.forEach((h, i) => { const btn = add(history, 'button', 'history-record', String(i + 1).padStart(2, '0') + ' / ' + h.title); btn.type = 'button'; btn.setAttribute('aria-label', 'Restore ' + h.title); add(btn, 'small', '', h.domain.toUpperCase()); btn.addEventListener('click', () => { if (graph.restore(h.id)) {
+    renderer.setScene(graph.active.domain);
+    updateHeader();
+    updateExperience();
+    experience.scrollTop = 0;
+    setMessage('Restored ' + h.title + '.');
+    el('historyPanel').hidden = true;
+    updateHistory();
+} }); }); }
+el('commandForm').addEventListener('submit', e => { e.preventDefault(); submit(input.value); });
+document.querySelectorAll('[data-command]').forEach(b => b.addEventListener('click', () => submit(b.dataset.command || '')));
+el('homeBtn').addEventListener('click', () => submit('return to yourself'));
+el('backBtn').addEventListener('click', () => submit('go back'));
+el('historyBtn').addEventListener('click', () => { el('historyPanel').hidden = !el('historyPanel').hidden; el('settingsPanel').hidden = true; updateHistory(); });
+el('settingsBtn').addEventListener('click', () => { el('settingsPanel').hidden = !el('settingsPanel').hidden; el('historyPanel').hidden = true; });
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => el(b.dataset.close || '').hidden = true));
+el('quality').addEventListener('change', e => { renderer.quality = e.target.value; setMessage('Graphics quality set to ' + renderer.quality + '.'); });
+el('material').addEventListener('change', e => renderer.material = e.target.value);
+const mediaReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+renderer.isReducedMotion = mediaReduced;
+el('reduceMotion').checked = mediaReduced;
+el('reduceMotion').addEventListener('change', e => renderer.isReducedMotion = e.target.checked);
+let dragging = false, x0 = 0, y0 = 0;
+const points = new Map();
+let pinchDistance = 0;
+world.addEventListener('pointerdown', e => { world.setPointerCapture(e.pointerId); points.set(e.pointerId, { x: e.clientX, y: e.clientY }); dragging = true; x0 = e.clientX; y0 = e.clientY; if (points.size === 2) {
+    const a = [...points.values()];
+    pinchDistance = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y);
+} });
+world.addEventListener('pointermove', e => { renderer.setPointer(e.clientX / innerWidth, e.clientY / innerHeight); if (!points.has(e.pointerId))
+    return; points.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (points.size === 2) {
+    const a = [...points.values()];
+    const d = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y);
+    if (pinchDistance > 0) {
+        graph.active.camera.distance = Math.min(22, Math.max(3, graph.active.camera.distance * pinchDistance / d));
+    }
+    pinchDistance = d;
+    return;
+} if (dragging) {
+    graph.active.camera.yaw += (e.clientX - x0) * .007;
+    graph.active.camera.pitch = Math.max(-1.1, Math.min(1.1, graph.active.camera.pitch + (e.clientY - y0) * .006));
+    x0 = e.clientX;
+    y0 = e.clientY;
+} });
+for (const name of ['pointerup', 'pointercancel', 'lostpointercapture'])
+    world.addEventListener(name, e => { points.delete(e.pointerId); if (points.size === 0)
+        dragging = false; pinchDistance = 0; });
+world.addEventListener('wheel', e => { e.preventDefault(); graph.active.camera.distance = Math.min(22, Math.max(3, graph.active.camera.distance * (e.deltaY > 0 ? 1.08 : .92))); }, { passive: false });
+window.addEventListener('keydown', e => { const t = e.target; if (t instanceof HTMLInputElement || t instanceof HTMLSelectElement)
+    return; if (e.key === 'Escape') {
+    el('historyPanel').hidden = true;
+    el('settingsPanel').hidden = true;
+} if (e.key === '/' || e.key === 'k' && e.ctrlKey) {
+    e.preventDefault();
+    input.focus();
+} });
+let lastUpdate = 0;
+function draw(now) { try {
+    renderer.draw(graph.active, now);
+    if (now - lastUpdate > 1100) {
+        text('fps', renderer.fps ? '~' + renderer.fps + ' FPS' : '—');
+        lastUpdate = now;
+    }
+}
+catch (e) {
+    setMessage('Rendering error: ' + String(e));
+    return;
+} requestAnimationFrame(draw); }
+updateHeader();
+updateExperience();
+updateHistory();
+if (renderer.error)
+    setMessage(renderer.error);
+requestAnimationFrame(draw);
+// Inspection-only browser test hook, not an authority or app invocation interface.
+Object.defineProperty(window, '__proteusDiagnostics', { configurable: false, value: () => ({ backend: renderer.backend, fps: renderer.fps, active: graph.active.domain, camera: structuredClone(graph.active.camera), history: graph.history, objects: graph.active.objects.map(o => o.id), tool: activeTool?.spec.title || null, values: structuredClone(toolValues), commands: commandCount, error: renderer.error }) });
+</script>
+</body></html>
