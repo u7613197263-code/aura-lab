@@ -1,0 +1,35 @@
+name: AURA Market standalone validation
+on:
+  push:
+    branches: [feat/aura-market-standalone-v1]
+    paths:
+      - "index.html"
+      - "market-terminal.js"
+      - "market-ui.css"
+      - "manifest.webmanifest"
+      - "sw.js"
+      - "tests/market-standalone.test.mjs"
+      - ".github/workflows/aura-market-standalone.yml"
+  pull_request:
+    paths:
+      - "index.html"
+      - "market-terminal.js"
+      - "market-ui.css"
+      - "manifest.webmanifest"
+      - "sw.js"
+      - "tests/market-standalone.test.mjs"
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Syntax check and source-based regression suite
+        run: |
+          node --check market-terminal.js
+          node --check sw.js
+          node --test tests/market-standalone.test.mjs
