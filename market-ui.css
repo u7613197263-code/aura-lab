@@ -1,0 +1,177 @@
+/* AURA Market Terminal v1 — functional luxury, Android-first */
+:root{
+ --bg:#050a11;--panel:#0b1624;--panel2:#102032;--line:#223449;--line2:#32485f;
+ --text:#e9f1f9;--muted:#a1b2c6;--dim:#738a9f;--mint:#80efcf;--mint2:#adffe7;
+ --gold:#f6ce95;--red:#ffa2ad;--blue:#93bded;
+ --shadow:0 14px 42px #00000049;
+}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(ellipse 80rem 48rem at 80% -15%,#2c415b52,transparent 58%),radial-gradient(ellipse 42rem 32rem at -18% 22%,#1b59464d,transparent 63%),#050a11;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:linear-gradient(90deg,transparent 98%,#87bbd609 99%),linear-gradient(0deg,transparent 98%,#87bbd609 99%);background-size:56px 56px;mask-image:linear-gradient(#0005,transparent 75%)}
+button,input,select{touch-action:manipulation}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #a1edff;outline-offset:3px}
+.wrap{max-width:1440px;padding:0 28px 45px}
+.top{padding:20px 0 17px;border-color:#293c50;position:relative}
+.brand .logo{border:1px solid #77cddd99;background:radial-gradient(circle at 50% 25%,#1f657d,#0a1b2e 80%);border-radius:12px;box-shadow:0 0 25px #5ecef622;color:#c3f9ff}
+.brand h1{font-size:13px;color:#f2f8ff;font-weight:750;letter-spacing:.22em}
+.brand p{color:#8fa6be;letter-spacing:.15em}
+.top-right{gap:9px}.pill{border-color:#344b60;background:#132034;color:#aac4da}
+.top-right .pill:last-child{font-size:9px}
+.nav{gap:8px;scrollbar-width:none;padding:16px 0 18px;position:relative;border:0}
+.nav button{background:#0b1727;border:1px solid #213448;border-radius:12px;padding:11px 18px;font-size:12px;color:#acc0d4;display:flex;align-items:center;justify-content:center;gap:9px;min-height:44px;font-weight:650}
+.nav button:hover{border-color:#5c98b2;background:#122839}
+.nav button.active{background:linear-gradient(110deg,#19403f,#17324a);border-color:#68d6c2;color:#c2ffee;box-shadow:inset 0 1px #c4f9e418}
+.nav-icon{width:16px;height:16px;display:block;flex-shrink:0}
+.nav-label{white-space:nowrap}
+.intro{padding:9px 0 17px;align-items:center}
+.intro .eyebrow,.aura-eyebrow{color:#91dbd3;font-size:10px;letter-spacing:.18em;font-weight:800}
+.intro h2{font-size:clamp(25px,3.6vw,42px);line-height:1.1;letter-spacing:-.055em;font-weight:740;margin:10px 0}
+.intro p{color:#a5b7cd;font-size:13px;max-width:680px}
+.intro .actions{gap:9px}
+.btn{background:#142337;color:#cbddec;border-color:#34516a;border-radius:11px;font-weight:650;min-height:43px;padding:11px 15px}
+.btn:hover{background:#1c3349;border-color:#72d9c8}
+.btn.primary{background:linear-gradient(120deg,#9ff4da,#83c5e7);border-color:transparent;color:#052124;font-weight:800}
+.btn.ghost{border-color:#2c4056;color:#96bbd0}
+.card{background:linear-gradient(153deg,#101f30fa,#0a1523f8);border-color:#2a4055;border-radius:17px;box-shadow:0 15px 35px #01040950}
+.stats{gap:11px}
+.card.stat{padding:18px 19px;min-height:112px;border-top-color:#3a6577}
+.stat .label,.label{color:#8ea9c2}
+.value{font-weight:760;font-size:clamp(21px,2vw,29px);letter-spacing:-.055em;color:#f1f9ff}
+.stat .sub{color:#8ca8bc}
+.section{padding:22px}
+.sect-head h3{font-size:12px;font-weight:750;letter-spacing:.095em;color:#e7f0f9}
+.sect-head p{color:#90a6bc;font-size:11px}
+.tag,.badge{background:#182b3b;border-color:#35556b;color:#a5c8d5}
+.field{min-height:44px;border-color:#2f4960;background:#0b1929;color:#edf5fc;border-radius:10px;font-size:12px}
+.field:focus{border-color:#72e5ce;outline:2px solid #72e5ce28}
+.filters{gap:9px}
+.table-wrap{border:1px solid #2a3e52;border-radius:12px;overflow:auto;overscroll-behavior-x:contain;max-width:100%}
+table{min-width:720px}
+td{padding:16px 10px;border-color:#1d2e42;font-size:12px}
+th{padding:13px 10px;font-size:10px;color:#94abc3}
+tbody tr:hover,tbody tr.selected{background:#153142}
+.score{color:#91f0cf;background:#14312c;border-color:#326c61}
+.score.mid{color:#ffdfa6;background:#312a1a;border-color:#6b5537}
+.score.low{color:#ffb4b4;background:#341e26;border-color:#804451}
+.positive,.pos{color:#85edce!important}
+.negative,.neg{color:#ff99ab!important}
+.feeditem{border-color:#273b50}
+.inspect{position:static;padding:18px}
+.inspect .price{letter-spacing:-.04em}
+.inspect-head h3{font-size:18px}
+.inspect .metric{border-color:#2a4056;background:#0c1828}
+.warning{border:1px solid #7d6242;background:#2e251c;color:#f4d4a0}
+.warning.red{border-color:#804854;background:#361f2b;color:#f2b5bf}
+.aura-context{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 16px;color:#b7cbe0;font-size:11px}
+.aura-context b{letter-spacing:.05em;font-size:12px}
+#aura-market-product{padding-bottom:20px}
+.aura-hero{position:relative;isolation:isolate;background:radial-gradient(circle at 96% 20%,#307a8860,transparent 29%),linear-gradient(120deg,#102c40,#102037 60%,#172942);border:1px solid #496a83;border-radius:21px;overflow:hidden;padding:clamp(18px,3vw,32px);min-height:165px;display:flex;align-items:center;justify-content:space-between;gap:25px;box-shadow:0 15px 60px #04121d73}
+.aura-hero:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 35px,#93cde40c 36px);z-index:-1}
+.aura-hero .eyebrow{color:#93e5d4}
+.aura-hero h3{font-size:clamp(20px,3.2vw,31px);margin:9px 0 7px;line-height:1.12;letter-spacing:-.05em}
+.aura-hero p{margin:0;color:#a8c5d9;max-width:650px;font-size:12px}
+.aura-hero .btn{min-width:148px}
+.aura-chipbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 15px}
+.aura-chip{background:#0e1d2e;border:1px solid #30485e;border-radius:13px;padding:14px 17px;min-width:0}
+.aura-chip small{display:block;font-size:10px;color:#90a8be;letter-spacing:.1em;font-weight:700}
+.aura-chip strong{display:block;font-size:clamp(19px,2.6vw,27px);letter-spacing:-.04em;margin:5px 0}
+.aura-chip em{font-size:10px;color:#7c9aab;font-style:normal}
+.aura-panel{background:linear-gradient(145deg,#102033,#0b1726);border:1px solid #2d445c;border-radius:17px;overflow:hidden;margin:12px 0;min-width:0}
+.aura-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 23px 15px}
+.aura-panel-head h3{margin:6px 0 0;font-size:clamp(18px,2vw,24px);letter-spacing:-.04em;font-weight:750}
+.aura-panel-head span:last-child{font-size:10px;color:#8da7bf}
+.aura-candidate{display:grid;grid-template-columns:25px minmax(0,1fr) 92px 68px;gap:12px;align-items:center;width:100%;background:transparent;border:0;border-top:1px solid #283c52;border-radius:0;text-align:left;padding:17px 22px}
+.aura-candidate:hover{background:#193548}
+.aura-rank{font:11px ui-monospace,monospace;color:#829cb2}
+.aura-candidate-main strong,.aura-candidate-change,.aura-candidate-score{display:block;color:#eaf2ff;font-size:15px;font-weight:750}
+.aura-candidate-main small{display:block;color:#879eaf;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aura-candidate-change,.aura-candidate-score{text-align:right}
+.aura-candidate-change small,.aura-candidate-score small{display:block;color:#92a7ba;font-size:9px;font-weight:450;margin-top:2px}
+.aura-candidate-score{color:#8cf1d1}
+.aura-placeholder{padding:23px;color:#91a9bd;font-size:12px;line-height:1.65}
+.aura-info-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:12px}
+.aura-brief{padding:20px 22px}
+.aura-brief strong{display:block;font-size:17px;color:#e5f7fa;margin:6px 0 4px}
+.aura-brief p{color:#99b5c8;line-height:1.6;margin:6px 0;font-size:12px}
+.aura-observation-note{font-size:10px;color:#8ba6b6;padding:12px 20px;border-top:1px solid #263b50}
+#research .workspace{grid-template-columns:minmax(0,.9fr) minmax(290px,1.1fr);align-items:start}
+.aura-research{padding:20px}
+.aura-research-head{display:flex;align-items:start;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.aura-research-head h3{font-size:clamp(21px,2.7vw,29px);letter-spacing:-.04em;margin:6px 0}
+.aura-research-head h3 span{font-weight:450;font-size:13px;color:#8ba8ba}
+.aura-grade{border-radius:9px;padding:8px 10px;font-size:9px;font-weight:800;letter-spacing:.07em;border:1px solid #6c5161;color:#e8b4b9;background:#2e1d2b}
+.aura-grade.pass{border-color:#3b8279;color:#8ef1d8;background:#15322e}
+.aura-research-meter{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:17px}
+.aura-research-meter>div{border:1px solid #304861;border-radius:10px;padding:12px;background:#0b1a2b;min-width:0}
+.aura-research-meter small{font-size:9px;color:#86a1b4;display:block;letter-spacing:.05em}
+.aura-research-meter strong{font-size:15px;display:block;margin-top:5px;overflow-wrap:anywhere}
+.aura-evidence-title{font-size:10px;letter-spacing:.11em;font-weight:800;color:#99cade;margin-top:19px}
+.aura-evidence-list{margin:9px 0 0 16px;padding:0;font-size:12px;color:#c2d3e2;line-height:1.75}
+.aura-evidence-list.caution{color:#e7c8bd}
+.aura-rulebox{background:#1c3040a6;border-left:3px solid #76e5cc;border-radius:8px;padding:12px 15px;margin-top:18px}
+.aura-rulebox b{font-size:11px}.aura-rulebox p{font-size:12px;color:#afc7d8;margin:5px 0;line-height:1.6}
+.aura-footnote{font-size:10px;color:#8cabc1;line-height:1.6}
+.aura-chart-svg{width:100%;height:auto;display:block}
+.aura-chart{min-height:175px;border-radius:11px;background:#0a1727;border:1px solid #2b4357;padding:8px;overflow:hidden}
+.aura-chart-caption{display:flex;justify-content:space-between;gap:8px;color:#90a9bb;font-size:9px;flex-wrap:wrap;padding:7px 4px}
+.aura-chart-tabs{display:flex;gap:8px}
+.aura-chart-tabs button{background:#14293c;border:1px solid #34546b;color:#b9d2dc;border-radius:8px;padding:8px 12px;font-size:11px}
+.aura-chart-tabs button.active{border-color:#73e6cf;color:#aaffed;background:#20423f}
+#scanner .workspace{display:block}
+#scanner .card.section{margin-top:13px}
+#scanner .filters{display:flex;gap:9px}
+#scanner #searchResults{max-height:400px;overflow:auto}
+#about .grid{align-items:start}
+footer{padding-bottom:26px}
+@media(min-width:1000px){
+ .wrap{padding-left:45px;padding-right:45px}
+ #overview .aura-info-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:800px){
+ .wrap{padding:0 16px 112px}
+ .top-right .pill:last-child{display:none}
+ .intro{display:block}
+ .intro .actions{margin-top:13px}
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #research .workspace,.aura-info-grid{grid-template-columns:1fr}
+ #about .grid{grid-template-columns:1fr!important}
+ .aura-chipbar{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .nav{position:fixed;left:0;right:0;bottom:0;z-index:60;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));padding:9px max(8px,env(safe-area-inset-right)) calc(9px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));background:#081320f7;border-top:1px solid #33495d;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);gap:4px;box-shadow:0 -20px 50px #0009;overflow:visible}
+ .nav button{display:flex;flex-direction:column;gap:4px;min-height:56px;padding:8px 2px 7px;border-radius:11px;background:transparent;border:1px solid transparent;font-size:9px;line-height:1.1}
+ .nav button.active{border-color:#3f8c85;background:#153d40;color:#d9fff4}
+ .nav-icon{height:21px;width:21px}
+ .nav-label{font-size:10px}
+ #scanner .table-wrap{margin-left:-3px;margin-right:-3px}
+ .aura-candidate{grid-template-columns:19px minmax(0,1fr) 58px 49px;gap:6px;padding:14px 12px}
+ .aura-candidate-main strong{font-size:13px}
+ .aura-candidate-score,.aura-candidate-change{font-size:13px}
+ .aura-panel-head{padding:18px 15px 13px}
+ footer{padding-bottom:10px}
+}
+@media(max-width:440px){
+ .wrap{padding-left:11px;padding-right:11px}
+ .top{padding-top:14px}
+ .top-right{gap:4px}
+ .top-right .pill:first-child{padding:6px 8px;font-size:9px}
+ .brand{gap:8px}
+ .brand .logo{width:33px;height:33px}
+ .brand h1{font-size:11px;letter-spacing:.13em}
+ .brand p{font-size:8px;letter-spacing:.07em}
+ .intro h2{font-size:25px}
+ .intro p{font-size:11px}
+ .intro .actions .btn{font-size:10px;padding:9px 10px;min-height:42px}
+ .stats{gap:8px}
+ .card.stat{min-height:104px;padding:12px}
+ .stat .value{font-size:23px}
+ .aura-hero{min-height:176px;display:block;padding:18px}
+ .aura-hero .btn{margin-top:14px}
+ .aura-chip{padding:12px}
+ .aura-chip strong{font-size:21px}
+ .section{padding:15px}
+ .aura-research{padding:13px}
+ .aura-research-meter>div{padding:8px}
+ .aura-research-meter strong{font-size:12px}
+ .filters input{min-width:120px}
+ #scanner .filters select{min-width:103px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
