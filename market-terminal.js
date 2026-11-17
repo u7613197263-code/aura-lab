@@ -7,7 +7,7 @@
   const validMint = s => typeof s === "string" && /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(s);
   const escape = v => String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const numeric = x => x==null||x===""||!Number.isFinite(Number(x))?null:Number(x);
-  const money = x => x==null?"—":"$"+(x>=1e6?(x/1e6).toFixed(2)+"M":x>=1e3?(x/1e3).toFixed(1)+"K":x.toLocaleString(undefined,{maximumFractionDigits:2}));
+  const money = x => x==null?"—":"$"+(x>0&&x<.01?x.toLocaleString(undefined,{maximumSignificantDigits:5}):x>=1e6?(x/1e6).toFixed(2)+"M":x>=1e3?(x/1e3).toFixed(1)+"K":x.toLocaleString(undefined,{maximumFractionDigits:2}));
   const percent=x=>x==null?"—":(x>0?"+":"")+x.toFixed(1)+"%";
   const market = {tokens:[], ranked:[], selected:null, scanTime:null, view:"overview", chartRequest:0};
 
