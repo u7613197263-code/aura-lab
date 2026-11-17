@@ -2,7 +2,7 @@ import http from "node:http";
 
 const PORT = Number(process.env.PORT || 10000);
 const APP_ORIGIN = "https://aura-wallet-intelligence.onrender.com";
-const ALLOWED_ORIGINS = new Set([APP_ORIGIN, "http://localhost:4173", "http://127.0.0.1:4173"]);
+const ALLOWED_ORIGINS = new Set([APP_ORIGIN, "https://aura-market-terminal-v1.onrender.com", "http://localhost:4173", "http://127.0.0.1:4173"]);
 const CACHE = new Map();
 const INFLIGHT = new Map();
 const LAST_GOOD_FEEDS = new Map();
