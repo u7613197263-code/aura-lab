@@ -1,0 +1,767 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050911"><meta name="description" content="GENESIS 0.3 isolated semantic morphing runtime — Project PROTEUS"><title>AURA OMNI · GENESIS 0.3</title><style>:root{color-scheme:dark;--night:#050a12;--ink:#eaf8ff;--muted:#8396a9;--aqua:#56f5de;--ice:#94caff;--violet:#a98dff;--gold:#f0b36b;--line:rgba(163,224,248,.13);font-family:Inter,'Segoe UI',Arial,sans-serif}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--night);color:var(--ink)}body{overflow-x:hidden;background:radial-gradient(ellipse at 48% 33%,#101d2c 0,#080e1a 42%,#03070c 98%)}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid var(--aqua);outline-offset:3px}[hidden]{display:none!important}.visually-hidden{position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden}.surface-noise{position:fixed;inset:0;z-index:0;opacity:.12;pointer-events:none;background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 180 180%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.92%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22180%22 height=%22180%22 filter=%22url(%23n)%22 opacity=%22.27%22/%3E%3C/svg%3E')}.app{position:relative;z-index:1;max-width:1720px;min-height:100svh;margin:auto;padding:0 4.3vw;display:flex;flex-direction:column}.topbar{height:92px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(169,224,248,.075)}.brand{display:flex;gap:16px;align-items:center}.brand b{display:block;font-size:20px;letter-spacing:.24em;font-weight:720}.brand-light{font-weight:250}.brand small{display:block;color:#5e7c8e;font-size:9px;letter-spacing:.32em;margin-top:7px}.brand-sigil{width:35px;height:35px;border:1px solid rgba(94,246,223,.4);display:grid;place-content:center;transform:rotate(45deg);border-radius:10px;box-shadow:0 0 30px #1ef1d21f}.brand-sigil span{width:13px;height:1px;background:var(--aqua);margin:2px;display:block}.topright{display:flex;align-items:center;gap:13px}.live{font-size:10px;letter-spacing:.17em;color:#b8d4d7;border-right:1px solid var(--line);padding-right:19px}.live i,.feedback-light,.pulse{width:6px;height:6px;display:inline-block;border-radius:100%;background:var(--aqua);box-shadow:0 0 12px #6fffe3}.live i{margin-right:8px}.icon-button{display:grid;place-items:center;background:#18253270;color:#b5ced9;border:1px solid var(--line);width:35px;height:35px;border-radius:11px;font-size:22px}.microline{display:flex;justify-content:space-between;padding-top:20px;font-size:10px;letter-spacing:.2em;color:#6d8599}.stage{flex:1;display:grid;grid-template-columns:minmax(0,1.13fr) minmax(380px,.87fr);gap:clamp(15px,2.5vw,48px);align-items:stretch;min-height:min(660px,66vh);padding-top:12px;padding-bottom:22px}.world{min-height:520px;position:relative;touch-action:none;user-select:none;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 52%,#08222c70 0,#06132222 51%,transparent 76%)}.world-vignette{position:absolute;inset:-10%;background:radial-gradient(ellipse at 50% 49%,transparent 30%,#03091088 67%,#050a12 84%);pointer-events:none;z-index:2}.world-orbit{position:absolute;border:1px solid rgba(84,207,219,.075);border-radius:50%;width:min(60vw,570px);height:min(60vw,570px);left:50%;top:48%;transform:translate(-50%,-50%) rotate(25deg);pointer-events:none}.world-orbit-two{width:min(42vw,390px);height:min(42vw,390px);border-color:#7fc4e711;transform:translate(-50%,-50%) rotate(-36deg) scaleX(.74)}#worldCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;filter:drop-shadow(0 0 17px rgba(79,230,215,.38))}.focus-hair{position:absolute;inset:50% auto auto 50%;width:8px;height:8px;border:1px solid #78f6dd78;transform:translate(-50%,-50%) rotate(45deg);z-index:3;pointer-events:none}.stage-label{position:absolute;z-index:4;bottom:73px;left:16px;pointer-events:none;text-shadow:0 5px 30px #02080d}.stage-kicker,.section-eyebrow{font-size:10px;color:#62babb;letter-spacing:.25em}.stage-label h1{font-size:clamp(25px,4vw,56px);font-weight:360;letter-spacing:-.046em;margin:9px 0}.stage-label p{font-size:10px;color:#9bb9bf;letter-spacing:.12em;max-width:390px}.world-footer{position:absolute;z-index:4;bottom:8px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:9px;letter-spacing:.14em;color:#7999a9}.world-footer>span:first-child{color:#b7e4e2}.pulse{margin-right:8px;width:5px;height:5px}.world-footer button{background:none;color:#afdfd9;font-size:23px;border:0;padding:5px}.experience{position:relative;z-index:5;align-self:center;width:100%;max-width:620px;min-height:400px;max-height:min(685px,72vh);overflow:auto;overscroll-behavior:contain;padding:27px 27px 25px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(135deg,#111d2bd8,#08121ce8 58%,#07111ab3);box-shadow:0 35px 65px #0007, inset 0 1px #b5f7ff18;backdrop-filter:blur(22px);scrollbar-color:#37545a transparent}.experience.is-presence{max-width:440px;min-height:310px;background:linear-gradient(135deg,#07152075,#07151b66);border-color:#5ff4e715}.experience-heading{display:flex;gap:16px;align-items:flex-start;justify-content:space-between}.experience h2{font-weight:430;letter-spacing:-.035em;font-size:clamp(24px,2.5vw,37px);margin:12px 0 7px}.experience h3{font-size:12px;letter-spacing:.13em;color:#d2edee;font-weight:500;text-transform:uppercase}.description{font-size:13px;line-height:1.65;color:#8ca6b7}.pill{display:inline-flex;align-items:center;gap:7px;padding:7px 9px;border:1px solid var(--line);color:#91c6cc;font-size:9px;white-space:nowrap;letter-spacing:.12em;border-radius:7px}.info-rule{height:1px;background:linear-gradient(90deg,#8fc9d828,transparent);margin:18px 0}.presence-message{font-family:Georgia,serif;font-style:italic;font-size:clamp(19px,2.5vw,29px);font-weight:normal;line-height:1.38;color:#d6f7f1;max-width:360px;margin:26px 0}.presence-items{display:grid;gap:9px;margin-top:22px}.presence-items button{color:#b5d6dc;background:#12232b66;border:1px solid var(--line);padding:13px 15px;text-align:left;border-radius:9px;font-size:13px;display:flex;align-items:center;justify-content:space-between}.presence-items button span{color:var(--aqua)}.data-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}.metric{background:#071a2587;border:1px solid #8ecbdc14;border-radius:13px;padding:16px;min-width:0}.metric-label{color:#779bab;font-size:10px;letter-spacing:.13em}.metric-value{display:block;font-size:clamp(20px,2.15vw,31px);font-weight:380;letter-spacing:-.045em;margin-top:8px;white-space:nowrap}.metric-note{font-size:10px;color:#9dc6c7;margin-top:7px}.metric-accent{color:var(--aqua)}.button-group{display:flex;gap:7px;flex-wrap:wrap}.choice{border:1px solid #b4eaf224;background:#0c202c87;color:#9fbcc7;padding:9px 12px;border-radius:9px;font-size:11px}.choice[aria-pressed="true"],.choice.selected{border-color:#6ef2d77b;background:#1d4b4b80;color:#d8fff7}.data-chart{width:100%;height:auto;display:block;border:1px solid #ffffff10;border-radius:13px;background:#06131faa;touch-action:none}.chart-tooltip{padding:12px 0;font-size:12px;color:#a9dadd;min-height:40px}.legend{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px}.legend small{font-size:10px;color:#6e95a6}.calendar-nav{display:flex;gap:8px;align-items:center;justify-content:space-between}.calendar-nav h2{font-size:26px;margin:5px 0}.calendar-controls{display:flex;gap:7px}.calendar-controls button,.mini-btn{border:1px solid var(--line);background:#1428346b;color:#bdeae5;border-radius:8px;padding:8px 11px}.day-headings,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.day-headings{margin:22px 0 8px}.day-headings span{font-size:10px;color:#83b4ba;text-align:center}.day{aspect-ratio:1;min-width:0;border-radius:9px;border:1px solid #7cbdcc14;background:#0719279e;color:#e2eaf0;font-size:12px;position:relative;display:grid;place-items:center}.day.today{border-color:#c8dba534}.day.selected{background:#24575ca8;border-color:#68e2d2}.day.has-event:after{content:"";position:absolute;width:4px;height:4px;border-radius:50%;background:#ffc983;bottom:4px;left:50%;transform:translateX(-50%)}.day-empty{border:0;background:transparent}.appointment{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px 12px;border-radius:10px;background:#12212a9b;margin:6px 0}.appointment time{font-size:10px;color:var(--aqua);width:45px}.appointment span{flex:1;overflow-wrap:anywhere;font-size:12px}.appointment button{background:none;color:#e5a5a5;border:0;padding:3px 9px}.event-form{display:flex;gap:8px;margin:15px 0 4px;flex-wrap:wrap}.event-form input{background:#06141ed8;border:1px solid #76c9d42e;border-radius:8px;color:var(--ink);padding:11px;min-width:0}.event-form input[type=text]{flex:1 1 155px}.event-form input[type=time]{flex:0 1 110px;color-scheme:dark}.event-form button{background:#22544c;color:#d9fff8;border:1px solid #6bf3d354;padding:10px 12px;border-radius:9px}.model-display{height:160px;margin:8px 0 18px;border:1px solid #78c5db20;border-radius:15px;display:grid;place-items:center;background:radial-gradient(ellipse at center,#1b324053,transparent 70%);position:relative}.chamber{width:112px;height:106px;border:2px solid #88dae377;border-radius:31% 31% 19% 19%;position:relative;overflow:hidden;box-shadow:inset 0 0 30px #57bcaf1c,0 0 34px #55f4df1c}.liquid{position:absolute;left:10%;right:10%;bottom:0;height:60%;border-radius:30% 30% 15% 15%;background:linear-gradient(#c88c4966,#ab63366b);animation:liquidPulse 2.8s ease-in-out infinite}.liquid:before{content:"";position:absolute;inset:4px;border-radius:100%;border-top:2px solid #f1bc8b91}.no-motion .liquid{animation:none}@keyframes liquidPulse{50%{height:68%}}.model-display span{position:absolute;top:13px;left:13px;font-size:9px;color:#94b4c2;letter-spacing:.17em}.knob-row{display:grid;grid-template-columns:70px 1fr 65px;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid #b9e1ed15}.knob-row label{font-size:11px;color:#a9c7c8}.knob-row output{text-align:right;font-size:12px;color:#d6eee9}.knob-row input{width:100%;accent-color:#58e8cf}.simulation-note{font-size:11px;color:#7d9aaa;line-height:1.65;margin-top:15px}.dock{position:relative;border-top:1px solid #acd0db15;padding:12px 0 18px;background:linear-gradient(#071018e0,#050b12)}.feedback{display:flex;gap:10px;align-items:center;min-height:28px;color:#92aeb9;font-size:11px;letter-spacing:.02em;margin-bottom:7px}.feedback-light{flex:none;width:4px;height:4px}.command-form{height:62px;display:flex;gap:12px;align-items:center;padding:0 13px 0 18px;border:1px solid #82d5d748;border-radius:17px;background:linear-gradient(105deg,#172f397f,#0e1b2ba9);box-shadow:0 0 40px #00f5ce08,inset 0 1px #d7f7fa22}.prompt-symbol{font-size:34px;color:var(--aqua);font-weight:200}.command-form input{flex:1;width:100%;min-width:0;border:0;outline:none;background:transparent;font-size:14px;color:#edfaff}.command-form input::placeholder{color:#6e8c9a}.command-form button{border:0;border-radius:11px;background:#6febda;color:#002b30;font-size:24px;width:39px;height:39px}.quick-actions{display:flex;gap:11px;align-items:center;padding:13px 2px 0;flex-wrap:wrap}.quick-actions button{background:none;color:#9bbac3;font-size:10px;letter-spacing:.13em;border:0;border-right:1px solid #8dc8ce34;padding:0 15px 0 0}.runtime-status{font-size:9px;letter-spacing:.1em;color:#557786;margin-left:auto}.history-drawer{position:fixed;z-index:30;top:93px;right:4vw;width:min(370px,88vw);border:1px solid #79d5da48;border-radius:18px;background:#081823ed;box-shadow:0 20px 80px #000a;padding:22px;backdrop-filter:blur(20px)}.panel-heading{display:flex;justify-content:space-between;align-items:center;letter-spacing:.12em;font-size:11px}.panel-heading button{background:none;border:0;color:#a3d9d7;font-size:24px}.history-drawer #historyList{display:grid;gap:8px;margin-top:17px}.history-drawer #historyList button{padding:11px;border:1px solid var(--line);border-radius:8px;color:#bddbdc;text-align:left;background:#102531b5}.history-drawer p{font-size:11px;color:#758e9d;line-height:1.6}.fade-in{animation:enterPanel .38s ease both}@keyframes enterPanel{from{opacity:.30;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(max-width:970px){.app{padding:0 3.5vw}.stage{grid-template-columns:1fr;gap:0;padding-top:2px}.world{min-height:360px;height:42vh}.world-orbit{width:380px;height:380px}.world-orbit-two{width:290px;height:290px}.stage-label{bottom:55px}.experience{max-width:100%;max-height:none;min-height:280px;margin:0 0 18px;padding:23px}.experience.is-presence{max-width:100%}.topbar{height:74px}.microline{padding-top:13px}}
+@media(max-width:480px){.app{padding:0 16px}.topbar{height:67px}.brand b{font-size:14px}.brand small{font-size:7px;letter-spacing:.19em}.brand-sigil{width:27px;height:27px}.live{display:none}.microline{font-size:8px}.world{height:33vh;min-height:245px}.world-orbit{width:290px;height:290px}.world-orbit-two{width:220px;height:220px}.stage-label{left:4px;bottom:44px}.stage-label h1{font-size:27px}.stage-label p{font-size:8px;line-height:1.5;margin-bottom:0}.world-footer{left:5px;right:5px;bottom:4px;font-size:8px}.experience{border-radius:17px;padding:18px 17px;margin-bottom:8px}.experience h2{font-size:24px}.data-summary{gap:7px}.metric{padding:12px}.metric-value{font-size:22px}.day-headings,.calendar-grid{gap:3px}.day{border-radius:7px;font-size:11px}.dock{padding:9px 0 12px}.command-form{height:54px;border-radius:12px}.command-form input{font-size:12px}.feedback{font-size:10px}.quick-actions{gap:8px}.quick-actions button{font-size:9px;padding-right:8px}.runtime-status{width:100%;margin-top:3px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style></head><body>
+<div class="surface-noise" aria-hidden="true"></div>
+<div id="app" class="app" data-scene="presence">
+ <header class="topbar"><div class="brand"><span class="brand-sigil" aria-hidden="true"><span></span><span></span><span></span></span><div><b>AURA<span class="brand-light"> OMNI</span></b><small>PROJECT PROTEUS / GENESIS 0.3</small></div></div><div class="topright"><span class="live"><i></i> LOCAL RUNTIME</span><button id="historyBtn" class="icon-button" aria-label="Scene history" title="History">↶</button><button id="saveBtn" class="icon-button" aria-label="Save session locally" title="Save to this browser">◇</button></div></header>
+ <div class="microline"><span id="eyebrow">01 / INACTIVE MATTER</span><span id="source">PROCEDURAL · OFFLINE</span></div>
+ <main class="stage">
+  <div class="world" id="world" aria-label="Interactive spatial representation. Drag to rotate, scroll or pinch to zoom.">
+   <div class="world-vignette"></div><div class="world-orbit world-orbit-one"></div><div class="world-orbit world-orbit-two"></div>
+   <canvas id="worldCanvas" aria-label="Continuously morphing procedural geometry"></canvas>
+   <div class="focus-hair" aria-hidden="true"></div>
+   <div class="stage-label"><span class="stage-kicker">ACTIVE MANIFESTATION</span><h1 id="sceneTitle">AURA OMNI</h1><p id="sceneSubtitle">EVERYTHING WHEN NEEDED. ALMOST NOTHING WHEN NOT.</p></div>
+   <div class="world-footer"><span><i class="pulse" aria-hidden="true"></i> <span id="sceneRole">PRESENCE</span></span><span id="renderStatus">RENDERER INITIALIZING</span><button id="resetCamera" title="Reset rotation and zoom" aria-label="Reset camera">⟳</button></div>
+  </div>
+  <section id="experience" class="experience" aria-label="Active contextual experience"></section>
+ </main>
+ <div id="historyDrawer" class="history-drawer" hidden><div class="panel-heading"><strong>SCENE CONTINUITY</strong><button id="closeHistory" aria-label="Close history">×</button></div><div id="historyList"></div><p>History preserves your financial chart span and local calendar events.</p></div>
+ <footer class="dock"><div id="feedback" class="feedback" role="status" aria-live="polite"><span class="feedback-light"></span><span id="feedbackText">Describe what you want this environment to become.</span></div><form id="commandForm" class="command-form"><span class="prompt-symbol">›</span><label for="command" class="visually-hidden">Natural language command</label><input id="command" maxlength="280" autocomplete="off" placeholder="Ask the environment to transform…" aria-label="Command AURA OMNI"><button id="send" type="submit" aria-label="Execute command">↗</button></form><div class="quick-actions" aria-label="Quick commands"><button data-command="Show Bitcoin">MARKET</button><button data-command="Show my calendar">CALENDAR</button><button data-command="Show espresso extraction">FLUID MODEL</button><button data-command="Return to yourself">PRESENCE</button><span class="runtime-status">SYNTHETIC DATA · NO CONNECTED AI</span></div></footer>
+</div><script type="module">
+// == model ==
+const palette = { aqua: [.18, .95, .91], ice: [.47, .78, 1], violet: [.67, .45, 1], gold: [1, .69, .28] };
+const object = (id, kind, meaning, color, count, additional = {}) => ({ id, kind, meaning, provenance: 'ILLUSTRATIVE', color: [color[0], color[1], color[2]], count, ...additional });
+function syntheticPrices() {
+    const start = Date.UTC(2026, 10, 17, 0, 0);
+    return Array.from({ length: 97 }, (_, i) => ({ time: new Date(start + i * 15 * 60000).toISOString(), BTC: 64200 + 1400 * Math.sin(i / 10) + i * 18 + 380 * Math.sin(i * .77), ETH: 3200 + 100 * Math.sin(i / 12 + .8) + i * 2 + 35 * Math.cos(i * .62) }));
+}
+function ymd(year, month, day) { return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`; }
+function validYmd(value) { return /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(value) && !Number.isNaN(Date.parse(`${value}T12:00:00Z`)) && new Date(`${value}T12:00:00Z`).toISOString().slice(0, 10) === value; }
+function monthCells(year, month) {
+    if (!Number.isInteger(year) || year < 1970 || year > 2100 || !Number.isInteger(month) || month < 0 || month > 11)
+        throw Error('Date range invalid');
+    const offset = (new Date(year, month, 1).getDay() + 6) % 7;
+    const len = new Date(year, month + 1, 0).getDate();
+    return Array.from({ length: Math.ceil((offset + len) / 7) * 7 }, (_, i) => { const day = i - offset + 1; return day >= 1 && day <= len ? ymd(year, month, day) : null; });
+}
+function defaultState(now = new Date()) {
+    return {
+        finance: { hours: 24, series: 'BTC', hoveredIndex: null },
+        calendar: { year: now.getFullYear(), month: now.getMonth(), selected: ymd(now.getFullYear(), now.getMonth(), now.getDate()), events: [] },
+        flow: { pressure: 9, resistance: 4, duration: 25 }
+    };
+}
+function createScene(chapter, state) {
+    if (chapter === 'presence')
+        return { id: chapter, title: 'AURA OMNI', subtitle: 'EVERYTHING WHEN NEEDED. ALMOST NOTHING WHEN NOT.', annotation: '01 / INACTIVE MATTER', role: 'PRESENCE', objects: [object('identity:proteus', 'membrane', 'Persistent non-sentient AURA identity', palette.aqua, 2200)], permissions: [], source: 'PROCEDURAL' };
+    if (chapter === 'finance') {
+        const full = syntheticPrices();
+        const filtered = full.filter((_, i) => i >= full.length - 1 - state.finance.hours * 4);
+        const prices = filtered.map(d => d[state.finance.series]);
+        return { id: chapter, title: 'MARKET FORM', subtitle: `${state.finance.series} / ${state.finance.hours}-HOUR PRICE STRUCTURE`, annotation: '02 / MARKET · SYNTHETIC DATA', role: 'ANALYST', objects: [
+                object('identity:proteus', 'membrane', 'Same AURA identity, orbiting the representation', palette.aqua, 370, { position: [-1.25, .81, -.38], size: [.24, .24, .24] }),
+                object('asset:' + state.finance.series, 'ribbon', 'Synthetic timestamped asset price curve', palette.ice, 1200, { values: prices, position: [.12, .03, 0], size: [2.8, 1.25, 1] }),
+                object('asset:time-axis', 'line', 'Temporal axis of the price series', palette.violet, 210, { position: [.05, -.7, -.1], size: [2.9, 0, 0] }),
+                object('asset:volatility', 'spray', 'Abstract volatility envelope, not literal price data', palette.aqua, 420, { position: [.0, .05, -.6], size: [3, 1.4, .25] })
+            ], permissions: [], source: 'SYNTHETIC' };
+    }
+    if (chapter === 'calendar') {
+        const cells = monthCells(state.calendar.year, state.calendar.month);
+        const selectedIndex = Math.max(0, cells.indexOf(state.calendar.selected));
+        const col = selectedIndex % 7, row = Math.floor(selectedIndex / 7);
+        const ringX = .1 + (col + .5 - 3.5) * 2.9 / 7, ringY = .03 + (Math.ceil(cells.length / 7) / 2 - row - .5) * 1.8 / Math.ceil(cells.length / 7);
+        return { id: chapter, title: 'TEMPORAL FORM', subtitle: new Date(state.calendar.year, state.calendar.month, 1).toLocaleDateString('en', { month: 'long', year: 'numeric' }).toUpperCase(), annotation: '03 / TIME · PRIVATE TO THIS BROWSER', role: 'TIMEKEEPER', objects: [
+                object('identity:proteus', 'membrane', 'Persistent AURA identity at the calendar anchor', palette.aqua, 350, { position: [-1.12, .85, -.3], size: [.25, .25, .25] }),
+                object('calendar:month', 'grid', 'Calendar cells representing actual local dates', palette.ice, 1100, { rows: Math.ceil(cells.length / 7), cols: 7, position: [.1, .03, 0], size: [2.9, 1.8, 1] }),
+                object('calendar:day:' + state.calendar.selected, 'ring', 'Current selected day in local calendar', palette.gold, 320, { position: [ringX, ringY, .07], size: [.18, .18, .18] }),
+                ...state.calendar.events.filter(e => cells.includes(e.day)).slice(0, 12).map((e, i) => { const k = cells.indexOf(e.day), c = k % 7, r = Math.floor(k / 7), rows = Math.ceil(cells.length / 7); return object('event:' + e.id, 'sphere', 'Local appointment ' + e.title, palette.violet, 55, { position: [.1 + (c + .5 - 3.5) * 2.9 / 7, .03 + (rows / 2 - r - .5) * 1.8 / rows, .14], size: [.024, .024, .024] }); })
+            ], permissions: [], source: 'LOCAL' };
+    }
+    return { id: chapter, title: 'FLUID FORM', subtitle: 'ESPRESSO / EDUCATIONAL FLOW PROXY', annotation: '04 / MECHANICS · SIMPLIFIED MODEL', role: 'EXPLAINER', objects: [
+            object('identity:proteus', 'membrane', 'Persistent AURA identity as guide to the model', palette.aqua, 340, { position: [-1.2, .82, -.25], size: [.25, .25, .25] }),
+            object('espresso:chamber', 'cylinder', 'Transparent espresso machine chamber', palette.ice, 660, { position: [0, .25, 0], size: [.9, 1.3, .9] }),
+            object('espresso:water', 'helix', 'Water path as animated schematic', palette.aqua, 540, { position: [0, .0, 0], size: [.5, 1.7, .5], turns: 5 }),
+            object('espresso:flow', 'spray', 'Illustrative extracted liquid particle flow', palette.gold, 380, { position: [0, -.82, 0], size: [.33, .55, .32] })
+        ], permissions: [], source: 'ILLUSTRATIVE' };
+}
+function flowMetrics(flow) {
+    // Educational proxy, NOT a physical extraction solver.
+    const rate = flow.pressure / (flow.resistance + 1) * .8;
+    return { flowRate: rate, yield: rate * flow.duration, ratio: rate * flow.duration / 18 };
+}
+function filteredPrices(state) { const arr = syntheticPrices(); return arr.slice(-(state.hours * 4 + 1)); }
+
+
+// == runtime ==
+class ProteusRuntime {
+    identity = 'identity:proteus';
+    state;
+    active = 'presence';
+    scene;
+    transition = null;
+    timeline = ['presence'];
+    index = 0;
+    constructor(now = new Date()) { this.state = defaultState(now); this.scene = createScene('presence', this.state); }
+    get history() { return [...this.timeline]; }
+    get canBack() { return this.index > 0; }
+    get transitionProgress() { return !this.transition ? 1 : Math.min(1, Math.max(0, (performance.now() - this.transition.startedAt) / this.transition.duration)); }
+    enter(next, at = performance.now()) {
+        const origin = this.scene;
+        const nextScene = createScene(next, this.state);
+        this.active = next;
+        this.scene = nextScene;
+        this.timeline = this.timeline.slice(0, this.index + 1);
+        this.timeline.push(next);
+        this.index++;
+        this.transition = { from: origin.id, to: next, fromScene: origin, toScene: nextScene, startedAt: at, duration: 1450 };
+    }
+    refresh() { this.scene = createScene(this.active, this.state); }
+    back(at = performance.now()) { if (!this.canBack)
+        return false; const from = this.scene; this.index--; this.active = this.timeline[this.index]; this.scene = createScene(this.active, this.state); this.transition = { from: from.id, to: this.active, fromScene: from, toScene: this.scene, startedAt: at, duration: 1250 }; return true; }
+    setSpan(hours) { if (![6, 12, 24].includes(hours))
+        throw Error('Span unsupported'); this.state.finance.hours = hours; if (this.active === 'finance')
+        this.refresh(); }
+    setSeries(series) { if (!['BTC', 'ETH'].includes(series))
+        throw Error('Unknown series'); this.state.finance.series = series; if (this.active === 'finance')
+        this.refresh(); }
+    changeMonth(offset) { if (!Number.isInteger(offset) || Math.abs(offset) > 24)
+        throw Error('Invalid month offset'); const s = this.state.calendar; const next = new Date(s.year, s.month + offset, 1); if (next.getFullYear() < 1970 || next.getFullYear() > 2100)
+        throw Error('Date out of range'); s.year = next.getFullYear(); s.month = next.getMonth(); s.selected = ymd(s.year, s.month, 1); if (this.active === 'calendar')
+        this.refresh(); return monthCells(s.year, s.month); }
+    selectDay(day) { if (!validYmd(day) || day.slice(0, 7) !== ymd(this.state.calendar.year, this.state.calendar.month, 1).slice(0, 7))
+        throw Error('Day is not in active month'); this.state.calendar.selected = day; if (this.active === 'calendar')
+        this.refresh(); }
+    addEvent(day, title, time) { if (!validYmd(day))
+        throw Error('Invalid day'); const t = title.trim(); if (!t || t.length > 90 || /[<>]/.test(t))
+        throw Error('Invalid title'); if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(time))
+        throw Error('Invalid event time'); if (this.state.calendar.events.length >= 200)
+        throw Error('Local event quota reached'); const event = { id: 'e-' + (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`), day, title: t, time, createdAt: new Date().toISOString() }; this.state.calendar.events.push(event); return event; }
+    deleteEvent(id) { const length = this.state.calendar.events.length; this.state.calendar.events = this.state.calendar.events.filter(e => e.id !== id); return length !== this.state.calendar.events.length; }
+    setFlow(key, value) { const ranges = { pressure: [1, 15], resistance: [1, 10], duration: [5, 60] }; if (!Number.isFinite(value) || value < ranges[key][0] || value > ranges[key][1])
+        throw Error('Invalid flow parameter'); this.state.flow[key] = value; }
+    save() { try {
+        localStorage.setItem('proteus:genesis03:v1', JSON.stringify({ version: 1, state: this.state, active: this.active }));
+        return true;
+    }
+    catch {
+        return false;
+    } }
+    load() { try {
+        const value = localStorage.getItem('proteus:genesis03:v1');
+        if (!value)
+            return false;
+        const o = JSON.parse(value);
+        if (o.version !== 1 || !['presence', 'finance', 'calendar', 'flow'].includes(o.active) || !o.state || !Array.isArray(o.state.calendar?.events) || o.state.calendar.events.length > 200 || !o.state.calendar.events.every((e) => validYmd(e.day) && typeof e.title === 'string' && e.title.length <= 90 && /^[0-2]\d:[0-5]\d$/.test(e.time)) || ![6, 12, 24].includes(o.state.finance?.hours) || !['BTC', 'ETH'].includes(o.state.finance?.series))
+            return false;
+        const s = o.state;
+        if (!Number.isInteger(s.calendar.year) || s.calendar.year < 1970 || s.calendar.year > 2100 || !Number.isInteger(s.calendar.month) || s.calendar.month < 0 || s.calendar.month > 11 || !validYmd(s.calendar.selected) || s.calendar.selected.slice(0, 7) !== ymd(s.calendar.year, s.calendar.month, 1).slice(0, 7) || !s.flow || !Number.isFinite(s.flow.pressure) || s.flow.pressure < 1 || s.flow.pressure > 15 || !Number.isFinite(s.flow.resistance) || s.flow.resistance < 1 || s.flow.resistance > 10 || !Number.isFinite(s.flow.duration) || s.flow.duration < 5 || s.flow.duration > 60)
+            return false;
+        this.state = s;
+        this.active = o.active;
+        this.scene = createScene(this.active, this.state);
+        this.timeline = ['presence', this.active];
+        this.index = 1;
+        return true;
+    }
+    catch {
+        return false;
+    } }
+    get diagnostics() { return { identity: this.identity, scene: this.active, history: this.history, transition: this.transition?.to || null, objects: this.scene.objects.map(o => ({ id: o.id, kind: o.kind, meaning: o.meaning })), state: structuredClone(this.state) }; }
+}
+/** Explicit limited grammar; this is NOT AI or a general-purpose language understanding model. */
+function interpret(command, active) {
+    const q = command.trim().toLowerCase();
+    if (!q)
+        return { type: 'message', message: 'Describe a scene to manifest.' };
+    if (/^(back|go back|previous scene|undo)$/i.test(q))
+        return { type: 'back' };
+    if (/^(save|save experience|save this|save state)$/i.test(q))
+        return { type: 'save' };
+    if (/^(restore|load|restore session|load saved)$/i.test(q))
+        return { type: 'load' };
+    if (/\b(return|back) to (yourself|presence)|original form|resting form|go home|^presence$/.test(q))
+        return { type: 'scene', target: 'presence' };
+    if (/\b(calendar|schedule|appointments|month view|my month|dates)\b/.test(q))
+        return { type: 'scene', target: 'calendar' };
+    if (/\b(espresso|extraction|coffee machine|water flow|fluid model)\b/.test(q))
+        return { type: 'scene', target: 'flow' };
+    if (/\b(bitcoin|btc|ethereum|eth|price chart|crypto|market)\b/.test(q))
+        return { type: 'scene', target: 'finance' };
+    if (active === 'finance') {
+        const h = /\b(6|12|24)\s*(?:hours?|h)\b/.exec(q);
+        if (h)
+            return { type: 'span', hours: Number(h[1]) };
+    }
+    if (active === 'calendar' && /\b(next month|forward month)\b/.test(q))
+        return { type: 'month', offset: 1 };
+    if (active === 'calendar' && /\b(previous month|last month)\b/.test(q))
+        return { type: 'month', offset: -1 };
+    return { type: 'message', message: 'Supported: Bitcoin, calendar, espresso, return to presence, go back, save or restore. Natural-language generation requires a separate AI planner.' };
+}
+
+
+// == field ==
+const N = 3200;
+const f = (i, seed = 0) => { const n = Math.sin(i * 127.1 + seed * 91.7) * 43758.5453; return n - Math.floor(n); };
+const smooth = (v) => v * v * (3 - 2 * v);
+function sample(obj, i, count) {
+    const t = count > 1 ? i / (count - 1) : 0, ang = t * Math.PI * 2, noise = f(i, 3) - .5;
+    const [cx, cy, cz] = obj.position || [0, 0, 0];
+    const [sx, sy, sz] = obj.size || [1.5, 1.5, 1];
+    switch (obj.kind) {
+        case 'membrane': {
+            // folded toroidal shell; deliberately not a conventional glowing sphere
+            const a = 2 * Math.PI * f(i, 11);
+            const b = 2 * Math.PI * f(i, 17);
+            const lobe = 1 + .25 * Math.sin(a * 5 + Math.sin(b * 3)) + .17 * Math.cos(b * 4);
+            const R = (.88 + .26 * Math.cos(b)) * lobe;
+            return [cx + sx * (R * Math.cos(a) + .07 * Math.sin(b * 7)), cy + sy * (.52 * Math.sin(b) + .24 * Math.sin(a * 3)), cz + sz * ((.38 * Math.sin(a) + .29 * Math.cos(b)) * lobe)];
+        }
+        case 'ribbon': {
+            const values = obj.values || [0, 1];
+            const k = Math.max(0, Math.min(values.length - 1, Math.round(t * (values.length - 1))));
+            const v = values[k];
+            const min = Math.min(...values), max = Math.max(...values);
+            const normal = (v - min) / (max - min || 1);
+            return [cx + (t - .5) * sx, cy + (normal - .5) * sy + noise * .018, cz + Math.sin(t * 20) * .02 + noise * .12];
+        }
+        case 'line': return [cx + (t - .5) * sx, cy + (t - .5) * sy, cz + (t - .5) * sz];
+        case 'grid': {
+            const cols = obj.cols || 7, rows = obj.rows || 5;
+            const perCell = Math.max(1, Math.floor(count / (rows * cols)));
+            const index = Math.min(rows * cols - 1, Math.floor(i / perCell));
+            const column = index % cols, row = Math.floor(index / cols);
+            const cellW = sx / cols, cellH = sy / rows;
+            const gx = (column + .5 - cols / 2) * cellW, gy = (rows / 2 - row - .5) * cellH;
+            const local = (i % perCell) / perCell, edge = Math.floor(local * 4), u = (local * 4) % 1;
+            const dx = edge === 0 ? (-.46 + u * .92) * cellW : edge === 1 ? .46 * cellW : edge === 2 ? (.46 - u * .92) * cellW : -.46 * cellW;
+            const dy = edge === 0 ? .44 * cellH : edge === 1 ? (.44 - u * .88) * cellH : edge === 2 ? -.44 * cellH : (-.44 + u * .88) * cellH;
+            return [cx + gx + dx, cy + gy + dy, cz + .03 * Math.sin(row + column)];
+        }
+        case 'ring': {
+            const a = ang * 4;
+            return [cx + sx * .5 * Math.cos(a), cy + sy * .5 * Math.sin(a), cz + .08 * Math.sin(a * 3)];
+        }
+        case 'cylinder': {
+            const a = 2 * Math.PI * f(i, 2);
+            const h = (f(i, 3) - .5) * sy;
+            const r = (.80 + f(i, 4) * .14) * sx * .5;
+            return [cx + r * Math.cos(a), cy + h, cz + r * Math.sin(a)];
+        }
+        case 'helix': {
+            const a = t * Math.PI * 2 * (obj.turns || 4);
+            return [cx + sx * .5 * Math.cos(a), cy + (t - .5) * sy, cz + sz * .5 * Math.sin(a)];
+        }
+        case 'spray': return [cx + (f(i, 2) - .5) * sx, cy + (f(i, 3) - .5) * sy, cz + (f(i, 4) - .5) * sz];
+        case 'sphere': {
+            const a = 2 * Math.PI * f(i, 2), z = 2 * f(i, 3) - 1;
+            const k = Math.sqrt(1 - z * z);
+            return [cx + sx * k * Math.cos(a), cy + sy * z, cz + sz * k * Math.sin(a)];
+        }
+    }
+}
+function cloudFor(scene) {
+    if (!scene.objects.length || scene.objects.length > 32)
+        throw Error('Object count limit');
+    const objects = scene.objects;
+    const weights = objects.map(o => Math.max(1, Math.min(N, o.count)));
+    const total = weights.reduce((a, b) => a + b, 0);
+    const nObjs = [];
+    let allocated = 0;
+    for (let i = 0; i < objects.length; i++) {
+        const amount = i === objects.length - 1 ? N - allocated : Math.floor(N * weights[i] / total);
+        nObjs.push(amount);
+        allocated += amount;
+    }
+    const positions = new Float32Array(N * 3), colors = new Float32Array(N * 3), ids = [];
+    let cursor = 0;
+    for (let k = 0; k < objects.length; k++) {
+        const obj = objects[k], count = nObjs[k];
+        for (let i = 0; i < count; i++) {
+            const p = sample(obj, i, count);
+            positions.set(p, cursor * 3);
+            const luminosity = .4 + .6 * f(i, 18);
+            colors.set(obj.color.map(c => Math.min(1, c * luminosity)), cursor * 3);
+            ids.push(obj.id);
+            cursor++;
+        }
+    }
+    return { positions, colors, ids };
+}
+function blendCloud(a, b, t) {
+    const u = smooth(Math.max(0, Math.min(1, t)));
+    const pos = new Float32Array(a.positions.length), col = new Float32Array(a.colors.length);
+    for (let i = 0; i < pos.length; i++) {
+        pos[i] = a.positions[i] * (1 - u) + b.positions[i] * u;
+        col[i] = a.colors[i] * (1 - u) + b.colors[i] * u;
+    }
+    return { positions: pos, colors: col, ids: b.ids };
+}
+
+
+// == renderer ==
+const vertex = `#version 300 es
+precision highp float;
+in vec3 aFrom, aTo, cFrom, cTo;
+uniform float uMorph,uClock,uYaw,uPitch,uAspect,uScale;
+out vec3 vCol;
+void main(){
+ float t=uMorph*uMorph*(3.0-2.0*uMorph);
+ vec3 p=mix(aFrom,aTo,t);
+ float v=float(gl_VertexID);
+ p+=.022*vec3(sin(v*7.77+uClock*.49),cos(v*11.1+uClock*.31),sin(v*2.9+uClock*.53));
+ float c=cos(uYaw),s=sin(uYaw),cx=cos(uPitch),sx=sin(uPitch);
+ p=vec3(c*p.x+s*p.z,p.y,-s*p.x+c*p.z);
+ p=vec3(p.x,cx*p.y-sx*p.z,sx*p.y+cx*p.z);
+ float perspective=1.0/(1.0+.18*(p.z+1.4));
+ gl_Position=vec4(p.x*uScale/uAspect*perspective,p.y*uScale*perspective,p.z*.01,1.);
+ gl_PointSize=clamp((2.0+3.2*perspective)*uScale*1.2,1.0,8.0);
+ vCol=mix(cFrom,cTo,t);
+}`;
+const fragment = `#version 300 es
+precision highp float; in vec3 vCol;out vec4 o;
+void main(){float r=length(gl_PointCoord-.5);float a=(1.-smoothstep(.17,.5,r));o=vec4(vCol,a*.82);}`;
+const makeShader = (gl, k, code) => { const s = gl.createShader(k); if (!s)
+    throw Error('Shader unavailable'); gl.shaderSource(s, code); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))
+    throw Error(gl.getShaderInfoLog(s) || 'Shader compile failed'); return s; };
+class MorphRenderer {
+    canvas;
+    backend;
+    error = null;
+    ctx = null;
+    gl = null;
+    program = null;
+    buffers = [];
+    current;
+    origin;
+    target;
+    transitionStart = 0;
+    duration = 1450;
+    isMoving = false;
+    last = 0;
+    fps = 0;
+    fpsSamples = [];
+    yaw = .22;
+    pitch = -.08;
+    scale = 1;
+    pointer = { x: 0, y: 0 };
+    reducedMotion = false;
+    constructor(canvas, initial) {
+        this.canvas = canvas;
+        this.target = cloudFor(initial);
+        this.origin = this.target;
+        this.current = this.target;
+        let failure = '';
+        try {
+            this.gl = canvas.getContext('webgl2', { alpha: true, antialias: true, powerPreference: 'high-performance' });
+            if (this.gl)
+                this.initGL();
+        }
+        catch (e) {
+            failure = String(e);
+            this.gl = null;
+        }
+        if (!this.gl)
+            this.ctx = canvas.getContext('2d', { alpha: true });
+        this.backend = this.gl ? 'WebGL2' : 'Canvas 2D';
+        if (!this.ctx && !this.gl)
+            throw Error('No supported canvas backend');
+        if (failure)
+            console.warn('WebGL2 unavailable, using 2D fallback:', failure);
+        this.resize();
+        new ResizeObserver(() => this.resize()).observe(canvas);
+    }
+    initGL() {
+        const gl = this.gl;
+        const v = makeShader(gl, gl.VERTEX_SHADER, vertex), f = makeShader(gl, gl.FRAGMENT_SHADER, fragment);
+        const p = gl.createProgram();
+        if (!p)
+            throw Error('GL program allocation failed');
+        gl.attachShader(p, v);
+        gl.attachShader(p, f);
+        gl.linkProgram(p);
+        if (!gl.getProgramParameter(p, gl.LINK_STATUS))
+            throw Error(gl.getProgramInfoLog(p) || 'GL link failure');
+        gl.deleteShader(v);
+        gl.deleteShader(f);
+        this.program = p;
+        gl.useProgram(p);
+        for (const name of ['aFrom', 'aTo', 'cFrom', 'cTo']) {
+            const attr = gl.getAttribLocation(p, name);
+            const b = gl.createBuffer();
+            if (attr < 0 || !b)
+                throw Error('Missing GL attribute');
+            this.buffers.push(b);
+            gl.bindBuffer(gl.ARRAY_BUFFER, b);
+            gl.enableVertexAttribArray(attr);
+            gl.vertexAttribPointer(attr, 3, gl.FLOAT, false, 0, 0);
+        }
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        gl.disable(gl.DEPTH_TEST);
+    }
+    resize() { const ratio = Math.min(devicePixelRatio || 1, 2); const width = Math.max(1, Math.floor(this.canvas.clientWidth * ratio)), height = Math.max(1, Math.floor(this.canvas.clientHeight * ratio)); if (this.canvas.width !== width || this.canvas.height !== height) {
+        this.canvas.width = width;
+        this.canvas.height = height;
+        this.gl?.viewport(0, 0, width, height);
+    } }
+    setPointer(x, y) { this.pointer.x = x; this.pointer.y = y; }
+    rotate(dx, dy) { this.yaw += dx * .004; this.pitch = Math.max(-.65, Math.min(.65, this.pitch + dy * .004)); }
+    zoom(scale) { this.scale = Math.max(.60, Math.min(1.75, this.scale * scale)); }
+    get rotation() { return { yaw: this.yaw, pitch: this.pitch, scale: this.scale }; }
+    /** Interruptible. Samples the current intermediate geometry before choosing the next target. */
+    morph(scene, at = performance.now(), duration = 1450) {
+        if (this.isMoving) {
+            this.current = blendCloud(this.origin, this.target, Math.min(1, (at - this.transitionStart) / this.duration));
+        }
+        else
+            this.current = this.target;
+        this.origin = this.current;
+        this.target = cloudFor(scene);
+        this.transitionStart = at;
+        this.duration = this.reducedMotion ? 0 : duration;
+        this.isMoving = this.duration > 0;
+    }
+    get morphProgress() { return !this.isMoving ? 1 : Math.min(1, (performance.now() - this.transitionStart) / this.duration); }
+    draw(time) {
+        this.resize();
+        const mix = this.isMoving ? Math.min(1, (time - this.transitionStart) / this.duration) : 1;
+        if (mix >= 1)
+            this.isMoving = false;
+        if (this.gl)
+            this.drawGL(time, mix);
+        else
+            this.drawCanvas(time, mix);
+        if (this.last) {
+            const d = time - this.last;
+            if (d > 0 && d < 500) {
+                this.fpsSamples.push(1000 / d);
+                if (this.fpsSamples.length > 35)
+                    this.fpsSamples.shift();
+                this.fps = Math.round(this.fpsSamples.reduce((a, b) => a + b, 0) / this.fpsSamples.length);
+            }
+        }
+        this.last = time;
+    }
+    drawGL(time, mix) {
+        const gl = this.gl, p = this.program;
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.useProgram(p);
+        [this.origin.positions, this.target.positions, this.origin.colors, this.target.colors].forEach((arr, i) => { gl.bindBuffer(gl.ARRAY_BUFFER, this.buffers[i]); gl.bufferData(gl.ARRAY_BUFFER, arr, gl.DYNAMIC_DRAW); });
+        const u = (name, value) => gl.uniform1f(gl.getUniformLocation(p, name), value);
+        u('uMorph', mix);
+        u('uClock', time * .001);
+        u('uYaw', this.yaw);
+        u('uPitch', this.pitch);
+        u('uAspect', this.canvas.width / this.canvas.height);
+        u('uScale', this.scale * 1.17);
+        gl.drawArrays(gl.POINTS, 0, N);
+    }
+    drawCanvas(time, mix) {
+        const ctx = this.ctx, w = this.canvas.width, h = this.canvas.height, ratio = Math.min(devicePixelRatio || 1, 2), scale = this.scale * Math.min(w, h) / 3.6;
+        ctx.clearRect(0, 0, w, h);
+        const t = mix * mix * (3 - 2 * mix);
+        const co = Math.cos(this.yaw), si = Math.sin(this.yaw), cp = Math.cos(this.pitch), sp = Math.sin(this.pitch);
+        const stride = this.fps && this.fps < 25 ? 3 : 2;
+        for (let i = 0; i < N; i += stride) {
+            const b = i * 3;
+            let x = this.origin.positions[b] * (1 - t) + this.target.positions[b] * t, y = this.origin.positions[b + 1] * (1 - t) + this.target.positions[b + 1] * t, z = this.origin.positions[b + 2] * (1 - t) + this.target.positions[b + 2] * t;
+            x += .015 * Math.sin(i * 5.1 + time * .0006);
+            y += .012 * Math.cos(i * 4.1 + time * .0007);
+            const rx = co * x + si * z, rz = -si * x + co * z, ry = cp * y - sp * rz;
+            const rZ = sp * y + cp * rz;
+            const perspective = 1 / (1 + .17 * (rZ + 1));
+            const px = w / 2 + rx * scale * perspective, py = h / 2 - ry * scale * perspective;
+            if (px < 0 || px > w || py < 0 || py > h)
+                continue;
+            const c = [0, 1, 2].map(j => Math.round(255 * (this.origin.colors[b + j] * (1 - t) + this.target.colors[b + j] * t)));
+            ctx.fillStyle = `rgba(${c.join(',')},${.40 + .38 * perspective})`;
+            const radius = (w < 700 ? 1.35 : 1.55) * ratio * perspective;
+            ctx.beginPath();
+            ctx.arc(px, py, radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+}
+
+
+// == main ==
+const $ = (id) => { const e = document.getElementById(id); if (!e)
+    throw Error('Missing element: ' + id); return e; };
+const app = $('app'), experience = $('experience'), world = $('world'), canvas = $('worldCanvas'), input = $('command'), feedback = $('feedbackText');
+const runtime = new ProteusRuntime();
+const renderer = new MorphRenderer(canvas, runtime.scene);
+const formatter = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
+let lastMessage = '';
+let lastInteraction = 0;
+function message(text) { lastMessage = text; feedback.textContent = text; }
+function tag(name, className = '', text = '') { const el = document.createElement(name); if (className)
+    el.className = className; if (text)
+    el.textContent = text; return el; }
+function button(parent, text, handler, className = 'choice', pressed) { const b = tag('button', className, text); b.type = 'button'; if (pressed !== undefined)
+    b.setAttribute('aria-pressed', String(pressed)); b.addEventListener('click', handler); parent.append(b); return b; }
+function line(parent) { parent.append(tag('div', 'info-rule')); }
+function title(parent, kicker, heading, description, badge) { const h = tag('div', 'experience-heading'); const left = tag('div'); left.append(tag('span', 'section-eyebrow', kicker), tag('h2', '', heading), tag('p', 'description', description)); h.append(left); if (badge)
+    h.append(tag('span', 'pill', badge)); parent.append(h); }
+function metric(parent, label, value, detail = '') { const node = tag('div', 'metric'); node.append(tag('span', 'metric-label', label), tag('strong', 'metric-value', value)); if (detail)
+    node.append(tag('span', 'metric-note', detail)); parent.append(node); }
+function showPresence() {
+    experience.classList.add('is-presence');
+    title(experience, '01 / THE ORIGIN', 'Before the instrument.', 'A continuous non-sentient visual identity. Describe an intention; the matter reorganizes.', 'LOCAL · €0');
+    experience.append(tag('p', 'presence-message', '“The form changes. The thread remains.”'));
+    const items = tag('div', 'presence-items');
+    for (const [cmd, desc] of [['Show Bitcoin', 'Transform into market data'], ['Show my calendar', 'Build a real temporal workspace'], ['Show espresso extraction', 'Expose a schematic fluid model']])
+        button(items, desc + '  ↗', () => command(cmd), 'presence-choice');
+    experience.append(items);
+    line(experience);
+    experience.append(tag('p', 'description', 'A bounded local command interpreter drives this prototype. No AI model, account data, microphone or external service is connected.'));
+}
+function chartPath(values, x0, y0, w, h) { const min = Math.min(...values), max = Math.max(...values), range = max - min || 1; return values.map((v, i) => `${i === 0 ? 'M' : 'L'}${(x0 + w * i / (values.length - 1)).toFixed(2)} ${(y0 + h - (v - min) / range * h).toFixed(2)}`).join(' '); }
+function showFinance() {
+    const state = runtime.state.finance;
+    const points = filteredPrices(state);
+    const values = points.map(p => p[state.series]);
+    const start = values[0], end = values[values.length - 1], pct = (end / start - 1) * 100;
+    title(experience, '02 / ANALYTICAL MANIFESTATION', state.series === 'BTC' ? 'Bitcoin' : 'Ethereum', 'Timestamped offline demonstration data. Not a live market feed.', 'SYNTHETIC');
+    const summary = tag('div', 'data-summary');
+    metric(summary, 'FINAL SAMPLE', `${state.series === 'BTC' ? '$' : ''}${formatter.format(end)}`, 'Demonstration units');
+    metric(summary, `${state.hours}H CHANGE`, `${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%`, 'Computed from displayed samples');
+    experience.append(summary);
+    const header = tag('div', 'legend');
+    header.append(tag('h3', '', 'TIME / PRICE STRUCTURE'));
+    const spans = tag('div', 'button-group');
+    for (const h of [6, 12, 24])
+        button(spans, h + 'H', () => { runtime.setSpan(h); refreshScene(); }, 'choice', state.hours === h);
+    header.append(spans);
+    experience.append(header);
+    const w = 550, h = 265, pad = 48;
+    const min = Math.min(...values), max = Math.max(...values), margin = (max - min) * .1 || 1;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    svg.setAttribute('class', 'data-chart');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', `${state.series} synthetic price chart, ${state.hours} hours, ${values.length} points`);
+    svg.style.cursor = 'crosshair';
+    const rows = Array.from({ length: 5 }, (_, i) => { const y = 25 + i * 48; const val = max + margin - (i / 4) * (max - min + 2 * margin); return `<line x1="44" y1="${y}" x2="530" y2="${y}" stroke="#8abacb" opacity=".12"/><text x="39" y="${y + 4}" fill="#7e9ba9" font-size="10" text-anchor="end">${Math.round(val).toLocaleString()}</text>`; }).join('');
+    const minY = min - margin, maxY = max + margin;
+    const coords = values.map((v, i) => [48 + i * (472) / (values.length - 1), 216 - (v - minY) / (maxY - minY) * 191]);
+    const path = coords.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join(' ');
+    const area = path + ` L520 216 L48 216 Z`;
+    svg.innerHTML = `<defs><linearGradient id="priceFill" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#4af7d9" stop-opacity=".29"/><stop offset="1" stop-color="#4af7d9" stop-opacity="0"/></linearGradient></defs>${rows}<path d="${area}" fill="url(#priceFill)"/><path d="${path}" stroke="#71e9d6" stroke-width="2.7" fill="none" stroke-linejoin="round"/><text x="48" y="247" fill="#8cabb5" font-size="10">${new Date(points[0].time).toISOString().slice(11, 16)} UTC</text><text x="520" y="247" fill="#8cabb5" font-size="10" text-anchor="end">${new Date(points[points.length - 1].time).toISOString().slice(11, 16)} UTC</text><circle id="chartDot" r="5" fill="#d9fffa" stroke="#37c9bd" stroke-width="3" visibility="hidden"/><line id="chartCross" stroke="#9fe9e2" stroke-dasharray="4 6" y1="25" y2="216" visibility="hidden"/>`;
+    experience.append(svg);
+    const tip = tag('p', 'chart-tooltip', 'Move across the chart to inspect a sample.');
+    experience.append(tip);
+    const inspect = (evt) => { const box = svg.getBoundingClientRect(); const x = (evt.clientX - box.left) * w / box.width; const i = Math.max(0, Math.min(values.length - 1, Math.round((x - 48) / 472 * (values.length - 1)))); const [cx, cy] = coords[i]; svg.querySelector('#chartDot')?.setAttribute('cx', String(cx)); svg.querySelector('#chartDot')?.setAttribute('cy', String(cy)); svg.querySelector('#chartDot')?.setAttribute('visibility', 'visible'); svg.querySelector('#chartCross')?.setAttribute('x1', String(cx)); svg.querySelector('#chartCross')?.setAttribute('x2', String(cx)); svg.querySelector('#chartCross')?.setAttribute('visibility', 'visible'); tip.textContent = `${new Date(points[i].time).toISOString().slice(0, 16).replace('T', ' ')} UTC  ·  ${formatter.format(values[i])} (demo)`; state.hoveredIndex = i; };
+    svg.addEventListener('pointermove', inspect);
+    svg.addEventListener('pointerdown', inspect);
+    svg.addEventListener('pointerleave', () => { svg.querySelector('#chartDot')?.setAttribute('visibility', 'hidden'); svg.querySelector('#chartCross')?.setAttribute('visibility', 'hidden'); });
+    line(experience);
+    const series = tag('div', 'button-group');
+    button(series, 'BITCOIN · BTC', () => { runtime.setSeries('BTC'); refreshScene(); }, 'choice', state.series === 'BTC');
+    button(series, 'ETHEREUM · ETH', () => { runtime.setSeries('ETH'); refreshScene(); }, 'choice', state.series === 'ETH');
+    experience.append(series);
+    experience.append(tag('p', 'simulation-note', 'Data generated by deterministic trigonometric functions for demonstration only. No exchange connection, pricing guarantee, market prediction or actual trade execution.'));
+}
+function renderEvents(target, day) { target.replaceChildren(); const events = runtime.state.calendar.events.filter(e => e.day === day).sort((a, b) => a.time.localeCompare(b.time)); if (!events.length) {
+    target.append(tag('p', 'description', 'No local appointments on this day.'));
+    return;
+} for (const e of events) {
+    const row = tag('div', 'appointment');
+    row.append(tag('time', '', e.time), tag('span', '', e.title));
+    button(row, '×', () => { runtime.deleteEvent(e.id); runtime.refresh(); refreshScene(); }, 'event-delete');
+    target.append(row);
+} }
+function showCalendar() {
+    const s = runtime.state.calendar;
+    const monthName = new Date(s.year, s.month, 1).toLocaleString('en', { month: 'long', year: 'numeric' });
+    const nav = tag('div', 'calendar-nav');
+    const lhs = tag('div');
+    lhs.append(tag('span', 'section-eyebrow', '03 / TEMPORAL MANIFESTATION'), tag('h2', '', monthName));
+    const controls = tag('div', 'calendar-controls');
+    button(controls, '‹', () => { runtime.changeMonth(-1); refreshScene(); }, 'mini-btn');
+    button(controls, '›', () => { runtime.changeMonth(1); refreshScene(); }, 'mini-btn');
+    nav.append(lhs, controls);
+    experience.append(nav);
+    experience.append(tag('p', 'description', 'Actual calendar dates and editable appointments. Events remain in this session until you choose Save.'));
+    const heads = tag('div', 'day-headings');
+    for (const d of ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'])
+        heads.append(tag('span', '', d));
+    experience.append(heads);
+    const grid = tag('div', 'calendar-grid');
+    const today = new Date();
+    const todayKey = ymd(today.getFullYear(), today.getMonth(), today.getDate());
+    for (const day of monthCells(s.year, s.month)) {
+        if (day) {
+            const b = button(grid, String(Number(day.slice(-2))), () => { runtime.selectDay(day); refreshScene(); }, 'day' + (s.selected === day ? ' selected' : '') + (day === todayKey ? ' today' : '') + (s.events.some(e => e.day === day) ? ' has-event' : ''));
+            b.setAttribute('aria-label', `${day}, ${s.events.filter(e => e.day === day).length} appointments`);
+            b.setAttribute('aria-pressed', String(s.selected === day));
+        }
+        else
+            grid.append(tag('span', 'day-empty'));
+    }
+    experience.append(grid);
+    line(experience);
+    const chosen = new Date(`${s.selected}T12:00:00Z`);
+    experience.append(tag('h3', '', chosen.toLocaleDateString('en', { weekday: 'long', day: 'numeric', month: 'long' })));
+    const evtContainer = tag('div', 'events');
+    renderEvents(evtContainer, s.selected);
+    experience.append(evtContainer);
+    const form = tag('form', 'event-form');
+    form.id = 'eventForm';
+    const text = tag('input');
+    text.type = 'text';
+    text.id = 'eventTitle';
+    text.placeholder = 'New appointment';
+    text.maxLength = 90;
+    text.required = true;
+    text.setAttribute('aria-label', 'Event title');
+    const time = tag('input');
+    time.type = 'time';
+    time.id = 'eventTime';
+    time.value = '10:00';
+    time.required = true;
+    time.setAttribute('aria-label', 'Appointment time');
+    const add = tag('button', '', '+ ADD');
+    add.type = 'submit';
+    form.append(text, time, add);
+    form.addEventListener('submit', e => { e.preventDefault(); try {
+        runtime.addEvent(s.selected, text.value, time.value);
+        runtime.refresh();
+        refreshScene();
+        message('Local appointment created for ' + s.selected + '. Save to persist in this browser.');
+    }
+    catch (err) {
+        message('Event rejected: ' + String(err));
+    } });
+    experience.append(form);
+    experience.append(tag('p', 'simulation-note', `${s.events.length} local appointments · no linked Google Calendar · no account access or external requests.`));
+}
+function flowDial(parent, label, key, unit, min, max, step) { const row = tag('div', 'knob-row'); const lbl = tag('label', '', label); lbl.setAttribute('for', 'flow-' + key); const slide = tag('input'); slide.type = 'range'; slide.id = 'flow-' + key; slide.min = String(min); slide.max = String(max); slide.step = String(step); slide.value = String(runtime.state.flow[key]); const output = tag('output', '', String(runtime.state.flow[key]) + unit); slide.addEventListener('input', () => { runtime.setFlow(key, Number(slide.value)); output.textContent = slide.value + unit; const v = flowMetrics(runtime.state.flow); const metric1 = document.getElementById('flowRate'); const metric2 = document.getElementById('flowYield'); if (metric1)
+    metric1.textContent = v.flowRate.toFixed(2) + ' mL/s'; if (metric2)
+    metric2.textContent = v.yield.toFixed(1) + ' mL'; }); row.append(lbl, slide, output); parent.append(row); }
+function showFlow() {
+    title(experience, '04 / MECHANICAL MANIFESTATION', 'Espresso Flow Lab', 'A distinct 3D procedural chamber and a small educational flow calculation.', 'SIMPLIFIED');
+    const graphic = tag('div', 'model-display');
+    graphic.append(tag('span', '', 'MODEL / SECTION VIEW'));
+    const chamber = tag('div', 'chamber');
+    chamber.append(tag('div', 'liquid'));
+    graphic.append(chamber);
+    experience.append(graphic);
+    const metrics = flowMetrics(runtime.state.flow), summary = tag('div', 'data-summary');
+    const m1 = tag('div', 'metric'), m2 = tag('div', 'metric');
+    m1.append(tag('span', 'metric-label', 'FLOW PROXY'));
+    const n1 = tag('strong', 'metric-value', metrics.flowRate.toFixed(2) + ' mL/s');
+    n1.id = 'flowRate';
+    m1.append(n1);
+    m2.append(tag('span', 'metric-label', 'EXTRACTED VOLUME'));
+    const n2 = tag('strong', 'metric-value', metrics.yield.toFixed(1) + ' mL');
+    n2.id = 'flowYield';
+    m2.append(n2);
+    summary.append(m1, m2);
+    experience.append(summary);
+    flowDial(experience, 'PRESSURE', 'pressure', ' bar', 1, 15, .5);
+    flowDial(experience, 'RESISTANCE', 'resistance', ' index', 1, 10, .5);
+    flowDial(experience, 'DURATION', 'duration', ' s', 5, 60, 1);
+    experience.append(tag('p', 'simulation-note', 'Illustrative proxy only: flow = 0.8 × pressure / (resistance + 1). Not fluid dynamics, not a calibrated espresso prediction. Stage geometry is assembled from reusable cylinder, helix, spray and membrane primitives.'));
+}
+function renderExperience() { experience.replaceChildren(); experience.classList.remove('is-presence', 'fade-in'); if (runtime.active === 'presence')
+    showPresence();
+else if (runtime.active === 'finance')
+    showFinance();
+else if (runtime.active === 'calendar')
+    showCalendar();
+else
+    showFlow(); experience.classList.add('fade-in'); }
+function updateHeader() { const scene = runtime.scene; app.dataset.scene = runtime.active; $('sceneTitle').textContent = scene.title; $('sceneSubtitle').textContent = scene.subtitle; $('eyebrow').textContent = scene.annotation; $('source').textContent = `${scene.source} · OFFLINE`; $('sceneRole').textContent = scene.role; }
+function renderHistory() { const list = $('historyList'); list.replaceChildren(); runtime.history.forEach((ch, i) => { button(list, `${String(i + 1).padStart(2, '0')} / ${ch.toUpperCase()}`, () => { if (ch === runtime.active)
+    return; while (runtime.history.length > 1 && runtime.active !== ch && runtime.canBack) {
+    const prev = runtime.active;
+    runtime.back();
+    if (prev === runtime.active)
+        break;
+} renderer.morph(runtime.scene); renderExperience(); updateHeader(); $('historyDrawer').hidden = true; }, 'history-link'); }); }
+function manifest(chapter) { runtime.enter(chapter); renderer.morph(runtime.scene); renderExperience(); updateHeader(); message('MANIFESTED · ' + runtime.scene.title + ' / ' + runtime.scene.source); }
+function refreshScene() { renderer.morph(runtime.scene, performance.now(), 550); renderExperience(); updateHeader(); }
+function command(value) { const text = value.trim(); if (!text)
+    return; lastInteraction++; const action = interpret(text, runtime.active); input.value = ''; switch (action.type) {
+    case 'scene':
+        manifest(action.target);
+        break;
+    case 'back':
+        if (runtime.back()) {
+            renderer.morph(runtime.scene);
+            renderExperience();
+            updateHeader();
+            message('RESTORED · ' + runtime.scene.title);
+        }
+        else
+            message('No previous scene.');
+        break;
+    case 'span':
+        runtime.setSpan(action.hours);
+        refreshScene();
+        message('Chart window set to ' + action.hours + ' hours.');
+        break;
+    case 'month':
+        runtime.changeMonth(action.offset);
+        refreshScene();
+        break;
+    case 'save':
+        message(runtime.save() ? 'Session saved locally in this browser.' : 'Local storage unavailable; session still in memory.');
+        break;
+    case 'load':
+        if (runtime.load()) {
+            renderer.morph(runtime.scene);
+            renderExperience();
+            updateHeader();
+            message('Validated local session restored.');
+        }
+        else
+            message('No valid saved session in this browser.');
+        break;
+    case 'message': message(action.message);
+} }
+$('commandForm').addEventListener('submit', e => { e.preventDefault(); command(input.value); });
+document.querySelectorAll('[data-command]').forEach(b => b.addEventListener('click', () => command(b.dataset.command || '')));
+$('saveBtn').addEventListener('click', () => command('save'));
+$('historyBtn').addEventListener('click', () => { renderHistory(); $('historyDrawer').hidden = !$('historyDrawer').hidden; });
+$('closeHistory').addEventListener('click', () => { $('historyDrawer').hidden = true; });
+$('resetCamera').addEventListener('click', () => { const r = renderer.rotation; renderer.rotate((.22 - r.yaw) / .004, (-.08 - r.pitch) / .004); renderer.zoom(1 / r.scale); message('View reset.'); });
+const pointers = new Map();
+let pinch = 0;
+world.addEventListener('pointerdown', e => { if (e.target instanceof HTMLButtonElement)
+    return; world.setPointerCapture(e.pointerId); pointers.set(e.pointerId, { x: e.clientX, y: e.clientY }); });
+world.addEventListener('pointermove', e => { renderer.setPointer(e.clientX / innerWidth, e.clientY / innerHeight); const p = pointers.get(e.pointerId); if (!p)
+    return; if (pointers.size === 2) {
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const v = [...pointers.values()];
+    const distance = Math.hypot(v[0].x - v[1].x, v[0].y - v[1].y);
+    if (pinch > 0)
+        renderer.zoom(distance / pinch);
+    pinch = distance;
+    return;
+} renderer.rotate(e.clientX - p.x, e.clientY - p.y); pointers.set(e.pointerId, { x: e.clientX, y: e.clientY }); });
+for (const event of ['pointerup', 'pointercancel', 'lostpointercapture'])
+    world.addEventListener(event, e => { pointers.delete(e.pointerId); if (pointers.size < 2)
+        pinch = 0; });
+world.addEventListener('wheel', e => { e.preventDefault(); renderer.zoom(e.deltaY > 0 ? .92 : 1.08); }, { passive: false });
+window.addEventListener('keydown', e => { if (e.key === 'Escape')
+    $('historyDrawer').hidden = true; if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+    e.preventDefault();
+    input.focus();
+} });
+renderer.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (renderer.reducedMotion)
+    app.classList.add('no-motion');
+$('renderStatus').textContent = renderer.backend.toUpperCase();
+let raf = 0, previous = 0;
+function frame(t) { try {
+    if (!renderer.reducedMotion || t - previous > 160) {
+        renderer.draw(t);
+        previous = t;
+        if ((Math.floor(t / 1400) % 3) === 0)
+            $('renderStatus').textContent = `${renderer.backend.toUpperCase()} · ${renderer.fps || '—'} FPS`;
+    }
+}
+catch (err) {
+    message('Render error: ' + String(err));
+    return;
+} raf = requestAnimationFrame(frame); }
+renderExperience();
+updateHeader();
+raf = requestAnimationFrame(frame);
+Object.defineProperty(window, '__proteusDiagnostics', { configurable: false, value: () => ({ version: '0.3.0', backend: renderer.backend, fps: renderer.fps, active: runtime.active, role: runtime.scene.role, objects: runtime.scene.objects.map(o => ({ id: o.id, kind: o.kind, meaning: o.meaning })), transitionProgress: renderer.morphProgress, rotation: renderer.rotation, history: runtime.history, state: structuredClone(runtime.state), commands: lastInteraction, message: lastMessage, errors: [] }) });
+</script></body></html>
