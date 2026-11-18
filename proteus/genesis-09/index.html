@@ -140,6 +140,31 @@
 @media(max-width:970px){.app[data-scene="network"] .world{height:41vh;min-height:310px}}
 @media(max-width:550px){.app[data-scene="network"] .world{height:37vh;min-height:295px}.app[data-scene="network"] .stage-label{top:16px;left:13px;max-width:62%}.app[data-scene="network"] .stage-label h1{font-size:14px;letter-spacing:.08em}}
 
+
+/* GENESIS 0.9.1 — composer draft pipeline; all AI results remain sandboxed JSON. */
+.composer-workflow{margin:17px 0;padding:17px;border:1px solid #62e2d84a;border-radius:16px;background:linear-gradient(125deg,#122d39c9,#0a1827bb);box-shadow:inset 0 1px #cafcf019}
+.composer-workflow-heading,.composer-output-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:11px}
+.composer-workflow-heading strong,.composer-output-head strong{color:#d3fff3;font-size:11px;letter-spacing:.15em}
+.composer-mini{color:#75afb6;font-size:10px;letter-spacing:.05em}
+.composer-prompt-label{display:block;margin:0 0 8px;color:#9fd6d5;font-size:10px;letter-spacing:.13em}
+.composer-brief{display:block;width:100%;min-height:94px;resize:vertical;border:1px solid #83b9c54d;border-radius:12px;background:#061420c9;color:#f0fffc;padding:13px 14px;font:13px/1.55 Inter,'Segoe UI',Arial,sans-serif}
+.composer-brief::placeholder{color:#7699a5}.composer-brief:focus-visible,.composer-input:focus-visible{outline:2px solid #62eedc;outline-offset:2px}
+.composer-metrics{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:11px 0}
+.composer-count{display:inline-flex;min-height:25px;align-items:center;border:1px solid #81c4d53c;border-radius:7px;padding:4px 9px;background:#061a26;font:10px ui-monospace,SFMono-Regular,Consolas,monospace;color:#b8e0e3}
+.composer-metrics-note{font-size:10px;color:#759ca7}
+.composer-generate-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.composer-generate-actions button{flex:1 1 142px;min-height:41px;padding:10px 12px;border-radius:9px;font-size:11px;font-weight:650;letter-spacing:.025em}
+.composer-ai-generate{border:1px solid #83f7e1b5;background:linear-gradient(120deg,#55e6cd,#a8f7e7);color:#06272d}
+.composer-fast-draft{border:1px solid #69b8c871;background:#183543;color:#e3faf8}
+.composer-model-setup,.composer-cancel{border:1px solid #528292;background:#13232f;color:#c8e8ec}
+.composer-generate-actions button:disabled,.composer-actions button:disabled{opacity:.4;cursor:not-allowed}
+.composer-status{min-height:29px;overflow-wrap:anywhere;line-height:1.65}
+.composer-input[readonly]{background:#061e29;color:#dcfff5}
+.composer-output-head{margin-top:15px}
+.composer-output-head .composer-mini{font-family:ui-monospace,Consolas,monospace}
+@media(max-width:600px){.composer-workflow{padding:13px;margin:12px 0}.composer-brief{min-height:112px;font-size:14px}.composer-metrics{gap:5px}.composer-metrics-note{width:100%}.composer-generate-actions button{flex-basis:100%}.composer-output-head{gap:5px}.composer-modal{padding:12px;max-height:calc(100dvh - 16px)}.composer-input{min-height:190px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.composer-workflow,.composer-brief{transition:none}}
+
 </style></head><body>
 <div class="surface-noise" aria-hidden="true"></div>
 <div id="app" class="app" data-scene="presence">
@@ -1789,7 +1814,7 @@ const CPU_WASM_URL = 'https://cdn.jsdelivr.net/npm/@wllama/wllama@3.6.1/esm/wasm
 const CPU_MODEL_SIZE_MB = 491; // conservative transfer warning, files may vary
 const MODEL_DOWNLOAD_NOTICE = 'WebGPU model: approximately 950 MB. CPU model: approximately 491 MB plus runtime/WASM assets. Network and device storage costs depend on your connection. Neither downloads until you press LOAD MODEL and consent.';
 const GENERATION_DEADLINE_MS = 180_000;
-const CPU_GENERATION_TOKENS = 270;
+const CPU_GENERATION_TOKENS = 480;
 const supported = new Set(['timeline-chart', 'date-grid', 'spatial-assembly', 'task-board', 'explanation']);
 const validIdentifier = /^[a-z][a-z0-9_-]{0,47}$/;
 function safeId(value, prefix, index) { const id = value.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 34); return (validIdentifier.test(id) ? id : prefix) + '-' + index; }
@@ -2044,8 +2069,8 @@ class LocalWebLLM {
     async generate(prompt, context, opts = {}) {
         if (!this.ready || !this.engine)
             throw Error('Local AI is not loaded.');
-        if (!prompt.trim() || prompt.length > 350)
-            throw Error('Request must contain 1–350 characters.');
+        if (!prompt.trim() || prompt.length > 1200)
+            throw Error('Request must contain 1–1200 characters.');
         if (context.length > 2500)
             throw Error('Context too large.');
         const controller = new AbortController();
@@ -2065,12 +2090,11 @@ class LocalWebLLM {
                 abortListener();
             const request = { messages: [{ role: 'system', content: PLANNER_SYSTEM_PROMPT },
                     { role: 'user', content: `CONTEXT: ${context.slice(0, 600)}\nREQUEST: ${prompt}` }],
-                temperature: 0.1, max_tokens: this.backend === 'cpu' ? CPU_GENERATION_TOKENS : 350 };
+                temperature: 0.1, max_tokens: this.backend === 'cpu' ? CPU_GENERATION_TOKENS : 480 };
             request.response_format = { type: 'json_object' };
-            if (this.backend === 'cpu') {
-                request.stream = true;
+            request.stream = true;
+            if (this.backend === 'cpu')
                 request.abortSignal = controller.signal;
-            }
             opts.onProgress?.({ phase: 'prefill', tokens: 0, chars: 0 });
             const work = (async () => {
                 const result = await this.engine.chat.completions.create(request);
@@ -2090,7 +2114,7 @@ class LocalWebLLM {
                                 tokens++;
                                 if (raw.length > 8000)
                                     throw Error('Model exceeded output size limit.');
-                                opts.onProgress?.({ phase: 'generating', tokens, chars: raw.length });
+                                opts.onProgress?.({ phase: 'generating', tokens, chars: raw.length, raw });
                             }
                         }
                     }
@@ -2100,7 +2124,7 @@ class LocalWebLLM {
                     raw = reply?.choices?.[0]?.message?.content ?? '';
                     truncated = reply?.choices?.[0]?.finish_reason === 'length';
                     if (raw)
-                        opts.onProgress?.({ phase: 'generating', tokens: 1, chars: raw.length });
+                        opts.onProgress?.({ phase: 'generating', tokens: 1, chars: raw.length, raw });
                 }
                 if (truncated)
                     throw Error('Model reached its token limit before completing JSON. Retry with a simpler request.');
@@ -2807,9 +2831,178 @@ textArea.setAttribute('aria-label', 'Validated JSON experience specification');
 const desc = element('p', 'description', 'Version 1 spec: resource network, hydraulic and atmosphere, time-series, calendar, spatial assembly, task board, numeric instrument and explanation. JSON is strictly validated before mounting. No arbitrary JavaScript or privileged actions.');
 const compiledStatus = element('p', 'composer-status', 'Ready to compile.');
 compiledStatus.id = 'compileStatus';
+
+/** Natural-language authoring; the active runtime only receives compiler-validated JSON. */
+const composerWorkflow = element('section', 'composer-workflow');
+composerWorkflow.id = 'composerWorkflow';
+const composerTitle = element('div', 'composer-workflow-heading');
+composerTitle.append(element('strong', '', '01 / DESCRIBE YOUR EXPERIENCE'), element('span', 'composer-mini', 'TEXT → PLAN → VALIDATED JSON'));
+const composerPromptLabel = element('label', 'composer-prompt-label', 'WHAT SHOULD AURA CREATE?');
+composerPromptLabel.htmlFor = 'composerPrompt';
+const composerPrompt = element('textarea', 'composer-brief');
+composerPrompt.id = 'composerPrompt';
+composerPrompt.rows = 4;
+composerPrompt.maxLength = 1200;
+composerPrompt.placeholder = 'Build an underwater research station with pumps, inspection tasks and a trend chart…';
+composerPrompt.setAttribute('aria-label', 'Describe a new experience in natural language');
+const composerMetrics = element('div', 'composer-metrics');
+const composerInputTokens = element('output', 'composer-count', '~0 INPUT TOKENS');
+const composerOutputTokens = element('output', 'composer-count', '~0 OUTPUT TOKENS');
+const composerModelState = element('span', 'composer-metrics-note', 'Local AI is optional · no paid API');
+composerMetrics.append(composerInputTokens, composerOutputTokens, composerModelState);
+const composerDraftControls = element('div', 'composer-generate-actions');
+const composerAiButton = makeButton(composerDraftControls, 'GENERATE JSON · LOCAL AI', () => { void generateComposerJSON(); }, 'composer-ai-generate');
+const composerFastButton = makeButton(composerDraftControls, 'DRAFT JSON · FAST OFFLINE', () => draftComposerJSON(), 'composer-fast-draft');
+const composerSetupButton = makeButton(composerDraftControls, 'MODEL SETUP', () => {
+    dialog.close();
+    aiDialog.showModal();
+    updateAILoadButton();
+}, 'composer-model-setup');
+const composerCancelButton = makeButton(composerDraftControls, 'CANCEL GENERATION', () => {
+    if (composerGenerating) cancelInference();
+}, 'composer-cancel');
+composerCancelButton.hidden = true;
+composerWorkflow.append(composerTitle, composerPromptLabel, composerPrompt, composerMetrics, composerDraftControls);
+const composerOutputHead = element('div', 'composer-output-head');
+composerOutputHead.append(element('strong', '', '02 / COMPILE-READY JSON'), element('span', 'composer-mini', 'REVIEW · VALIDATE · MANIFEST'));
+let composerGenerating = false;
+const approximateTokens = (value) => Math.ceil(new TextEncoder().encode(value).length / 4);
+function updateComposerMeters() {
+    composerInputTokens.textContent = '~' + approximateTokens(composerPrompt.value) + ' INPUT TOKENS';
+    composerOutputTokens.textContent = '~' + approximateTokens(textArea.value) + ' OUTPUT TOKENS';
+    composerModelState.textContent = localAI.ready ? 'LOCAL ' + (localAI.backend || 'AI').toUpperCase() + ' READY' : 'AI requires opt-in model · FAST works offline';
+}
+function composerJSONReady(spec, notice) {
+    const checked = compileExperience(spec);
+    textArea.value = JSON.stringify(checked, null, 2);
+    compiledStatus.textContent = notice;
+    compiledStatus.setAttribute('role', 'status');
+    updateComposerMeters();
+}
+function setComposerGenerating(active) {
+    composerGenerating = active;
+    textArea.readOnly = active;
+    textArea.setAttribute('aria-busy', String(active));
+    composerAiButton.disabled = active;
+    composerFastButton.disabled = active;
+    composerSetupButton.disabled = active;
+    composerCancelButton.hidden = !active;
+    for (const button of compilerControls.querySelectorAll('button'))
+        button.disabled = active;
+}
+function draftComposerJSON() {
+    if (composerGenerating) return;
+    const request = composerPrompt.value.trim();
+    if (!request) {
+        compiledStatus.textContent = 'Enter a description first.';
+        composerPrompt.focus();
+        return;
+    }
+    if (request.length > 280) {
+        compiledStatus.textContent = 'FAST draft supports up to 280 characters. Shorten the request or use LOCAL AI for longer briefs.';
+        return;
+    }
+    const candidate = fastCompose(request, runtime.current, new Date(), makeLocalSuffix());
+    if (candidate.kind !== 'compose') {
+        compiledStatus.textContent = 'FAST DRAFT UNAVAILABLE · ' + candidate.reason + ' · A loaded local model may support another plan.';
+        return;
+    }
+    try {
+        composerJSONReady(candidate.spec, 'VALIDATED FAST DRAFT · Deterministic local compiler, NOT AI. Review the JSON and choose COMPILE EXPERIENCE.');
+    } catch (err) {
+        compiledStatus.textContent = 'FAST DRAFT REJECTED · ' + String(err);
+    }
+}
+async function generateComposerJSON() {
+    const request = composerPrompt.value.trim();
+    if (!request) {
+        compiledStatus.textContent = 'Enter a description first.';
+        composerPrompt.focus();
+        return;
+    }
+    if (aiBusy || composerGenerating) {
+        compiledStatus.textContent = 'Another local AI generation is in progress. Cancel it before starting a new request.';
+        return;
+    }
+    if (!localAI.ready) {
+        compiledStatus.textContent = 'MODEL NOT LOADED · Use MODEL SETUP to check device and explicitly opt into local model download. FAST offline draft is available immediately.';
+        return;
+    }
+    const previousJSON = textArea.value;
+    const ticket = ++aiRequestSerial;
+    const context = JSON.stringify({ active: runtime.active, title: runtime.current?.title || 'Presence', blocks: runtime.current?.blocks.map(b => ({ kind: b.kind, title: b.title })) || [] });
+    aiBusy = true;
+    aiController = new AbortController();
+    setComposerGenerating(true);
+    compiledStatus.textContent = 'LOCAL AI · Preparing first JSON fragment. Output is a provisional plan until validated.';
+    try {
+        const plan = await localAI.generate(request, context, {
+            signal: aiController.signal,
+            onProgress: ({ phase, tokens, raw }) => {
+                if (ticket !== aiRequestSerial) return;
+                if (typeof raw === 'string') {
+                    textArea.value = raw;
+                    updateComposerMeters();
+                }
+                compiledStatus.textContent = phase === 'prefill'
+                    ? 'LOCAL AI · Preparing first JSON fragment.'
+                    : phase === 'validating'
+                        ? 'LOCAL AI · Validating the generated plan against the safe schema…'
+                        : 'AI PLAN STREAM · ' + tokens + ' received chunks · ~' + approximateTokens(textArea.value) + ' output tokens estimated. Not compile-ready yet.';
+            }
+        });
+        if (ticket !== aiRequestSerial || aiController.signal.aborted)
+            throw Error('Generation cancelled; existing JSON preserved.');
+        const spec = compileIntentPlan(plan, new Date(), makeLocalSuffix());
+        composerJSONReady(spec, 'AI PLAN VALIDATED → EXPERIENCE JSON READY · ILLUSTRATIVE source, no live data. Review and choose COMPILE EXPERIENCE to manifest.');
+        lastAIPlan = plan;
+        aiGenerated++;
+    } catch (err) {
+        textArea.value = previousJSON;
+        updateComposerMeters();
+        compiledStatus.textContent = 'GENERATION DID NOT COMPILE · ' + String(err) + ' · Previous JSON restored. No scene changed.';
+        compiledStatus.setAttribute('role', 'alert');
+    } finally {
+        aiBusy = false;
+        aiController = null;
+        setComposerGenerating(false);
+        updateAILoadButton();
+    }
+}
+composerPrompt.addEventListener('input', updateComposerMeters);
+composerPrompt.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        if (localAI.ready) void generateComposerJSON();
+        else draftComposerJSON();
+    }
+});
+textArea.addEventListener('input', () => {
+    if (composerGenerating) return;
+    updateComposerMeters();
+    compiledStatus.textContent = 'JSON edited. Changes will be schema-validated before compilation.';
+});
+const composerCopyButton = makeButton(composerDraftControls, 'COPY JSON', () => {
+    if (!textArea.value.trim()) {
+        compiledStatus.textContent = 'No JSON to copy.';
+        return;
+    }
+    if (!navigator.clipboard?.writeText) {
+        textArea.focus();
+        textArea.select();
+        compiledStatus.textContent = 'Clipboard API unavailable. JSON selected for manual copying.';
+        return;
+    }
+    void navigator.clipboard.writeText(textArea.value).then(
+        () => compiledStatus.textContent = 'JSON copied to clipboard.',
+        () => { textArea.focus(); textArea.select(); compiledStatus.textContent = 'Clipboard access denied. JSON selected for manual copying.'; }
+    );
+});
+dialog.addEventListener('close', () => { if (composerGenerating) cancelInference(); });
+
 makeButton(heading, 'LOAD EXAMPLE', () => { const example = { version: 1, id: 'moon-operations', title: 'Moon expedition operations', subtitle: 'A new combination of timeline and task-board', role: 'MISSION COORDINATOR', source: 'ILLUSTRATIVE', permissions: [], blocks: [{ kind: 'timeline-chart', id: 'oxygen', title: 'Illustrative oxygen supply', unit: 'kg', tracks: [{ id: 'supply', label: 'Available oxygen', points: Array.from({ length: 12 }, (_, i) => ({ t: new Date(Date.UTC(2026, 10, 17, i * 2)).toISOString(), v: 140 - i * 8 })) }], selected: 'supply', window: 12, windows: [6, 12] }, { kind: 'task-board', id: 'operations', title: 'Crew tasks', lanes: [{ id: 'next', title: 'Next' }, { id: 'working', title: 'Working' }, { id: 'done', title: 'Done' }], cards: [{ id: 'check-air', title: 'Inspect airlocks', lane: 'next' }, { id: 'watch-oxygen', title: 'Verify supply model', lane: 'working' }] }, { kind: 'explanation', id: 'note', title: 'Source warning', text: 'Illustrative mission scenario generated as a compositional grammar test; not real telemetry.' }] }; textArea.value = JSON.stringify(example, null, 2); compiledStatus.textContent = 'New mixed-domain specimen loaded. Press COMPILE.'; }, 'choice');
 makeButton(heading, 'CLOSE', () => dialog.close(), 'choice');
-dialog.append(element('h2', '', 'EXPERIENCE COMPILER'), desc, heading, textArea, compiledStatus);
+dialog.append(element('h2', '', 'EXPERIENCE COMPILER'), desc, composerWorkflow, heading, composerOutputHead, textArea, compiledStatus);
 const importLabel = element('label', 'composer-import-label', 'IMPORT LOCAL JSON · never uploads');
 const jsonFile = element('input');
 jsonFile.type = 'file';
@@ -2819,7 +3012,7 @@ jsonFile.addEventListener('change', () => { const file = jsonFile.files?.[0]; if
     return; if (file.size > 80000) {
     compiledStatus.textContent = 'REJECTED · File must be 80 KB or smaller';
     return;
-} void file.text().then(text => { textArea.value = text; compiledStatus.textContent = 'Local file loaded. Review it and choose COMPILE EXPERIENCE or COMPILE PLAN JSON.'; }).catch(e => compiledStatus.textContent = 'File read error: ' + String(e)); });
+} void file.text().then(text => { textArea.value = text; updateComposerMeters(); compiledStatus.textContent = 'Local file loaded. Review it and choose COMPILE EXPERIENCE or COMPILE PLAN JSON.'; }).catch(e => compiledStatus.textContent = 'File read error: ' + String(e)); });
 importLabel.append(jsonFile);
 dialog.append(importLabel);
 makeButton(heading, 'LOAD LOCAL PLAN TEST', () => { const test = { version: 1, intent: 'compose', title: 'River waterworks observatory', subtitle: 'Illustrative water-transport monitoring and operational planning', role: 'SYSTEMS EXPLAINER', blocks: [{ kind: 'spatial-assembly', title: 'Water path', items: ['Intake pipe', 'Filter chamber', 'Buffer tank', 'Outlet valve'] }, { kind: 'timeline-chart', title: 'Illustrative throughput trend', unit: 'index' }, { kind: 'task-board', title: 'Inspection steps', items: ['Inspect inlet', 'Review filter', 'Sample output'] }] }; textArea.value = JSON.stringify(test, null, 2); compiledStatus.textContent = 'A sample PLAN loaded. Choose COMPILE PLAN JSON (no AI/model required).'; }, 'choice');
@@ -2848,15 +3041,15 @@ catch (err) {
     compiledStatus.setAttribute('role', 'alert');
 } }, 'choice');
 makeButton(compilerControls, 'COPY CURRENT JSON', () => { const data = runtime.exportCurrent(); if (data) {
-    textArea.value = data;
-    compiledStatus.textContent = 'Current experience specification copied into editor.';
+    textArea.value = data; updateComposerMeters();
+    compiledStatus.textContent = 'Current experience specification loaded into editor.';
 }
 else
     compiledStatus.textContent = 'No active experience.'; }, 'choice');
 dialog.append(compilerControls);
 document.body.append(dialog);
 function openComposer(showCurrent = false) { if (showCurrent && runtime.exportCurrent())
-    textArea.value = runtime.exportCurrent(); dialog.showModal(); textArea.focus(); }
+    textArea.value = runtime.exportCurrent(); updateComposerMeters(); dialog.showModal(); (showCurrent ? textArea : composerPrompt).focus(); }
 function makeLocalSuffix() { if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
     return crypto.randomUUID().replaceAll('-', '').slice(0, 10); return Math.random().toString(36).slice(2, 12); }
 const aiProgress = element('div', 'ai-inference-progress');
