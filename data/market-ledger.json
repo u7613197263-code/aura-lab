@@ -1,27 +1,27 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T10:34:21.106Z",
+  "generated_at": "2026-11-18T11:30:09.190Z",
   "sampler": {
     "status": "online",
     "interval_minutes": 5,
-    "last_run_at": "2026-11-18T10:34:21.106Z",
-    "last_success_at": "2026-11-18T10:34:21.106Z",
-    "run_count": 41,
-    "successful_runs": 41,
+    "last_run_at": "2026-11-18T11:30:09.190Z",
+    "last_success_at": "2026-11-18T11:30:09.190Z",
+    "run_count": 42,
+    "successful_runs": 42,
     "discovery_status": "online",
     "market_status": "online",
     "last_error": null,
     "note": "Best-effort background sampling. GitHub Actions schedule events can be delayed and public workflows may be disabled after 60 days without repository activity.",
-    "last_discovery_count": 65,
+    "last_discovery_count": 62,
     "new_assets_this_run": 2,
-    "due_assets_this_run": 6,
-    "captured_this_run": 6,
+    "due_assets_this_run": 8,
+    "captured_this_run": 8,
     "failed_batches": 0
   },
   "summary": {
-    "tracked_assets": 82,
-    "captured_outcomes": 256,
-    "missed_outcomes": 84,
+    "tracked_assets": 84,
+    "captured_outcomes": 264,
+    "missed_outcomes": 86,
     "pending_outcomes": 70
   },
   "assets": [
@@ -3980,24 +3980,25 @@
         "market_cap_usd": 19292.6
       },
       "last_market": {
-        "sampled_at": "2026-11-17T17:39:54.049Z",
-        "price_usd": 0.000007803,
+        "sampled_at": "2026-11-18T11:30:09.190Z",
+        "price_usd": 0.00001072,
         "liquidity_usd": 0,
-        "volume_1h_usd": 300.79,
-        "buys_1h": 4,
-        "sells_1h": 7,
-        "price_change_1h_pct": 0.43,
-        "heuristic_score": 42,
-        "risk_score": 30,
+        "volume_1h_usd": 307.24,
+        "buys_1h": 3,
+        "sells_1h": 3,
+        "price_change_1h_pct": 14.33,
+        "heuristic_score": 36,
+        "risk_score": 45,
         "risk_flags": [
-          "very_thin_liquidity"
+          "very_thin_liquidity",
+          "low_txn_count"
         ],
         "pair_address": "9o6xKzfXQ9ih7WkcFQFaHHRMwP7ykxnNbhtsJEBgNbjr",
         "dex_url": "https://dexscreener.com/solana/9o6xkzfxq9ih7wkcfqfahhrmwp7ykxnnbhtsjebgnbjr",
-        "fdv_usd": 7803.51,
-        "market_cap_usd": 7803.51
+        "fdv_usd": 10729.55,
+        "market_cap_usd": 10729.55
       },
-      "last_market_at": "2026-11-17T17:39:54.049Z",
+      "last_market_at": "2026-11-18T11:30:09.190Z",
       "outcomes": [
         {
           "horizon_seconds": 300,
@@ -4060,13 +4061,13 @@
           "label": "24h",
           "target_at": "2026-11-18T10:48:25.198Z",
           "deadline_at": "2026-11-20T10:48:25.198Z",
-          "status": "pending",
+          "status": "captured",
           "attempts": 0,
-          "sampled_at": null,
-          "delay_seconds": null,
-          "price_usd": null,
-          "return_pct": null,
-          "liquidity_usd": null,
+          "sampled_at": "2026-11-18T11:30:09.190Z",
+          "delay_seconds": 2504,
+          "price_usd": 0.00001072,
+          "return_pct": -44.427164333851735,
+          "liquidity_usd": 0,
           "reason": null
         }
       ]
@@ -4102,14 +4103,14 @@
         "market_cap_usd": 5652
       },
       "last_market": {
-        "sampled_at": "2026-11-17T17:39:54.049Z",
-        "price_usd": 0.000002598,
-        "liquidity_usd": 2385.3,
-        "volume_1h_usd": 269.82,
-        "buys_1h": 2,
-        "sells_1h": 5,
-        "price_change_1h_pct": -9.9,
-        "heuristic_score": 37,
+        "sampled_at": "2026-11-18T11:30:09.190Z",
+        "price_usd": 0.000001553,
+        "liquidity_usd": 1560.86,
+        "volume_1h_usd": 27.14,
+        "buys_1h": 0,
+        "sells_1h": 3,
+        "price_change_1h_pct": -3.44,
+        "heuristic_score": 31,
         "risk_score": 59,
         "risk_flags": [
           "very_thin_liquidity",
@@ -4118,10 +4119,10 @@
         ],
         "pair_address": "GUFVbN2Hado6oRRTqipeLXGFNjiBUHeycuLShYfij1uQ",
         "dex_url": "https://dexscreener.com/solana/gufvbn2hado6orrtqipelxgfnjibuheyculshyfij1uq",
-        "fdv_usd": 2478,
-        "market_cap_usd": 2478
+        "fdv_usd": 1481,
+        "market_cap_usd": 1481
       },
-      "last_market_at": "2026-11-17T17:39:54.049Z",
+      "last_market_at": "2026-11-18T11:30:09.190Z",
       "outcomes": [
         {
           "horizon_seconds": 300,
@@ -4184,13 +4185,13 @@
           "label": "24h",
           "target_at": "2026-11-18T10:48:25.198Z",
           "deadline_at": "2026-11-20T10:48:25.198Z",
-          "status": "pending",
+          "status": "captured",
           "attempts": 0,
-          "sampled_at": null,
-          "delay_seconds": null,
-          "price_usd": null,
-          "return_pct": null,
-          "liquidity_usd": null,
+          "sampled_at": "2026-11-18T11:30:09.190Z",
+          "delay_seconds": 2504,
+          "price_usd": 0.000001553,
+          "return_pct": -73.79787413531298,
+          "liquidity_usd": 1560.86,
           "reason": null
         }
       ]
@@ -8660,25 +8661,24 @@
         "market_cap_usd": 10522
       },
       "last_market": {
-        "sampled_at": "2026-11-18T06:06:03.076Z",
-        "price_usd": 0.00001203,
-        "liquidity_usd": 6719.36,
-        "volume_1h_usd": 93119.71,
-        "buys_1h": 1453,
-        "sells_1h": 1103,
-        "price_change_1h_pct": -47.8,
-        "heuristic_score": 50,
-        "risk_score": 42,
+        "sampled_at": "2026-11-18T11:30:09.190Z",
+        "price_usd": 0.000005568,
+        "liquidity_usd": 4141.88,
+        "volume_1h_usd": 974.32,
+        "buys_1h": 20,
+        "sells_1h": 33,
+        "price_change_1h_pct": -16.21,
+        "heuristic_score": 42,
+        "risk_score": 30,
         "risk_flags": [
-          "very_thin_liquidity",
-          "pair_under_6h"
+          "very_thin_liquidity"
         ],
         "pair_address": "3vnxyY99ETkRDAkfJ51FZdqtxADpTYGrcbiWEcKShKg7",
         "dex_url": "https://dexscreener.com/solana/3vnxyy99etkrdakfj51fzdqtxadptygrcbiweckshkg7",
-        "fdv_usd": 11499,
-        "market_cap_usd": 11499
+        "fdv_usd": 5321,
+        "market_cap_usd": 5321
       },
-      "last_market_at": "2026-11-18T06:06:03.076Z",
+      "last_market_at": "2026-11-18T11:30:09.190Z",
       "outcomes": [
         {
           "horizon_seconds": 300,
@@ -8727,13 +8727,13 @@
           "label": "6h",
           "target_at": "2026-11-18T11:04:03.676Z",
           "deadline_at": "2026-11-18T23:04:03.676Z",
-          "status": "pending",
+          "status": "captured",
           "attempts": 0,
-          "sampled_at": null,
-          "delay_seconds": null,
-          "price_usd": null,
-          "return_pct": null,
-          "liquidity_usd": null,
+          "sampled_at": "2026-11-18T11:30:09.190Z",
+          "delay_seconds": 1566,
+          "price_usd": 0.000005568,
+          "return_pct": -47.17267552182164,
+          "liquidity_usd": 4141.88,
           "reason": null
         },
         {
@@ -8782,25 +8782,25 @@
         "market_cap_usd": 11614
       },
       "last_market": {
-        "sampled_at": "2026-11-18T06:06:03.076Z",
-        "price_usd": 0.00001605,
-        "liquidity_usd": 9374.72,
-        "volume_1h_usd": 27381.83,
-        "buys_1h": 234,
-        "sells_1h": 172,
-        "price_change_1h_pct": 44.74,
-        "heuristic_score": 46,
-        "risk_score": 42,
+        "sampled_at": "2026-11-18T11:30:09.190Z",
+        "price_usd": 0.00002821,
+        "liquidity_usd": 12845.91,
+        "volume_1h_usd": 1104.27,
+        "buys_1h": 7,
+        "sells_1h": 20,
+        "price_change_1h_pct": -19.61,
+        "heuristic_score": 37,
+        "risk_score": 32,
         "risk_flags": [
-          "very_thin_liquidity",
-          "pair_under_6h"
+          "low_liquidity",
+          "sell_pressure"
         ],
         "pair_address": "68amZd5FhryZgYKpyppgXQZr88MoSNrSz2ssA8h5S7yz",
         "dex_url": "https://dexscreener.com/solana/68amzd5fhryzgykpyppgxqzr88mosnrsz2ssa8h5s7yz",
-        "fdv_usd": 15449,
-        "market_cap_usd": 15449
+        "fdv_usd": 27139,
+        "market_cap_usd": 27139
       },
-      "last_market_at": "2026-11-18T06:06:03.076Z",
+      "last_market_at": "2026-11-18T11:30:09.190Z",
       "outcomes": [
         {
           "horizon_seconds": 300,
@@ -8849,13 +8849,13 @@
           "label": "6h",
           "target_at": "2026-11-18T11:04:03.676Z",
           "deadline_at": "2026-11-18T23:04:03.676Z",
-          "status": "pending",
+          "status": "captured",
           "attempts": 0,
-          "sampled_at": null,
-          "delay_seconds": null,
-          "price_usd": null,
-          "return_pct": null,
-          "liquidity_usd": null,
+          "sampled_at": "2026-11-18T11:30:09.190Z",
+          "delay_seconds": 1566,
+          "price_usd": 0.00002821,
+          "return_pct": 142.98018949181736,
+          "liquidity_usd": 12845.91,
           "reason": null
         },
         {
@@ -9639,24 +9639,24 @@
         "market_cap_usd": 10792.83
       },
       "last_market": {
-        "sampled_at": "2026-11-18T10:34:21.106Z",
-        "price_usd": 0.000007479,
+        "sampled_at": "2026-11-18T11:30:09.190Z",
+        "price_usd": 0.000006608,
         "liquidity_usd": 0,
-        "volume_1h_usd": 1946.83,
-        "buys_1h": 44,
-        "sells_1h": 42,
-        "price_change_1h_pct": -34.41,
-        "heuristic_score": 42,
+        "volume_1h_usd": 1007.84,
+        "buys_1h": 15,
+        "sells_1h": 18,
+        "price_change_1h_pct": -11.65,
+        "heuristic_score": 43,
         "risk_score": 30,
         "risk_flags": [
           "very_thin_liquidity"
         ],
         "pair_address": "8FgrZFZY4AhNmqir7Dtj4NRTPtrR3w2jgRZdpE5cWLUy",
         "dex_url": "https://dexscreener.com/solana/8fgrzfzy4ahnmqir7dtj4nrtptrr3w2jgrzdpe5cwluy",
-        "fdv_usd": 7479.22,
-        "market_cap_usd": 7479.22
+        "fdv_usd": 6608.12,
+        "market_cap_usd": 6608.12
       },
-      "last_market_at": "2026-11-18T10:34:21.106Z",
+      "last_market_at": "2026-11-18T11:30:09.190Z",
       "outcomes": [
         {
           "horizon_seconds": 300,
@@ -9691,13 +9691,13 @@
           "label": "1h",
           "target_at": "2026-11-18T10:34:51.921Z",
           "deadline_at": "2026-11-18T13:34:51.921Z",
-          "status": "pending",
+          "status": "captured",
           "attempts": 0,
-          "sampled_at": null,
-          "delay_seconds": null,
-          "price_usd": null,
-          "return_pct": null,
-          "liquidity_usd": null,
+          "sampled_at": "2026-11-18T11:30:09.190Z",
+          "delay_seconds": 3317,
+          "price_usd": 0.000006608,
+          "return_pct": -38.758109360519,
+          "liquidity_usd": 0,
           "reason": null
         },
         {
@@ -9760,14 +9760,14 @@
         "market_cap_usd": 3390.56
       },
       "last_market": {
-        "sampled_at": "2026-11-18T10:34:21.106Z",
-        "price_usd": 0.000003468,
+        "sampled_at": "2026-11-18T11:30:09.190Z",
+        "price_usd": 0.000003606,
         "liquidity_usd": 0,
-        "volume_1h_usd": 3631.47,
-        "buys_1h": 38,
-        "sells_1h": 42,
-        "price_change_1h_pct": -0.07,
-        "heuristic_score": 47,
+        "volume_1h_usd": 1722.24,
+        "buys_1h": 10,
+        "sells_1h": 19,
+        "price_change_1h_pct": 4,
+        "heuristic_score": 41,
         "risk_score": 42,
         "risk_flags": [
           "very_thin_liquidity",
@@ -9775,10 +9775,10 @@
         ],
         "pair_address": "6Rw2Sdos6D5Kpgjt4wBokMUv3p7S4Z921t7ftc1FbXTA",
         "dex_url": "https://dexscreener.com/solana/6rw2sdos6d5kpgjt4wbokmuv3p7s4z921t7ftc1fbxta",
-        "fdv_usd": 3468.39,
-        "market_cap_usd": 3468.39
+        "fdv_usd": 3606.95,
+        "market_cap_usd": 3606.95
       },
-      "last_market_at": "2026-11-18T10:34:21.106Z",
+      "last_market_at": "2026-11-18T11:30:09.190Z",
       "outcomes": [
         {
           "horizon_seconds": 300,
@@ -9813,13 +9813,13 @@
           "label": "1h",
           "target_at": "2026-11-18T10:34:51.921Z",
           "deadline_at": "2026-11-18T13:34:51.921Z",
-          "status": "pending",
+          "status": "captured",
           "attempts": 0,
-          "sampled_at": null,
-          "delay_seconds": null,
-          "price_usd": null,
-          "return_pct": null,
-          "liquidity_usd": null,
+          "sampled_at": "2026-11-18T11:30:09.190Z",
+          "delay_seconds": 3317,
+          "price_usd": 0.000003606,
+          "return_pct": 6.371681415929187,
+          "liquidity_usd": 0,
           "reason": null
         },
         {
@@ -9882,52 +9882,54 @@
         "market_cap_usd": 2152.31
       },
       "last_market": {
-        "sampled_at": "2026-11-18T10:34:21.106Z",
+        "sampled_at": "2026-11-18T11:30:09.190Z",
         "price_usd": 0.000002152,
         "liquidity_usd": 0,
-        "volume_1h_usd": 16350.14,
-        "buys_1h": 267,
-        "sells_1h": 263,
-        "price_change_1h_pct": 0.84,
-        "heuristic_score": 51,
-        "risk_score": 55,
+        "volume_1h_usd": 13.79,
+        "buys_1h": 0,
+        "sells_1h": 3,
+        "price_change_1h_pct": -1.2,
+        "heuristic_score": 25,
+        "risk_score": 71,
         "risk_flags": [
           "very_thin_liquidity",
-          "pair_under_1h"
+          "pair_under_6h",
+          "low_txn_count",
+          "sell_pressure"
         ],
         "pair_address": "C8aDcb6JxhjygZdHoKwCk17UhZcwENkKDMHzGCtkGkhb",
         "dex_url": "https://dexscreener.com/solana/c8adcb6jxhjygzdhokwck17uhzcwenkkdmhzgctkgkhb",
         "fdv_usd": 2152.31,
         "market_cap_usd": 2152.31
       },
-      "last_market_at": "2026-11-18T10:34:21.106Z",
+      "last_market_at": "2026-11-18T11:30:09.190Z",
       "outcomes": [
         {
           "horizon_seconds": 300,
           "label": "5m",
           "target_at": "2026-11-18T10:39:21.106Z",
           "deadline_at": "2026-11-18T11:09:21.106Z",
-          "status": "pending",
+          "status": "missed_window",
           "attempts": 0,
-          "sampled_at": null,
+          "sampled_at": "2026-11-18T11:30:09.190Z",
           "delay_seconds": null,
           "price_usd": null,
           "return_pct": null,
           "liquidity_usd": null,
-          "reason": null
+          "reason": "No valid market sample was obtained before the sampling deadline."
         },
         {
           "horizon_seconds": 900,
           "label": "15m",
           "target_at": "2026-11-18T10:49:21.106Z",
           "deadline_at": "2026-11-18T11:49:21.106Z",
-          "status": "pending",
+          "status": "captured",
           "attempts": 0,
-          "sampled_at": null,
-          "delay_seconds": null,
-          "price_usd": null,
-          "return_pct": null,
-          "liquidity_usd": null,
+          "sampled_at": "2026-11-18T11:30:09.190Z",
+          "delay_seconds": 2448,
+          "price_usd": 0.000002152,
+          "return_pct": 0,
+          "liquidity_usd": 0,
           "reason": null
         },
         {
@@ -10004,52 +10006,52 @@
         "market_cap_usd": 6757.11
       },
       "last_market": {
-        "sampled_at": "2026-11-18T10:34:21.106Z",
-        "price_usd": 0.000006757,
+        "sampled_at": "2026-11-18T11:30:09.190Z",
+        "price_usd": 0.000003611,
         "liquidity_usd": 0,
-        "volume_1h_usd": 75923.4,
-        "buys_1h": 954,
-        "sells_1h": 603,
-        "price_change_1h_pct": 36.67,
-        "heuristic_score": 45,
-        "risk_score": 55,
+        "volume_1h_usd": 5382.54,
+        "buys_1h": 48,
+        "sells_1h": 79,
+        "price_change_1h_pct": -57.41,
+        "heuristic_score": 38,
+        "risk_score": 42,
         "risk_flags": [
           "very_thin_liquidity",
-          "pair_under_1h"
+          "pair_under_6h"
         ],
         "pair_address": "7Deku22J77tnRTjHyfcKhs4CDMTqqSePmDwVqyXVD5Gh",
         "dex_url": "https://dexscreener.com/solana/7deku22j77tnrtjhyfckhs4cdmtqqsepmdwvqyxvd5gh",
-        "fdv_usd": 6757.11,
-        "market_cap_usd": 6757.11
+        "fdv_usd": 3611.66,
+        "market_cap_usd": 3611.66
       },
-      "last_market_at": "2026-11-18T10:34:21.106Z",
+      "last_market_at": "2026-11-18T11:30:09.190Z",
       "outcomes": [
         {
           "horizon_seconds": 300,
           "label": "5m",
           "target_at": "2026-11-18T10:39:21.106Z",
           "deadline_at": "2026-11-18T11:09:21.106Z",
-          "status": "pending",
+          "status": "missed_window",
           "attempts": 0,
-          "sampled_at": null,
+          "sampled_at": "2026-11-18T11:30:09.190Z",
           "delay_seconds": null,
           "price_usd": null,
           "return_pct": null,
           "liquidity_usd": null,
-          "reason": null
+          "reason": "No valid market sample was obtained before the sampling deadline."
         },
         {
           "horizon_seconds": 900,
           "label": "15m",
           "target_at": "2026-11-18T10:49:21.106Z",
           "deadline_at": "2026-11-18T11:49:21.106Z",
-          "status": "pending",
+          "status": "captured",
           "attempts": 0,
-          "sampled_at": null,
-          "delay_seconds": null,
-          "price_usd": null,
-          "return_pct": null,
-          "liquidity_usd": null,
+          "sampled_at": "2026-11-18T11:30:09.190Z",
+          "delay_seconds": 2448,
+          "price_usd": 0.000003611,
+          "return_pct": -46.55912387154063,
+          "liquidity_usd": 0,
           "reason": null
         },
         {
@@ -10085,6 +10087,250 @@
           "label": "24h",
           "target_at": "2026-11-19T10:34:21.106Z",
           "deadline_at": "2026-11-21T10:34:21.106Z",
+          "status": "pending",
+          "attempts": 0,
+          "sampled_at": null,
+          "delay_seconds": null,
+          "price_usd": null,
+          "return_pct": null,
+          "liquidity_usd": null,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "mint": "2m7jKc7tFDnTqcCDLyAovppgUhHy4KzhZhQkeb5JYgDb",
+      "symbol": "AudaCity",
+      "name": "DacityCoin",
+      "chain": "solana",
+      "discovered_at": "2026-11-18T11:30:09.190Z",
+      "discovery_sources": [
+        "profile"
+      ],
+      "boost_amount": 0,
+      "initial": {
+        "sampled_at": "2026-11-18T11:30:09.190Z",
+        "price_usd": 0.00003504,
+        "liquidity_usd": 16504.22,
+        "volume_1h_usd": 135375.93,
+        "buys_1h": 1135,
+        "sells_1h": 928,
+        "price_change_1h_pct": -28.5,
+        "heuristic_score": 49,
+        "risk_score": 43,
+        "risk_flags": [
+          "low_liquidity",
+          "pair_under_1h"
+        ],
+        "pair_address": "89Mzbzgb7rcJt1z1Hfca9V5sK1NBNVjb9a7Wht9GnzTy",
+        "dex_url": "https://dexscreener.com/solana/89mzbzgb7rcjt1z1hfca9v5sk1nbnvjb9a7wht9gnzty",
+        "fdv_usd": 35043,
+        "market_cap_usd": 35043
+      },
+      "last_market": {
+        "sampled_at": "2026-11-18T11:30:09.190Z",
+        "price_usd": 0.00003504,
+        "liquidity_usd": 16504.22,
+        "volume_1h_usd": 135375.93,
+        "buys_1h": 1135,
+        "sells_1h": 928,
+        "price_change_1h_pct": -28.5,
+        "heuristic_score": 49,
+        "risk_score": 43,
+        "risk_flags": [
+          "low_liquidity",
+          "pair_under_1h"
+        ],
+        "pair_address": "89Mzbzgb7rcJt1z1Hfca9V5sK1NBNVjb9a7Wht9GnzTy",
+        "dex_url": "https://dexscreener.com/solana/89mzbzgb7rcjt1z1hfca9v5sk1nbnvjb9a7wht9gnzty",
+        "fdv_usd": 35043,
+        "market_cap_usd": 35043
+      },
+      "last_market_at": "2026-11-18T11:30:09.190Z",
+      "outcomes": [
+        {
+          "horizon_seconds": 300,
+          "label": "5m",
+          "target_at": "2026-11-18T11:35:09.190Z",
+          "deadline_at": "2026-11-18T12:05:09.190Z",
+          "status": "pending",
+          "attempts": 0,
+          "sampled_at": null,
+          "delay_seconds": null,
+          "price_usd": null,
+          "return_pct": null,
+          "liquidity_usd": null,
+          "reason": null
+        },
+        {
+          "horizon_seconds": 900,
+          "label": "15m",
+          "target_at": "2026-11-18T11:45:09.190Z",
+          "deadline_at": "2026-11-18T12:45:09.190Z",
+          "status": "pending",
+          "attempts": 0,
+          "sampled_at": null,
+          "delay_seconds": null,
+          "price_usd": null,
+          "return_pct": null,
+          "liquidity_usd": null,
+          "reason": null
+        },
+        {
+          "horizon_seconds": 3600,
+          "label": "1h",
+          "target_at": "2026-11-18T12:30:09.190Z",
+          "deadline_at": "2026-11-18T15:30:09.190Z",
+          "status": "pending",
+          "attempts": 0,
+          "sampled_at": null,
+          "delay_seconds": null,
+          "price_usd": null,
+          "return_pct": null,
+          "liquidity_usd": null,
+          "reason": null
+        },
+        {
+          "horizon_seconds": 21600,
+          "label": "6h",
+          "target_at": "2026-11-18T17:30:09.190Z",
+          "deadline_at": "2026-11-19T05:30:09.190Z",
+          "status": "pending",
+          "attempts": 0,
+          "sampled_at": null,
+          "delay_seconds": null,
+          "price_usd": null,
+          "return_pct": null,
+          "liquidity_usd": null,
+          "reason": null
+        },
+        {
+          "horizon_seconds": 86400,
+          "label": "24h",
+          "target_at": "2026-11-19T11:30:09.190Z",
+          "deadline_at": "2026-11-21T11:30:09.190Z",
+          "status": "pending",
+          "attempts": 0,
+          "sampled_at": null,
+          "delay_seconds": null,
+          "price_usd": null,
+          "return_pct": null,
+          "liquidity_usd": null,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "mint": "AwoRy6Dbo5qmWjCJeq4tbCVHooe2uWSa9kTfYEWWpump",
+      "symbol": "GtaPerps",
+      "name": "Gta Perpetuals",
+      "chain": "solana",
+      "discovered_at": "2026-11-18T11:30:09.190Z",
+      "discovery_sources": [
+        "profile"
+      ],
+      "boost_amount": 0,
+      "initial": {
+        "sampled_at": "2026-11-18T11:30:09.190Z",
+        "price_usd": 0.000006619,
+        "liquidity_usd": 0,
+        "volume_1h_usd": 12550.99,
+        "buys_1h": 81,
+        "sells_1h": 61,
+        "price_change_1h_pct": 9.88,
+        "heuristic_score": 45,
+        "risk_score": 55,
+        "risk_flags": [
+          "very_thin_liquidity",
+          "pair_under_1h"
+        ],
+        "pair_address": "4JEys47JiAzg5FH8YQcJJJ8b3xNfEHzuqMRkgsMFWPzC",
+        "dex_url": "https://dexscreener.com/solana/4jeys47jiazg5fh8yqcjjj8b3xnfehzuqmrkgsmfwpzc",
+        "fdv_usd": 6619.68,
+        "market_cap_usd": 6619.68
+      },
+      "last_market": {
+        "sampled_at": "2026-11-18T11:30:09.190Z",
+        "price_usd": 0.000006619,
+        "liquidity_usd": 0,
+        "volume_1h_usd": 12550.99,
+        "buys_1h": 81,
+        "sells_1h": 61,
+        "price_change_1h_pct": 9.88,
+        "heuristic_score": 45,
+        "risk_score": 55,
+        "risk_flags": [
+          "very_thin_liquidity",
+          "pair_under_1h"
+        ],
+        "pair_address": "4JEys47JiAzg5FH8YQcJJJ8b3xNfEHzuqMRkgsMFWPzC",
+        "dex_url": "https://dexscreener.com/solana/4jeys47jiazg5fh8yqcjjj8b3xnfehzuqmrkgsmfwpzc",
+        "fdv_usd": 6619.68,
+        "market_cap_usd": 6619.68
+      },
+      "last_market_at": "2026-11-18T11:30:09.190Z",
+      "outcomes": [
+        {
+          "horizon_seconds": 300,
+          "label": "5m",
+          "target_at": "2026-11-18T11:35:09.190Z",
+          "deadline_at": "2026-11-18T12:05:09.190Z",
+          "status": "pending",
+          "attempts": 0,
+          "sampled_at": null,
+          "delay_seconds": null,
+          "price_usd": null,
+          "return_pct": null,
+          "liquidity_usd": null,
+          "reason": null
+        },
+        {
+          "horizon_seconds": 900,
+          "label": "15m",
+          "target_at": "2026-11-18T11:45:09.190Z",
+          "deadline_at": "2026-11-18T12:45:09.190Z",
+          "status": "pending",
+          "attempts": 0,
+          "sampled_at": null,
+          "delay_seconds": null,
+          "price_usd": null,
+          "return_pct": null,
+          "liquidity_usd": null,
+          "reason": null
+        },
+        {
+          "horizon_seconds": 3600,
+          "label": "1h",
+          "target_at": "2026-11-18T12:30:09.190Z",
+          "deadline_at": "2026-11-18T15:30:09.190Z",
+          "status": "pending",
+          "attempts": 0,
+          "sampled_at": null,
+          "delay_seconds": null,
+          "price_usd": null,
+          "return_pct": null,
+          "liquidity_usd": null,
+          "reason": null
+        },
+        {
+          "horizon_seconds": 21600,
+          "label": "6h",
+          "target_at": "2026-11-18T17:30:09.190Z",
+          "deadline_at": "2026-11-19T05:30:09.190Z",
+          "status": "pending",
+          "attempts": 0,
+          "sampled_at": null,
+          "delay_seconds": null,
+          "price_usd": null,
+          "return_pct": null,
+          "liquidity_usd": null,
+          "reason": null
+        },
+        {
+          "horizon_seconds": 86400,
+          "label": "24h",
+          "target_at": "2026-11-19T11:30:09.190Z",
+          "deadline_at": "2026-11-21T11:30:09.190Z",
           "status": "pending",
           "attempts": 0,
           "sampled_at": null,
