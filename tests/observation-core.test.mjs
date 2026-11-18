@@ -1,0 +1,33 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {makeDecision,assessSample,resolveOutcome,appendEvidence,intervalDiagnostics,HORIZONS} from '../observation-core.mjs';
+const at=t=>new Date(Date.parse('2026-11-17T12:00:00.000Z')+t).toISOString();
+const d=()=>makeDecision({chain:'solana',mint:'MINT',pool:'POOL',observedAt:at(-30000),decisionAt:at(0),rawEvidenceHash:'HASH',modelVersion:'v1'});
+const h=HORIZONS[0];
+const s=(provider=at(300000),retrieved=at(300500),price=1)=>({chain:'solana',mint:'MINT',pool:'POOL',providerAsOf:provider,retrievedAt:retrieved,priceUsd:price,source:'fixture',rawEvidenceHash:'HASH2'});
+test('valid point-in-time decision is stable across replays',()=>assert.equal(d().decisionId,d().decisionId));
+test('decision cannot use observation from its future',()=>assert.throws(()=>makeDecision({chain:'solana',mint:'M',pool:'P',observedAt:at(1000),decisionAt:at(0),rawEvidenceHash:'H',modelVersion:'v1'}),/FUTURE/));
+test('provider as-of and receipt both within declared window yields CAPTURED',()=>assert.equal(assessSample({decision:d(),horizon:h,sample:s()}).status,'CAPTURED'));
+test('a price received before target cannot be used for future horizon',()=>assert.equal(assessSample({decision:d(),horizon:h,sample:s(at(299999))}).status,'BEFORE_HORIZON'));
+test('a later than horizon observation is LATE, not a five minute label',()=>assert.equal(assessSample({decision:d(),horizon:h,sample:s(at(481000),at(481100))}).status,'LATE'));
+test('a timely provider price fetched after deadline is not valid',()=>assert.equal(assessSample({decision:d(),horizon:h,sample:s(at(310000),at(481100))}).status,'RETRIEVED_TOO_LATE'));
+test('without provider-as-of the label is UNVERIFIED',()=>assert.equal(assessSample({decision:d(),horizon:h,sample:{...s(),providerAsOf:null}}).status,'UNVERIFIED_TIME'));
+test('zero price is missing not a -100% return',()=>assert.equal(assessSample({decision:d(),horizon:h,sample:s(at(300000),at(300500),0)}).status,'NO_VALID_PRICE'));
+test('unknown source provenance cannot be counted as captured',()=>assert.equal(assessSample({decision:d(),horizon:h,sample:{...s(),rawEvidenceHash:''}}).status,'MISSING_PROVENANCE'));
+test('wrong mint/pool is never substituted',()=>assert.equal(assessSample({decision:d(),horizon:h,sample:{...s(),pool:'OTHER'}}).status,'WRONG_INSTRUMENT'));
+test('future-dated provider sample is rejected',()=>assert.equal(assessSample({decision:d(),horizon:h,sample:s(at(310000),at(308000))}).status,'FUTURE_PROVIDER_TIME'));
+test('before target the status is pending',()=>assert.equal(resolveOutcome({decision:d(),horizon:h,samples:[],now:at(240000)}).status,'PENDING'));
+test('after unobserved horizon deadline the status is missed',()=>assert.equal(resolveOutcome({decision:d(),horizon:h,samples:[],now:at(480001)}).status,'MISSED_WINDOW'));
+test('late data cannot retroactively repair missed horizon',()=>assert.equal(resolveOutcome({decision:d(),horizon:h,samples:[s(at(500000),at(500100))],now:at(550000)}).status,'MISSED_WINDOW'));
+test('out-of-order samples choose nearest eligible time',()=>{
+ const out=resolveOutcome({decision:d(),horizon:h,samples:[s(at(380000),at(380100)),s(at(300000),at(300300))],now:at(400000)});
+ assert.equal(out.sample.providerAsOf,at(300000));
+});
+test('replay does not mutate source evidence',()=>{const samples=[s()],snapshot=JSON.stringify(samples);resolveOutcome({decision:d(),horizon:h,samples,now:at(310000)});assert.equal(JSON.stringify(samples),snapshot)});
+test('ledger append immutable and repeated event idempotent',()=>{
+ const event={id:'id',kind:'SAMPLE',eventAt:at(300000),rawEvidenceHash:'hash'};
+ const ledger=appendEvidence([],event);assert.equal(ledger.length,1);assert.equal(appendEvidence(ledger,event),ledger);
+ assert.throws(()=>appendEvidence(ledger,{...event,kind:'CORRUPTED'}),/CONFLICT/);
+});
+test('run diagnostics expose true 55m gap',()=>{const out=intervalDiagnostics(['2026-11-17T13:46:59.752Z','2026-11-17T14:42:02.886Z']);assert.equal(out.gapsSeconds[0],3303);assert.equal(out.lateGapCount,1);assert.equal(out.collectorCadenceIsVerified,false)});
+test('time travel replay ignores samples arriving later',()=>assert.equal(resolveOutcome({decision:d(),horizon:h,samples:[s()],now:at(300000)}).status,'PENDING'));

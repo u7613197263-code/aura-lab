@@ -1,14 +1,19 @@
 {
-  "name": "AURA Crypto Signal Lab",
-  "short_name": "AURA Lab",
-  "description": "Solana market intelligence and local paper trading.",
+  "name": "AURA Market — Mobile Research",
+  "short_name": "AURA Market",
+  "description": "Android-first public Solana market research: Today, Explore, Activity, Library. Preserves Classic paper trading and local records.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#07100f",
-  "theme_color": "#07100f",
+  "background_color": "#0b1110",
+  "theme_color": "#0b1311",
   "icons": [
-    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
   ]
 }
