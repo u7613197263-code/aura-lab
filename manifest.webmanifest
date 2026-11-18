@@ -1,13 +1,13 @@
 {
-  "name": "AURA Market — Intelligence Terminal",
+  "name": "AURA Market — Mobile Research",
   "short_name": "AURA Market",
-  "description": "AURA Market research terminal with tracked strategies, public wallet watchlists, outcome quality diagnostics and local evidence memory. No real trading.",
+  "description": "Android-first public Solana market research: Today, Explore, Activity, Library. Preserves Classic paper trading and local records.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#050a11",
-  "theme_color": "#050a11",
+  "background_color": "#0b1110",
+  "theme_color": "#0b1311",
   "icons": [
     {
       "src": "./icon.svg",
