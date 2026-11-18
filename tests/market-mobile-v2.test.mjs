@@ -30,7 +30,7 @@ test('Today displays source confidence, current research and collector quality',
 });
 test('Explore supports real feed and explicit search endpoint workflows',()=>{
  for(const id of ['token-search','search-external','explore-list','search-external-status'])assert.match(page,new RegExp('id="'+id+'"'));
- assert.match(script,/api\/market\/search\?q=/);assert.match(script,/api\/market\/token\?mint=/);
+ assert.match(script,/base\+'search\?q='/);assert.match(script,/base\+'token\?mint='/);
  assert.match(script,/function searchExternal\(/);assert.match(script,/function openDetail\(/);
 });
 test('prior v1.1 browser paper data and intelligence are retained untouched',()=>{
