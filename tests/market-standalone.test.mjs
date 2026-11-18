@@ -1,3 +1,4 @@
+import "./market-mobile-v2.test.mjs";
 import "./observation-core.test.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -5,7 +6,7 @@ import {readFile} from "node:fs/promises";
 import vm from "node:vm";
 const root=new URL("../",import.meta.url);
 const [page,terminal,styles,sw,manifest]=await Promise.all([
- readFile(new URL("index.html",root),"utf8"),readFile(new URL("market-terminal.js",root),"utf8"),
+ readFile(new URL("classic.html",root),"utf8"),readFile(new URL("market-terminal.js",root),"utf8"),
  readFile(new URL("market-ui.css",root),"utf8"),readFile(new URL("sw.js",root),"utf8"),
  readFile(new URL("manifest.webmanifest",root),"utf8")
 ]);
@@ -22,7 +23,7 @@ test("Market PWA uses unique standalone identity and 5 focused Android screens",
  for(const id of ["tokenRows","inspector","terminal-research","terminal-candidates","positions","globalOutcomeRows"]) assert.equal(page.split('id="'+id+'"').length-1,1,id);
  assert.match(page,/market-ui\.css/);assert.match(page,/market-terminal\.js/);
  assert.match(styles,/position:fixed/);assert.match(styles,/safe-area-inset-bottom/);assert.match(styles,/prefers-reduced-motion/);
- assert.match(sw,/aura-market-terminal-1\.1\.0/);
+ assert.match(sw,/aura-market-mobile-2\.0\.0/);
 });
 test("Legacy Crypto Signal Lab functionality is preserved and separated from Wallet",()=>{
  for(const feature of ["PAPER PORTFOLIO","Run on-chain checks","SHARED FORWARD OUTCOMES","Download local backup","Copy research brief"])assert.ok(page.includes(feature),feature);
