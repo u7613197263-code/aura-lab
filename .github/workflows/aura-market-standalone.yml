@@ -1,9 +1,11 @@
 name: AURA Market standalone validation
 on:
   push:
-    branches: [feat/aura-market-standalone-v1]
+    branches: [feat/aura-market-standalone-v1, feat/aura-market-mobile-v2-staging]
     paths:
       - "index.html"
+      - "classic.html"
+      - "tests/market-mobile-v2.test.mjs"
       - "market-terminal.js"
       - "market-ui.css"
       - "manifest.webmanifest"
