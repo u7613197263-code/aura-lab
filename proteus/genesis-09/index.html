@@ -165,6 +165,7 @@
 @media(max-width:600px){.composer-workflow{padding:13px;margin:12px 0}.composer-brief{min-height:112px;font-size:14px}.composer-metrics{gap:5px}.composer-metrics-note{width:100%}.composer-generate-actions button{flex-basis:100%}.composer-output-head{gap:5px}.composer-modal{padding:12px;max-height:calc(100dvh - 16px)}.composer-input{min-height:190px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){.composer-workflow,.composer-brief{transition:none}}
 
+.auraclock{padding:20px;border-radius:19px;background:radial-gradient(ellipse at 25% 10%,#24545299,transparent 75%),#081b26;border:1px solid #6de3d54d;text-align:center}.auraclock-face{position:relative;border:2px solid #c1fff36b;width:min(210px,75%);aspect-ratio:1;border-radius:50%;margin:0 auto 17px;background:radial-gradient(circle,#1b424f,#071722 71%);box-shadow:inset 0 0 30px #0009,0 0 25px #69eed01c}.auraclock-face:after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;transform:translate(-50%,-50%);background:#baffea;border-radius:50%}.auraclock-hand{position:absolute;top:50%;left:50%;height:31%;width:3px;background:#b5fff0;border-radius:8px;transform-origin:50% 100%}.auraclock-hand.hour{height:23%;width:5px;background:#ffe2ba}.auraclock-hand.second{height:35%;width:2px;background:#efaa82}.auraclock-time{color:#ecfff7;font:500 clamp(27px,6.8vw,44px) ui-monospace,monospace;font-variant-numeric:tabular-nums}.auraclock-day{font:12px/1.7 system-ui;color:#bdd8dc;margin:12px 0}.auraclock-zone{font:600 10px system-ui;color:#6fe2c6;letter-spacing:.12em}
 </style></head><body>
 <div class="surface-noise" aria-hidden="true"></div>
 <div id="app" class="app" data-scene="presence">
@@ -1042,6 +1043,7 @@ function checkBlock(v) {
     const o = record(v), kind = o.kind, id = ident(o.id), title = str(o.title);
     if (kind === 'system-graph') return validateGraph09(o,id,title);
     if (kind === 'fluid-network' || kind === 'atmosphere') return validateDomain08(o,id,title);
+    if(kind==='clock'){exact(o,['kind','id','title','timeZone','format']);if(!['local','UTC'].includes(o.timeZone)||![12,24].includes(o.format))fail('Invalid clock settings');return {kind,id,title,timeZone:o.timeZone,format:o.format};}
     if (kind === 'timeline-chart') {
         exact(o, ['kind', 'id', 'title', 'unit', 'tracks', 'selected', 'window', 'windows']);
         const tracks = arr(o.tracks, 4).map(x => { const t = record(x); exact(t, ['id', 'label', 'points']); const points = arr(t.points, 288).map(q => { const p = record(q); exact(p, ['t', 'v']); const time = str(p.t, 35); if (!Number.isFinite(Date.parse(time)))
@@ -1148,7 +1150,8 @@ function visual(id, kind, meaning, color, count, extra = {}) { return { id, kind
 function sceneFromExperience(spec) {
     const objects = [visual('identity:proteus', 'membrane', 'Persistent AURA OMNI semantic presence', interactionPalette.aqua, 540, { position: [-1.24, .80, -.3], size: [.25, .25, .25] })];
     for (const block of spec.blocks) {
-        if (block.kind === 'timeline-chart') {
+        if(block.kind==='clock'){objects.push(visual('clock:'+block.id,'ring','Clock visual geometry',interactionPalette.aqua,430,{position:[.1,.05,0],size:[1.5,1.5,.2]}));}
+        else if (block.kind === 'timeline-chart') {
             const series = block.tracks.find(t => t.id === block.selected);
             const values = series.points.slice(-block.window).map(p => p.v);
             objects.push(visual('plot:' + block.id + ':' + series.id, 'ribbon', 'Temporal values and verified time order, ' + block.title, interactionPalette.ice, 1000, { values, position: [.12, .08, 0], size: [2.85, 1.36, 1] }));
@@ -1779,12 +1782,21 @@ function showNumeric(block, controls) {
     }
     return root;
 }
+const auraclockFormatters=new WeakMap();
+function tickAuraClock(node){let fmt=auraclockFormatters.get(node);if(!fmt){fmt=new Intl.DateTimeFormat('en-GB',{timeZone:node.dataset.zone==='UTC'?'UTC':undefined,hourCycle:'h23',hour:'2-digit',minute:'2-digit',second:'2-digit',weekday:'long',day:'numeric',month:'long',year:'numeric'});auraclockFormatters.set(node,fmt);}
+const parts=Object.fromEntries(fmt.formatToParts(new Date()).filter(q=>q.type!=='literal').map(q=>[q.type,q.value])),h=+parts.hour,m=+parts.minute,sec=+parts.second,is12=node.dataset.format==='12';
+node.querySelector('.auraclock-time').textContent=(is12?String(h%12||12).padStart(2,'0'):parts.hour)+':'+parts.minute+':'+parts.second+(is12?(h<12?' AM':' PM'):'');
+node.querySelector('.auraclock-day').textContent=parts.weekday+', '+parts.day+' '+parts.month+' '+parts.year;
+[30*(h%12)+m/2+sec/120,6*m+sec/10,6*sec].forEach((a,i)=>node.querySelectorAll('.auraclock-hand')[i].style.transform='translate(-50%,-100%) rotate('+a+'deg)');}
+function showClock(b){const root=section(b.id,b.title,'LIVE CLOCK'),w=e('div','auraclock'),dial=e('div','auraclock-face');w.dataset.zone=b.timeZone;w.dataset.format=String(b.format);w.dataset.auraclock='true';dial.setAttribute('aria-hidden','true');dial.append(e('div','auraclock-hand hour'),e('div','auraclock-hand minute'),e('div','auraclock-hand second'));w.append(dial,e('div','auraclock-time'),e('div','auraclock-day'),e('div','auraclock-zone',b.timeZone==='UTC'?'UTC':'DEVICE LOCAL TIME'));root.append(w,e('p','description','Updated from this device every second; accuracy depends on the device clock. No external API.'));tickAuraClock(w);return root;}
+setInterval(()=>{for(const n of document.querySelectorAll('[data-auraclock="true"]'))tickAuraClock(n);},1000);
 function showExplanation(block) { const root = section(block.id, block.title, 'Interpretation'); root.append(e('p', 'description', block.text)); return root; }
 function renderBlock(block, controls) {
     switch (block.kind) {
         case 'system-graph': return showGraph09(block,controls);
         case 'fluid-network': return showFluid08(block,controls);
         case 'atmosphere': return showAtmosphere08(block,controls);
+        case 'clock': return showClock(block);
         case 'timeline-chart': return showTimeline(block, controls);
         case 'date-grid': return showDateGrid(block, controls);
         case 'spatial-assembly': return showSpatial(block, controls);
@@ -1815,7 +1827,7 @@ const CPU_MODEL_SIZE_MB = 491; // conservative transfer warning, files may vary
 const MODEL_DOWNLOAD_NOTICE = 'WebGPU model: approximately 950 MB. CPU model: approximately 491 MB plus runtime/WASM assets. Network and device storage costs depend on your connection. Neither downloads until you press LOAD MODEL and consent.';
 const GENERATION_DEADLINE_MS = 180_000;
 const CPU_GENERATION_TOKENS = 480;
-const supported = new Set(['timeline-chart', 'date-grid', 'spatial-assembly', 'task-board', 'explanation']);
+const supported = new Set(['clock','timeline-chart', 'date-grid', 'spatial-assembly', 'task-board', 'explanation']);
 const validIdentifier = /^[a-z][a-z0-9_-]{0,47}$/;
 function safeId(value, prefix, index) { const id = value.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 34); return (validIdentifier.test(id) ? id : prefix) + '-' + index; }
 function failPlan(why) { throw Error('Planner rejected: ' + why); }
@@ -1839,7 +1851,7 @@ function validateIntentPlan(raw) {
         failPlan('block count');
     const blocks = o.blocks.map(value => {
         const b = dict(value);
-        only(b, ['kind', 'title', 'items', 'unit', 'description']);
+        only(b, ['kind', 'title', 'items', 'unit', 'description', 'timeZone', 'format']);
         if (!supported.has(String(b.kind)))
             failPlan('unsupported block');
         const kind = b.kind;
@@ -1848,8 +1860,9 @@ function validateIntentPlan(raw) {
             failPlan('spatial requires named items');
         if (kind === 'task-board' && items.length < 1)
             failPlan('board requires cards');
-        if ((kind === 'date-grid' || kind === 'timeline-chart' || kind === 'explanation') && items.length)
-            failPlan('items not permitted on block');
+        if ((kind==='clock'||kind==='date-grid'||kind==='timeline-chart'||kind==='explanation')&&items.length)failPlan('items not permitted on block');
+        if(kind==='clock'){if(b.unit!==undefined||b.description!==undefined||!['local','UTC'].includes(b.timeZone??'local')||![12,24].includes(b.format??24))failPlan('invalid clock fields');return {kind,title:text(b.title,90),timeZone:b.timeZone??'local',format:b.format??24};}
+        if(b.timeZone!==undefined||b.format!==undefined)failPlan('clock fields on other block');
         return { kind, title: text(b.title, 90), ...(items.length ? { items } : {}), ...(b.unit !== undefined ? { unit: text(b.unit, 18) } : {}), ...(b.description !== undefined ? { description: text(b.description, 500) } : {}) };
     });
     return { version: 1, intent: 'compose', title: text(o.title, 90), subtitle: text(o.subtitle, 135), role: text(o.role, 48), blocks };
@@ -1869,7 +1882,8 @@ function compileIntentPlan(raw, now = new Date(), idSuffix = 'local') {
     for (const b of p.blocks) {
         index++;
         const id = safeId(b.title, 'block', index);
-        if (b.kind === 'timeline-chart') {
+        if(b.kind==='clock'){blocks.push({kind:'clock',id,title:b.title,timeZone:b.timeZone||'local',format:b.format||24});}
+        else if (b.kind === 'timeline-chart') {
             const v = valuesFor(p.title + '::' + b.title);
             const start = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) - 23 * 3600000;
             blocks.push({ kind: 'timeline-chart', id, title: b.title, unit: b.unit || 'index', tracks: [{ id: 'illustrative', label: 'Illustrative index', points: v.map((n, i) => ({ t: new Date(start + i * 3600000).toISOString(), v: n })) }], selected: 'illustrative', window: 24, windows: [6, 12, 24] });
@@ -1895,13 +1909,13 @@ function compileIntentPlan(raw, now = new Date(), idSuffix = 'local') {
     const version = 1;
     // Avoid overwriting existing experiences: fixed-length random suffix from browser crypto when available.
     const suffix = idSuffix.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 11) || 'local';
-    return compileExperience({ version, id: safeId(p.title, 'local', 0).slice(0, 35) + '-' + suffix, title: p.title, subtitle: p.subtitle, role: p.role, source: 'ILLUSTRATIVE', permissions: [], blocks });
+    return compileExperience({ version, id: safeId(p.title, 'local', 0).slice(0, 35) + '-' + suffix, title: p.title, subtitle: p.subtitle, role: p.role, source: p.blocks.every(b=>b.kind==='clock')?'LOCAL':'ILLUSTRATIVE', permissions: [], blocks });
 }
 const PLANNER_SYSTEM_PROMPT = [
     'You are a bounded local visualization planner. You do NOT have internet, real data, or authority to execute tools.',
     'Output exactly ONE JSON object and nothing else, not markdown.',
-    'Schema: {"version":1,"intent":"compose","title":"short title","subtitle":"short summary","role":"short presenter role","blocks":[{"kind":"spatial-assembly","title":"...","items":["part one","part two"]},{"kind":"task-board","title":"...","items":["step one","step two"]},{"kind":"timeline-chart","title":"...","unit":"index"},{"kind":"date-grid","title":"..."},{"kind":"explanation","title":"Limits","description":"..."}]}',
-    'Select 1 to 4 useful blocks. Only kinds: spatial-assembly,task-board,timeline-chart,date-grid,explanation.',
+    'Shape: {"version":1,"intent":"compose","title":"...","subtitle":"...","role":"...","blocks":[{"kind":"clock","title":"Live time","timeZone":"local","format":24}]}. This block is a CLOCK example ONLY; choose only suitable blocks for other requests. No duplicate keys.',
+    'Select 1–2 short blocks. Allowed kinds: clock,spatial-assembly,task-board,timeline-chart,date-grid,explanation. Clock requests MUST use clock kind with timeZone local and format 24.',
     'spatial-assembly and task-board REQUIRE 1..8 items (short labels). Other blocks MUST omit items.',
     'Never include URLs, JS code, permissions, executable actions, live values, claims of exact physics or real prices.',
     'Prefer a spatial assembly for mechanisms, a calendar for real dates, a time-series for trends and task board for workflows.',
@@ -2197,11 +2211,13 @@ function mathSpec(text, suffix) {
     const block = { kind: 'numeric-instrument', id: 'instrument', title: subject, description: 'User-supplied arithmetic formula. No independently verified physical model or unit conversion.', inputs: parsed, outputs: [{ id: 'result', label: 'Computed result', formula: match[2].trim(), unit: '1', precision: 4 }] };
     return compileExperience({ version: 1, id: 'math-' + toId(subject).slice(0, 18) + '-' + suffix, title: subject, subtitle: 'Functional offline numerical computation · supplied formula', role: 'COMPUTATIONAL GUIDE', source: 'LOCAL', permissions: [], blocks: [block, { kind: 'explanation', id: 'math-note', title: 'Calculation provenance', text: 'Calculated locally from the exact formula you supplied. No scientific calibration or live data. Any unit labels must be interpreted by the author.' }] });
 }
+function isSimpleClockRequest(raw){return /^(?:(?:create|make|build|design|show|open)\s+)?(?:(?:a|an|the|live|digital|analog|beautiful|premium|interactive|local|working)\s+){0,5}(?:clock|timepiece|ρολόι)\s*[.!?]*$/i.test(raw.trim());}
 function fastCompose(raw, current, now = new Date(), suffix = 'local') {
     const text = normalize(raw).slice(0, 280);
     if (!text)
         return { kind: 'unsupported', reason: 'Enter a request.' };
     try {
+        if(isSimpleClockRequest(text)){const spec=compileIntentPlan({version:1,intent:'compose',title:'Live Clock',subtitle:'Device time updated every second',role:'TIMEKEEPER',blocks:[{kind:'clock',title:'Local time',timeZone:'local',format:24}]},now,suffix);return {kind:'compose',spec,reason:'Strict live-clock compiler · no AI required'};}
         if(/^\s*(?:(?:build|create|design|show|make)\s+)?(?:a\s+)?(?:resource\s+)?network\s*:/i.test(text))
             return {kind:'compose',spec:fromNetworkText09(text,suffix),reason:'Declarative network grammar compiled into connected interactive semantics — no AI'};
         if (/\b(?:weather|forecast|rain)\b/i.test(text)&&/\b(?:today|tomorrow|outside|right now|currently|live|actual|real|forecast|near me|in athens|this afternoon|this evening)\b/i.test(text))
