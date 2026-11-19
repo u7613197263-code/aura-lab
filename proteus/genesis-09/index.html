@@ -3576,6 +3576,9 @@ function benchMedian(values){
 }
 function roundedMB(bytes){return Number((bytes/(1024*1024)).toFixed(1));}
 function buildLocalDeviceGuidance(report){
+    if(!report.secureContext){
+        return {tier:'HTTPS-REQUIRED',recommendation:'Use a secure HTTPS page. WebGPU and reliable local storage require a secure browser context.',caveat:'No model was downloaded. This does not measure inference performance.'};
+    }
     const gpu=report.webgpu.compute.status==='passed';
     const simd=report.cpu.wasmSIMD;
     const ram=report.cpu.reportedMemoryGB;
@@ -3595,6 +3598,7 @@ function buildLocalDeviceGuidance(report){
     return {tier,recommendation,caveat:'A WebGPU compute pass does not establish ONNX operator support, model loading, generation speed, available VRAM, or safe thermal behavior. No model was downloaded.'};
 }
 async function runAURADevicePreflight(onProgress=()=>{},signal) {
+    // No paid or remote services are contacted by this lab, and no AI model is installed.
     const report={
         schema:'aura-device-preflight-v1',
         purpose:'Non-inference hardware and graphics readiness test',
