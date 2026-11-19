@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050911"><meta name="description" content="GENESIS 0.9.0 isolated semantic morphing runtime — Project PROTEUS"><title>AURA OMNI · GENESIS 0.9.0</title><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050911"><meta name="description" content="GENESIS 0.9.0 isolated semantic morphing runtime — Project PROTEUS"><title>AURA OMNI · GENESIS 0.10.0</title><style>
 :root{color-scheme:dark;--night:#050a12;--ink:#eaf8ff;--muted:#8396a9;--aqua:#56f5de;--ice:#94caff;--violet:#a98dff;--gold:#f0b36b;--line:rgba(163,224,248,.13);font-family:Inter,'Segoe UI',Arial,sans-serif}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--night);color:var(--ink)}body{overflow-x:hidden;background:radial-gradient(ellipse at 48% 33%,#101d2c 0,#080e1a 42%,#03070c 98%)}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid var(--aqua);outline-offset:3px}[hidden]{display:none!important}.visually-hidden{position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden}.surface-noise{position:fixed;inset:0;z-index:0;opacity:.12;pointer-events:none;background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 180 180%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.92%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22180%22 height=%22180%22 filter=%22url(%23n)%22 opacity=%22.27%22/%3E%3C/svg%3E')}.app{position:relative;z-index:1;max-width:1720px;min-height:100svh;margin:auto;padding:0 4.3vw;display:flex;flex-direction:column}.topbar{height:92px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(169,224,248,.075)}.brand{display:flex;gap:16px;align-items:center}.brand b{display:block;font-size:20px;letter-spacing:.24em;font-weight:720}.brand-light{font-weight:250}.brand small{display:block;color:#5e7c8e;font-size:9px;letter-spacing:.32em;margin-top:7px}.brand-sigil{width:35px;height:35px;border:1px solid rgba(94,246,223,.4);display:grid;place-content:center;transform:rotate(45deg);border-radius:10px;box-shadow:0 0 30px #1ef1d21f}.brand-sigil span{width:13px;height:1px;background:var(--aqua);margin:2px;display:block}.topright{display:flex;align-items:center;gap:13px}.live{font-size:10px;letter-spacing:.17em;color:#b8d4d7;border-right:1px solid var(--line);padding-right:19px}.live i,.feedback-light,.pulse{width:6px;height:6px;display:inline-block;border-radius:100%;background:var(--aqua);box-shadow:0 0 12px #6fffe3}.live i{margin-right:8px}.icon-button{display:grid;place-items:center;background:#18253270;color:#b5ced9;border:1px solid var(--line);width:35px;height:35px;border-radius:11px;font-size:22px}.microline{display:flex;justify-content:space-between;padding-top:20px;font-size:10px;letter-spacing:.2em;color:#6d8599}.stage{flex:1;display:grid;grid-template-columns:minmax(0,1.13fr) minmax(380px,.87fr);gap:clamp(15px,2.5vw,48px);align-items:stretch;min-height:min(660px,66vh);padding-top:12px;padding-bottom:22px}.world{min-height:520px;position:relative;touch-action:none;user-select:none;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 52%,#08222c70 0,#06132222 51%,transparent 76%)}.world-vignette{position:absolute;inset:-10%;background:radial-gradient(ellipse at 50% 49%,transparent 30%,#03091088 67%,#050a12 84%);pointer-events:none;z-index:2}.world-orbit{position:absolute;border:1px solid rgba(84,207,219,.075);border-radius:50%;width:min(60vw,570px);height:min(60vw,570px);left:50%;top:48%;transform:translate(-50%,-50%) rotate(25deg);pointer-events:none}.world-orbit-two{width:min(42vw,390px);height:min(42vw,390px);border-color:#7fc4e711;transform:translate(-50%,-50%) rotate(-36deg) scaleX(.74)}#worldCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;filter:drop-shadow(0 0 17px rgba(79,230,215,.38))}.focus-hair{position:absolute;inset:50% auto auto 50%;width:8px;height:8px;border:1px solid #78f6dd78;transform:translate(-50%,-50%) rotate(45deg);z-index:3;pointer-events:none}.stage-label{position:absolute;z-index:4;bottom:73px;left:16px;pointer-events:none;text-shadow:0 5px 30px #02080d}.stage-kicker,.section-eyebrow{font-size:10px;color:#62babb;letter-spacing:.25em}.stage-label h1{font-size:clamp(25px,4vw,56px);font-weight:360;letter-spacing:-.046em;margin:9px 0}.stage-label p{font-size:10px;color:#9bb9bf;letter-spacing:.12em;max-width:390px}.world-footer{position:absolute;z-index:4;bottom:8px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:9px;letter-spacing:.14em;color:#7999a9}.world-footer>span:first-child{color:#b7e4e2}.pulse{margin-right:8px;width:5px;height:5px}.world-footer button{background:none;color:#afdfd9;font-size:23px;border:0;padding:5px}.experience{position:relative;z-index:5;align-self:center;width:100%;max-width:620px;min-height:400px;max-height:min(685px,72vh);overflow:auto;overscroll-behavior:contain;padding:27px 27px 25px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(135deg,#111d2bd8,#08121ce8 58%,#07111ab3);box-shadow:0 35px 65px #0007, inset 0 1px #b5f7ff18;backdrop-filter:blur(22px);scrollbar-color:#37545a transparent}.experience.is-presence{max-width:440px;min-height:310px;background:linear-gradient(135deg,#07152075,#07151b66);border-color:#5ff4e715}.experience-heading{display:flex;gap:16px;align-items:flex-start;justify-content:space-between}.experience h2{font-weight:430;letter-spacing:-.035em;font-size:clamp(24px,2.5vw,37px);margin:12px 0 7px}.experience h3{font-size:12px;letter-spacing:.13em;color:#d2edee;font-weight:500;text-transform:uppercase}.description{font-size:13px;line-height:1.65;color:#8ca6b7}.pill{display:inline-flex;align-items:center;gap:7px;padding:7px 9px;border:1px solid var(--line);color:#91c6cc;font-size:9px;white-space:nowrap;letter-spacing:.12em;border-radius:7px}.info-rule{height:1px;background:linear-gradient(90deg,#8fc9d828,transparent);margin:18px 0}.presence-message{font-family:Georgia,serif;font-style:italic;font-size:clamp(19px,2.5vw,29px);font-weight:normal;line-height:1.38;color:#d6f7f1;max-width:360px;margin:26px 0}.presence-items{display:grid;gap:9px;margin-top:22px}.presence-items button{color:#b5d6dc;background:#12232b66;border:1px solid var(--line);padding:13px 15px;text-align:left;border-radius:9px;font-size:13px;display:flex;align-items:center;justify-content:space-between}.presence-items button span{color:var(--aqua)}.data-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}.metric{background:#071a2587;border:1px solid #8ecbdc14;border-radius:13px;padding:16px;min-width:0}.metric-label{color:#779bab;font-size:10px;letter-spacing:.13em}.metric-value{display:block;font-size:clamp(20px,2.15vw,31px);font-weight:380;letter-spacing:-.045em;margin-top:8px;white-space:nowrap}.metric-note{font-size:10px;color:#9dc6c7;margin-top:7px}.metric-accent{color:var(--aqua)}.button-group{display:flex;gap:7px;flex-wrap:wrap}.choice{border:1px solid #b4eaf224;background:#0c202c87;color:#9fbcc7;padding:9px 12px;border-radius:9px;font-size:11px}.choice[aria-pressed="true"],.choice.selected{border-color:#6ef2d77b;background:#1d4b4b80;color:#d8fff7}.data-chart{width:100%;height:auto;display:block;border:1px solid #ffffff10;border-radius:13px;background:#06131faa;touch-action:none}.chart-tooltip{padding:12px 0;font-size:12px;color:#a9dadd;min-height:40px}.legend{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px}.legend small{font-size:10px;color:#6e95a6}.calendar-nav{display:flex;gap:8px;align-items:center;justify-content:space-between}.calendar-nav h2{font-size:26px;margin:5px 0}.calendar-controls{display:flex;gap:7px}.calendar-controls button,.mini-btn{border:1px solid var(--line);background:#1428346b;color:#bdeae5;border-radius:8px;padding:8px 11px}.day-headings,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.day-headings{margin:22px 0 8px}.day-headings span{font-size:10px;color:#83b4ba;text-align:center}.day{aspect-ratio:1;min-width:0;border-radius:9px;border:1px solid #7cbdcc14;background:#0719279e;color:#e2eaf0;font-size:12px;position:relative;display:grid;place-items:center}.day.today{border-color:#c8dba534}.day.selected{background:#24575ca8;border-color:#68e2d2}.day.has-event:after{content:"";position:absolute;width:4px;height:4px;border-radius:50%;background:#ffc983;bottom:4px;left:50%;transform:translateX(-50%)}.day-empty{border:0;background:transparent}.appointment{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px 12px;border-radius:10px;background:#12212a9b;margin:6px 0}.appointment time{font-size:10px;color:var(--aqua);width:45px}.appointment span{flex:1;overflow-wrap:anywhere;font-size:12px}.appointment button{background:none;color:#e5a5a5;border:0;padding:3px 9px}.event-form{display:flex;gap:8px;margin:15px 0 4px;flex-wrap:wrap}.event-form input{background:#06141ed8;border:1px solid #76c9d42e;border-radius:8px;color:var(--ink);padding:11px;min-width:0}.event-form input[type=text]{flex:1 1 155px}.event-form input[type=time]{flex:0 1 110px;color-scheme:dark}.event-form button{background:#22544c;color:#d9fff8;border:1px solid #6bf3d354;padding:10px 12px;border-radius:9px}.model-display{height:160px;margin:8px 0 18px;border:1px solid #78c5db20;border-radius:15px;display:grid;place-items:center;background:radial-gradient(ellipse at center,#1b324053,transparent 70%);position:relative}.chamber{width:112px;height:106px;border:2px solid #88dae377;border-radius:31% 31% 19% 19%;position:relative;overflow:hidden;box-shadow:inset 0 0 30px #57bcaf1c,0 0 34px #55f4df1c}.liquid{position:absolute;left:10%;right:10%;bottom:0;height:60%;border-radius:30% 30% 15% 15%;background:linear-gradient(#c88c4966,#ab63366b);animation:liquidPulse 2.8s ease-in-out infinite}.liquid:before{content:"";position:absolute;inset:4px;border-radius:100%;border-top:2px solid #f1bc8b91}.no-motion .liquid{animation:none}@keyframes liquidPulse{50%{height:68%}}.model-display span{position:absolute;top:13px;left:13px;font-size:9px;color:#94b4c2;letter-spacing:.17em}.knob-row{display:grid;grid-template-columns:70px 1fr 65px;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid #b9e1ed15}.knob-row label{font-size:11px;color:#a9c7c8}.knob-row output{text-align:right;font-size:12px;color:#d6eee9}.knob-row input{width:100%;accent-color:#58e8cf}.simulation-note{font-size:11px;color:#7d9aaa;line-height:1.65;margin-top:15px}.dock{position:relative;border-top:1px solid #acd0db15;padding:12px 0 18px;background:linear-gradient(#071018e0,#050b12)}.feedback{display:flex;gap:10px;align-items:center;min-height:28px;color:#92aeb9;font-size:11px;letter-spacing:.02em;margin-bottom:7px}.feedback-light{flex:none;width:4px;height:4px}.command-form{height:62px;display:flex;gap:12px;align-items:center;padding:0 13px 0 18px;border:1px solid #82d5d748;border-radius:17px;background:linear-gradient(105deg,#172f397f,#0e1b2ba9);box-shadow:0 0 40px #00f5ce08,inset 0 1px #d7f7fa22}.prompt-symbol{font-size:34px;color:var(--aqua);font-weight:200}.command-form input{flex:1;width:100%;min-width:0;border:0;outline:none;background:transparent;font-size:14px;color:#edfaff}.command-form input::placeholder{color:#6e8c9a}.command-form button{border:0;border-radius:11px;background:#6febda;color:#002b30;font-size:24px;width:39px;height:39px}.quick-actions{display:flex;gap:11px;align-items:center;padding:13px 2px 0;flex-wrap:wrap}.quick-actions button{background:none;color:#9bbac3;font-size:10px;letter-spacing:.13em;border:0;border-right:1px solid #8dc8ce34;padding:0 15px 0 0}.runtime-status{font-size:9px;letter-spacing:.1em;color:#557786;margin-left:auto}.history-drawer{position:fixed;z-index:30;top:93px;right:4vw;width:min(370px,88vw);border:1px solid #79d5da48;border-radius:18px;background:#081823ed;box-shadow:0 20px 80px #000a;padding:22px;backdrop-filter:blur(20px)}.panel-heading{display:flex;justify-content:space-between;align-items:center;letter-spacing:.12em;font-size:11px}.panel-heading button{background:none;border:0;color:#a3d9d7;font-size:24px}.history-drawer #historyList{display:grid;gap:8px;margin-top:17px}.history-drawer #historyList button{padding:11px;border:1px solid var(--line);border-radius:8px;color:#bddbdc;text-align:left;background:#102531b5}.history-drawer p{font-size:11px;color:#758e9d;line-height:1.6}.fade-in{animation:enterPanel .38s ease both}@keyframes enterPanel{from{opacity:.30;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media(max-width:970px){.app{padding:0 3.5vw}.stage{grid-template-columns:1fr;gap:0;padding-top:2px}.world{min-height:360px;height:42vh}.world-orbit{width:380px;height:380px}.world-orbit-two{width:290px;height:290px}.stage-label{bottom:55px}.experience{max-width:100%;max-height:none;min-height:280px;margin:0 0 18px;padding:23px}.experience.is-presence{max-width:100%}.topbar{height:74px}.microline{padding-top:13px}}
 @media(max-width:480px){.app{padding:0 16px}.topbar{height:67px}.brand b{font-size:14px}.brand small{font-size:7px;letter-spacing:.19em}.brand-sigil{width:27px;height:27px}.live{display:none}.microline{font-size:8px}.world{height:33vh;min-height:245px}.world-orbit{width:290px;height:290px}.world-orbit-two{width:220px;height:220px}.stage-label{left:4px;bottom:44px}.stage-label h1{font-size:27px}.stage-label p{font-size:8px;line-height:1.5;margin-bottom:0}.world-footer{left:5px;right:5px;bottom:4px;font-size:8px}.experience{border-radius:17px;padding:18px 17px;margin-bottom:8px}.experience h2{font-size:24px}.data-summary{gap:7px}.metric{padding:12px}.metric-value{font-size:22px}.day-headings,.calendar-grid{gap:3px}.day{border-radius:7px;font-size:11px}.dock{padding:9px 0 12px}.command-form{height:54px;border-radius:12px}.command-form input{font-size:12px}.feedback{font-size:10px}.quick-actions{gap:8px}.quick-actions button{font-size:9px;padding-right:8px}.runtime-status{width:100%;margin-top:3px}}
@@ -140,10 +140,58 @@
 @media(max-width:970px){.app[data-scene="network"] .world{height:41vh;min-height:310px}}
 @media(max-width:550px){.app[data-scene="network"] .world{height:37vh;min-height:295px}.app[data-scene="network"] .stage-label{top:16px;left:13px;max-width:62%}.app[data-scene="network"] .stage-label h1{font-size:14px;letter-spacing:.08em}}
 
+
+/* GENESIS 0.9.1 — composer draft pipeline; all AI results remain sandboxed JSON. */
+.composer-workflow{margin:17px 0;padding:17px;border:1px solid #62e2d84a;border-radius:16px;background:linear-gradient(125deg,#122d39c9,#0a1827bb);box-shadow:inset 0 1px #cafcf019}
+.composer-workflow-heading,.composer-output-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:11px}
+.composer-workflow-heading strong,.composer-output-head strong{color:#d3fff3;font-size:11px;letter-spacing:.15em}
+.composer-mini{color:#75afb6;font-size:10px;letter-spacing:.05em}
+.composer-prompt-label{display:block;margin:0 0 8px;color:#9fd6d5;font-size:10px;letter-spacing:.13em}
+.composer-brief{display:block;width:100%;min-height:94px;resize:vertical;border:1px solid #83b9c54d;border-radius:12px;background:#061420c9;color:#f0fffc;padding:13px 14px;font:13px/1.55 Inter,'Segoe UI',Arial,sans-serif}
+.composer-brief::placeholder{color:#7699a5}.composer-brief:focus-visible,.composer-input:focus-visible{outline:2px solid #62eedc;outline-offset:2px}
+.composer-metrics{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:11px 0}
+.composer-count{display:inline-flex;min-height:25px;align-items:center;border:1px solid #81c4d53c;border-radius:7px;padding:4px 9px;background:#061a26;font:10px ui-monospace,SFMono-Regular,Consolas,monospace;color:#b8e0e3}
+.composer-metrics-note{font-size:10px;color:#759ca7}
+.composer-generate-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.composer-generate-actions button{flex:1 1 142px;min-height:41px;padding:10px 12px;border-radius:9px;font-size:11px;font-weight:650;letter-spacing:.025em}
+.composer-ai-generate{border:1px solid #83f7e1b5;background:linear-gradient(120deg,#55e6cd,#a8f7e7);color:#06272d}
+.composer-fast-draft{border:1px solid #69b8c871;background:#183543;color:#e3faf8}
+.composer-model-setup,.composer-cancel{border:1px solid #528292;background:#13232f;color:#c8e8ec}
+.composer-generate-actions button:disabled,.composer-actions button:disabled{opacity:.4;cursor:not-allowed}
+.composer-status{min-height:29px;overflow-wrap:anywhere;line-height:1.65}
+.composer-input[readonly]{background:#061e29;color:#dcfff5}
+.composer-output-head{margin-top:15px}
+.composer-output-head .composer-mini{font-family:ui-monospace,Consolas,monospace}
+@media(max-width:600px){.composer-workflow{padding:13px;margin:12px 0}.composer-brief{min-height:112px;font-size:14px}.composer-metrics{gap:5px}.composer-metrics-note{width:100%}.composer-generate-actions button{flex-basis:100%}.composer-output-head{gap:5px}.composer-modal{padding:12px;max-height:calc(100dvh - 16px)}.composer-input{min-height:190px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.composer-workflow,.composer-brief{transition:none}}
+
+.auraclock{padding:20px;border-radius:19px;background:radial-gradient(ellipse at 25% 10%,#24545299,transparent 75%),#081b26;border:1px solid #6de3d54d;text-align:center}.auraclock-face{position:relative;border:2px solid #c1fff36b;width:min(210px,75%);aspect-ratio:1;border-radius:50%;margin:0 auto 17px;background:radial-gradient(circle,#1b424f,#071722 71%);box-shadow:inset 0 0 30px #0009,0 0 25px #69eed01c}.auraclock-face:after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;transform:translate(-50%,-50%);background:#baffea;border-radius:50%}.auraclock-hand{position:absolute;top:50%;left:50%;height:31%;width:3px;background:#b5fff0;border-radius:8px;transform-origin:50% 100%}.auraclock-hand.hour{height:23%;width:5px;background:#ffe2ba}.auraclock-hand.second{height:35%;width:2px;background:#efaa82}.auraclock-time{color:#ecfff7;font:500 clamp(27px,6.8vw,44px) ui-monospace,monospace;font-variant-numeric:tabular-nums}.auraclock-day{font:12px/1.7 system-ui;color:#bdd8dc;margin:12px 0}.auraclock-zone{font:600 10px system-ui;color:#6fe2c6;letter-spacing:.12em}
+.composer-raw-stream{white-space:pre-wrap;overflow-wrap:anywhere;overflow:auto;max-height:138px;margin:8px 0;padding:13px;color:#b1cbd1;font:11px/1.5 ui-monospace,monospace;background:#101e2a;border:1px dashed #d4a76577;border-radius:10px}
+
+/* Constructive object studio */
+.modelstudio{display:grid;gap:12px}
+.modelstudio .studio-overline{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font:600 10px/1.55 system-ui;letter-spacing:.13em;color:#80cfc9}
+.modelstudio .studio-viewport{border:1px solid #8ee9d13b;border-radius:16px;overflow:hidden;background:radial-gradient(ellipse at 48% 45%,#17425266,#071a29 72%)}
+.modelstudio .studio-viewport svg{display:block;width:100%;height:auto;max-height:340px}
+.modelstudio .studio-choices{display:flex;gap:6px;flex-wrap:wrap;max-height:160px;overflow:auto}
+.modelstudio .studio-choices button{border-radius:8px;padding:8px 10px;border:1px solid #7faeb745;color:#b4d7dc;background:#122a36;font-size:11px}
+.modelstudio .studio-choices button[aria-pressed="true"]{border-color:#82ffe5;color:#e9fff7;background:#1d4949}
+.modelstudio .studio-inspector{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:start;border:1px solid #5bc9b635;background:#1028367e;border-radius:12px;padding:14px}
+.modelstudio .studio-inspector strong{color:#e9fff7;font-size:17px;font-weight:500}
+.modelstudio .studio-inspector p{margin:6px 0 0;font:11px/1.5 ui-monospace,monospace;color:#8bb5bf}
+.modelstudio .studio-actions{display:flex;gap:8px;flex-wrap:wrap}
+.modelstudio .studio-actions button{background:#143646;color:#bbf3e9;border:1px solid #76babb68;border-radius:9px;min-width:40px;min-height:37px;padding:8px 12px;font-size:11px}
+.modelstudio .studio-note{font:11px/1.6 system-ui;color:#8daebc}
+@media(max-width:570px){.modelstudio .studio-inspector{grid-template-columns:1fr}.modelstudio .studio-inspector p{font-size:10px}.modelstudio .studio-choices{max-height:135px}.modelstudio .studio-actions button{flex:1 1 45px}}
+
+#modelSolidCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;opacity:0;transition:opacity .4s ease}
+.app[data-scene="model"] #worldCanvas{opacity:.55}
+.app[data-scene="model"] .stage-label{z-index:5}
+@media(prefers-reduced-motion:reduce){#modelSolidCanvas{transition:none}}
 </style></head><body>
 <div class="surface-noise" aria-hidden="true"></div>
 <div id="app" class="app" data-scene="presence">
- <header class="topbar"><div class="brand"><span class="brand-sigil" aria-hidden="true"><span></span><span></span><span></span></span><div><b>AURA<span class="brand-light"> OMNI</span></b><small>PROJECT PROTEUS / GENESIS 0.9.0</small></div></div><div class="topright"><span class="live"><i></i> LOCAL RUNTIME</span><button id="localAIButton" class="ai-launch" type="button" aria-label="Local AI setup" title="Check hardware and opt in to local inference">◇ EXPERIMENTAL MODEL <span id="aiTopStatus">OFF</span></button><button id="historyBtn" class="icon-button" aria-label="Scene history" title="History">↶</button><button id="composerBtn" class="icon-button" aria-label="Experience Composer" title="Compile JSON experience">⌘</button><button id="saveBtn" class="icon-button" aria-label="Save session locally" title="Save to this browser">◇</button></div></header>
+ <header class="topbar"><div class="brand"><span class="brand-sigil" aria-hidden="true"><span></span><span></span><span></span></span><div><b>AURA<span class="brand-light"> OMNI</span></b><small>PROJECT PROTEUS / GENESIS 0.10.0</small></div></div><div class="topright"><span class="live"><i></i> LOCAL RUNTIME</span><button id="localAIButton" class="ai-launch" type="button" aria-label="Local AI setup" title="Check hardware and opt in to local inference">◇ EXPERIMENTAL MODEL <span id="aiTopStatus">OFF</span></button><button id="historyBtn" class="icon-button" aria-label="Scene history" title="History">↶</button><button id="composerBtn" class="icon-button" aria-label="Experience Composer" title="Compile JSON experience">⌘</button><button id="saveBtn" class="icon-button" aria-label="Save session locally" title="Save to this browser">◇</button></div></header>
  <div class="microline"><span id="eyebrow">01 / INACTIVE MATTER</span><span id="source">PROCEDURAL · OFFLINE</span></div>
  <main class="stage">
   <div class="world" id="world" aria-label="Interactive spatial representation. Drag to rotate, scroll or pinch to zoom.">
@@ -384,6 +432,37 @@ function sample(obj, i, count) {
             return [cx + sx * .5 * Math.cos(a), cy + (t - .5) * sy, cz + sz * .5 * Math.sin(a)];
         }
         case 'spray': return [cx + (f(i, 2) - .5) * sx, cy + (f(i, 3) - .5) * sy, cz + (f(i, 4) - .5) * sz];
+
+        // Constructive surface primitives: object geometry has genuine bounded 3D volumes.
+        case 'box': {
+            const face=Math.floor(f(i,31)*6),u=f(i,32)-.5,v=f(i,33)-.5;
+            const p=face===0?[.5,u,v]:face===1?[-.5,u,v]:face===2?[u,.5,v]:
+                face===3?[u,-.5,v]:face===4?[u,v,.5]:[u,v,-.5];
+            return [cx+p[0]*sx,cy+p[1]*sy,cz+p[2]*sz];
+        }
+        case 'wedge': {
+            const face=Math.floor(f(i,41)*6),u=f(i,42)-.5,v=f(i,43)-.5;
+            const y=face===0?.5:face===1?-.5:v;
+            const width=(1-.42*(y+.5));
+            const x=face===2?.5*width:face===3?-.5*width:u*width;
+            const z=face===4?.5:face===5?-.5:v;
+            return [cx+x*sx,cy+y*sy,cz+z*sz];
+        }
+        case 'roof': {
+            const u=f(i,51)-.5,v=f(i,52)-.5,fac=Math.floor(f(i,53)*4);
+            const x=u*sx,z=v*sz;
+            const roofY=(.5-Math.abs(v))*sy;
+            return [cx+x,cy+(fac===0?-.42*sy:fac===1?roofY:roofY*(f(i,54)*.10+.90)),cz+z];
+        }
+        case 'tire': {
+            const a=2*Math.PI*f(i,61),b=2*Math.PI*f(i,62);
+            const r=.38+.12*Math.cos(b);
+            return [cx+sx*r*Math.cos(a),cy+sy*r*Math.sin(a),cz+sz*.49*Math.sin(b)];
+        }
+        case 'cone': {
+            const a=2*Math.PI*f(i,71),h=f(i,72),r=(1-h)*.5;
+            return [cx+sx*r*Math.cos(a),cy+(h-.5)*sy,cz+sz*r*Math.sin(a)];
+        }
         case 'sphere': {
             const a = 2 * Math.PI * f(i, 2), z = 2 * f(i, 3) - 1;
             const k = Math.sqrt(1 - z * z);
@@ -1013,10 +1092,108 @@ function unique(ids) { if (new Set(ids).size !== ids.length)
 const sourceValues = ['PROCEDURAL', 'SYNTHETIC', 'LOCAL', 'ILLUSTRATIVE'];
 function source(x) { if (!sourceValues.includes(x))
     fail('unknown provenance'); return x; }
+
+// GENESIS 0.10 — typed constructive models. Geometry is a bounded procedural point cloud,
+// NOT imported meshes, autonomous CAD, or open-ended 3D object synthesis.
+const MODEL_KINDS = new Set(['car','robot','house','rocket','custom']);
+const MODEL_SHAPES = new Set(['box','wedge','tire','cone','cylinder','sphere','roof','helix','ring']);
+function makeModelPart(id,name,shape,position,size,color='aqua',weight=120) {
+    return {id,name,shape,position,size,color,weight};
+}
+function modelParts(archetype) {
+    const P=makeModelPart;
+    switch(archetype){
+    case 'car': return [
+        P('chassis','Underframe','box',[0,-.31,0],[2.70,.22,1.08],'gold',330),
+        P('body','Vehicle body','box',[0,-.09,0],[2.85,.42,1.16],'aqua',780),
+        P('hood','Front bonnet','wedge',[.94,.17,0],[.94,.28,1.09],'aqua',240),
+        P('roof','Cabin roof','wedge',[-.12,.48,0],[1.44,.62,1.06],'aqua',520),
+        P('glass','Window glazing','wedge',[-.12,.46,.01],[1.27,.40,1.13],'ice',260),
+        P('tire-fl','Front left tire','tire',[.90,-.47,.66],[.50,.50,.24],'violet',300),
+        P('tire-fr','Front right tire','tire',[.90,-.47,-.66],[.50,.50,.24],'violet',300),
+        P('tire-rl','Rear left tire','tire',[-.92,-.47,.66],[.50,.50,.24],'violet',300),
+        P('tire-rr','Rear right tire','tire',[-.92,-.47,-.66],[.50,.50,.24],'violet',300),
+        P('headlight-l','Left headlamp','box',[1.43,.01,.40],[.09,.11,.23],'ice',90),
+        P('headlight-r','Right headlamp','box',[1.43,.01,-.40],[.09,.11,.23],'ice',90),
+        P('taillights','Rear light bar','box',[-1.43,-.02,0],[.09,.12,.78],'gold',90)
+    ];
+    case 'robot': return [
+        P('torso','Torso housing','box',[0,.10,0],[.90,1.05,.55],'aqua',650),
+        P('head','Sensor head','sphere',[0,.94,0],[.59,.51,.55],'ice',460),
+        P('eye-l','Left optic','sphere',[-.17,.96,.26],[.13,.12,.09],'gold',120),
+        P('eye-r','Right optic','sphere',[.17,.96,.26],[.13,.12,.09],'gold',120),
+        P('arm-l','Left arm','cylinder',[-.70,.0,0],[.26,.95,.26],'violet',290),
+        P('arm-r','Right arm','cylinder',[.70,.0,0],[.26,.95,.26],'violet',290),
+        P('hand-l','Left manipulator','sphere',[-.70,-.60,0],[.29,.20,.26],'gold',130),
+        P('hand-r','Right manipulator','sphere',[.70,-.60,0],[.29,.20,.26],'gold',130),
+        P('leg-l','Left leg','box',[-.25,-.79,0],[.30,.85,.36],'aqua',300),
+        P('leg-r','Right leg','box',[.25,-.79,0],[.30,.85,.36],'aqua',300)
+    ];
+    case 'house': return [
+        P('foundation','Foundation','box',[0,-.84,0],[2.3,.18,1.8],'gold',370),
+        P('walls','Wall envelope','box',[0,-.22,0],[2.10,1.12,1.58],'aqua',930),
+        P('roof','Pitched roof','roof',[0,.65,0],[2.34,.68,1.83],'violet',850),
+        P('door','Entrance door','box',[0,-.48,.83],[.39,.65,.10],'gold',260),
+        P('window-l','Left window','box',[-.60,-.13,.84],[.37,.40,.08],'ice',230),
+        P('window-r','Right window','box',[.60,-.13,.84],[.37,.40,.08],'ice',230),
+        P('chimney','Chimney','box',[.66,1.04,-.20],[.24,.74,.26],'gold',220)
+    ];
+    case 'rocket': return [
+        P('fuselage','Pressurized fuselage','cylinder',[0,.02,0],[.65,1.90,.65],'aqua',1200),
+        P('nose','Nose cone','cone',[0,1.25,0],[.68,.82,.68],'ice',620),
+        P('engine','Engine bell','cone',[0,-1.12,0],[.66,.48,.66],'gold',460),
+        P('fin-l','Left stabilizer','wedge',[-.46,-.72,0],[.65,.58,.27],'violet',340),
+        P('fin-r','Right stabilizer','wedge',[.46,-.72,0],[.65,.58,.27],'violet',340),
+        P('porthole','Observation window','sphere',[0,.43,.34],[.29,.29,.12],'ice',210)
+    ];
+    default: return [];
+    }
+}
+function constructModelBlock(archetype,title,id) {
+    if(!MODEL_KINDS.has(archetype) || archetype==='custom')throw Error('Unknown model profile');
+    const parts=modelParts(archetype);
+    return {kind:'object-model',id,title,archetype,selected:parts[0].id,exploded:false,parts};
+}
+function checkObjectModel(o,id,title){
+    exact(o,['kind','id','title','archetype','selected','exploded','parts']);
+    const archetype=str(o.archetype,20);
+    if(!MODEL_KINDS.has(archetype)||typeof o.exploded!=='boolean')fail('Invalid model profile');
+    const parts=arr(o.parts,24).map(v=>{
+        const p=record(v);
+        exact(p,['id','name','shape','position','size','color','weight']);
+        const shape=str(p.shape,20),color=str(p.color,20);
+        if(!MODEL_SHAPES.has(shape)||!Object.keys(interactionPalette).includes(color))fail('Unknown procedural model primitive');
+        const position=arr(p.position,3),size=arr(p.size,3);
+        if(position.length!==3||size.length!==3)fail('Part geometry must have 3D coordinates');
+        return {id:ident(p.id),name:str(p.name,65),shape,
+            position:position.map(x=>finite(x,-2.5,2.5)),
+            size:size.map(x=>finite(x,.045,3.5)),color,weight:int(p.weight,20,1500)};
+    });
+    if(parts.length<2)fail('Object model requires at least two constructive parts');
+    unique(parts.map(p=>p.id));
+    const selected=ident(o.selected);
+    if(!parts.some(p=>p.id===selected))fail('Missing selected model component');
+    return {kind:'object-model',id,title,archetype,selected,exploded:o.exploded,parts};
+}
+function describeModelIntent(text) {
+    const normalized=text.toLowerCase();
+    if(/\b(game|racing game|driving simulator|race simulator)\b/.test(normalized))return null;
+    const terms=[
+        ['car',/\b(car|cars|vehicle|vehicles|sedan|coupe|sports car|automobile)\b|αυτοκίνητο/],
+        ['robot',/\b(robot|android robot|humanoid robot)\b|ρομπότ/],
+        ['house',/\b(house|home|cottage|cabin|little house)\b|σπίτι/],
+        ['rocket',/\b(rocket|space rocket|launch vehicle)\b|πύραυλο/]
+    ];
+    const match=terms.filter(([,regex])=>regex.test(normalized));
+    return match.length===1?match[0][0]:null;
+}
+
 function checkBlock(v) {
     const o = record(v), kind = o.kind, id = ident(o.id), title = str(o.title);
+    if (kind === 'object-model') return checkObjectModel(o,id,title);
     if (kind === 'system-graph') return validateGraph09(o,id,title);
     if (kind === 'fluid-network' || kind === 'atmosphere') return validateDomain08(o,id,title);
+    if(kind==='clock'){exact(o,['kind','id','title','timeZone','format']);if(!['local','UTC'].includes(o.timeZone)||![12,24].includes(o.format))fail('Invalid clock settings');return {kind,id,title,timeZone:o.timeZone,format:o.format};}
     if (kind === 'timeline-chart') {
         exact(o, ['kind', 'id', 'title', 'unit', 'tracks', 'selected', 'window', 'windows']);
         const tracks = arr(o.tracks, 4).map(x => { const t = record(x); exact(t, ['id', 'label', 'points']); const points = arr(t.points, 288).map(q => { const p = record(q); exact(p, ['t', 'v']); const time = str(p.t, 35); if (!Number.isFinite(Date.parse(time)))
@@ -1123,7 +1300,8 @@ function visual(id, kind, meaning, color, count, extra = {}) { return { id, kind
 function sceneFromExperience(spec) {
     const objects = [visual('identity:proteus', 'membrane', 'Persistent AURA OMNI semantic presence', interactionPalette.aqua, 540, { position: [-1.24, .80, -.3], size: [.25, .25, .25] })];
     for (const block of spec.blocks) {
-        if (block.kind === 'timeline-chart') {
+        if(block.kind==='clock'){objects.push(visual('clock:'+block.id,'ring','Clock visual geometry',interactionPalette.aqua,430,{position:[.1,.05,0],size:[1.5,1.5,.2]}));}
+        else if (block.kind === 'timeline-chart') {
             const series = block.tracks.find(t => t.id === block.selected);
             const values = series.points.slice(-block.window).map(p => p.v);
             objects.push(visual('plot:' + block.id + ':' + series.id, 'ribbon', 'Temporal values and verified time order, ' + block.title, interactionPalette.ice, 1000, { values, position: [.12, .08, 0], size: [2.85, 1.36, 1] }));
@@ -1138,6 +1316,13 @@ function sceneFromExperience(spec) {
             for (const entry of block.events.filter(e => cells.includes(e.day)).slice(0, 7)) {
                 const i = cells.indexOf(entry.day), c = i % 7, r = Math.floor(i / 7);
                 objects.push(visual('appointment:' + entry.id, 'sphere', 'Local appointment ' + entry.title, interactionPalette.violet, 48, { position: [.1 + (c + .5 - 3.5) * 2.8 / 7, .06 + (rows / 2 - r - .5) * 1.9 / rows, .15], size: [.025, .025, .025] }));
+            }
+        }
+        else if (block.kind === 'object-model') {
+            for(const part of block.parts){
+                const shift=block.exploded ? part.position.map(v=>v*.32) : [0,0,0];
+                const origin=part.position.map((v,i)=>v+shift[i]);
+                objects.push(visual('constructive:'+block.id+':'+part.id,part.shape,part.name,interactionPalette[part.color],part.weight,{position:origin,size:part.size}));
             }
         }
         else if (block.kind === 'spatial-assembly') {
@@ -1257,6 +1442,26 @@ class ExperienceRuntime {
                     next.history=[{time:0,produced:0,delivered:0,stored:0,lost:0}];
                 }
                 Object.assign(b,validateGraph09(next,b.id,b.title));break;
+            }
+            case 'model-select':{
+                if(b.kind!=='object-model'||!b.parts.some(p=>p.id===action.id))throw Error('Unknown constructive model part');
+                b.selected=action.id;break;
+            }
+            case 'model-explode':{
+                if(b.kind!=='object-model')throw Error('Not a constructive model');
+                b.exploded=!b.exploded;break;
+            }
+            case 'model-move':{
+                if(b.kind!=='object-model')throw Error('Not a constructive model');
+                const part=b.parts.find(p=>p.id===action.id);
+                if(!part||!['x','y','z'].includes(action.axis)||!Number.isFinite(action.delta)||Math.abs(action.delta)>.3)throw Error('Invalid model move');
+                const ix={x:0,y:1,z:2}[action.axis],next=part.position[ix]+action.delta;
+                if(next<-2.5||next>2.5)throw Error('Model part outside bounds');
+                part.position[ix]=Math.round(next*1000)/1000;break;
+            }
+            case 'model-reset':{
+                if(b.kind!=='object-model'||b.archetype==='custom')throw Error('No registered reset geometry');
+                Object.assign(b,constructModelBlock(b.archetype,b.title,b.id));break;
             }
             case 'fluid-select': {
                 if(b.kind!=='fluid-network'||!b.nodes.some(n=>n.id===action.id))throw Error('Unknown hydraulic component');
@@ -1597,6 +1802,69 @@ function showDateGrid(block, controls) {
     root.append(events);
     return root;
 }
+
+const modelPartColors={aqua:'#60e9d6',ice:'#a3cdff',violet:'#c1a8ff',gold:'#eabb77'};
+function projectedPart(part,exploded) {
+    const xyz=part.position.map(v=>v*(exploded?1.32:1));
+    return {x:300+xyz[0]*149+xyz[2]*18,y:185-xyz[1]*116-xyz[2]*12,w:part.size[0]*149,h:part.size[1]*116};
+}
+function modelBlueprint(b) {
+    const canvas=svg('svg',{viewBox:'0 0 600 370',role:'group','aria-label':'Selectable schematic object components. Use the part buttons for precise selection.'});
+    for(let n=0;n<8;n++){
+        canvas.append(svg('line',{x1:16,y1:33+n*43,x2:584,y2:33+n*43,stroke:'#aacce015','stroke-width':1}));
+        canvas.append(svg('line',{x1:32+n*75,y1:15,x2:32+n*75,y2:359,stroke:'#aacce015','stroke-width':1}));
+    }
+    for(const part of [...b.parts].sort((x,y)=>x.position[2]-y.position[2])){
+        const v=projectedPart(part,b.exploded),x=v.x,y=v.y,w=Math.max(8,v.w),h=Math.max(8,v.h);
+        const color=modelPartColors[part.color],sel=part.id===b.selected;
+        const g=svg('g',{'data-object-part':part.id,role:'button',tabindex:'0','aria-label':'Select '+part.name});
+        g.style.cursor='pointer';
+        g.setAttribute('opacity',sel?'1':'.80');
+        const common={fill:color+'2a',stroke:color,'stroke-width':sel?3.2:1.6};
+        if(part.shape==='tire'||part.shape==='sphere'){
+            g.append(svg('ellipse',{cx:x,cy:y,rx:Math.max(5,w*.46),ry:Math.max(5,h*.46),...common}));
+            if(part.shape==='tire')g.append(svg('ellipse',{cx:x,cy:y,rx:Math.max(3,w*.22),ry:Math.max(3,h*.22),fill:'#0a2532',stroke:color,'stroke-width':1.2}));
+        }else if(['wedge','roof','cone'].includes(part.shape)){
+            const points=part.shape==='wedge'?[[x-w/2,y+h/2],[x-w*.33,y-h/2],[x+w*.27,y-h/2],[x+w/2,y+h/2]]:
+                [[x-w/2,y+h/2],[x,y-h/2],[x+w/2,y+h/2]];
+            g.append(svg('polygon',{points:points.map(v=>v.join(',')).join(' '),...common}));
+        }else{
+            g.append(svg('rect',{x:x-w/2,y:y-h/2,width:w,height:h,rx:part.shape==='cylinder'?12:3,...common}));
+        }
+        if(sel)g.append(svg('circle',{cx:x,cy:y,r:4.5,fill:'#f2fff9'}));
+        const choose=()=>{if(part.id!==b.selected)apply({type:'model-select',block:b.id,id:part.id});};
+        g.addEventListener('click',choose);
+        g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();choose();}});
+        canvas.append(g);
+    }
+    return canvas;
+}
+function showObjectModel(b) {
+    const root=section(b.id,b.title,'CONSTRUCTIVE OBJECT');
+    const lab=e('div','modelstudio');
+    const bar=e('div','studio-overline');
+    bar.append(e('span','',b.archetype.toUpperCase()+' / PARAMETRIC OBJECT'),e('span','',String(b.parts.length)+' SEMANTIC PARTS'));
+    const view=e('div','studio-viewport');
+    view.append(modelBlueprint(b));
+    const choices=e('div','studio-choices');
+    for(const part of b.parts) {
+        const button=btn(choices,part.name,()=>apply({type:'model-select',block:b.id,id:part.id}),'choice');
+        button.setAttribute('aria-pressed',String(b.selected===part.id));
+    }
+    const item=b.parts.find(p=>p.id===b.selected);
+    const detail=e('div','studio-inspector'),summary=e('div');
+    summary.append(e('strong','',item.name),e('p','',item.shape.toUpperCase()+'  ·  SIZE '+item.size.map(x=>x.toFixed(2)).join(' × ')),e('p','',item.position.map((v,i)=>['X','Y','Z'][i]+' '+v.toFixed(2)).join('   ')));
+    const moves=e('div','studio-actions');
+    for(const [label,axis,d] of [['←','x',-.12],['→','x',.12],['↑','y',.12],['↓','y',-.12],['Z+','z',.12],['Z−','z',-.12]])
+        btn(moves,label,()=>apply({type:'model-move',block:b.id,id:item.id,axis,delta:d}),'choice','Move part '+label);
+    detail.append(summary,moves);
+    const controls=e('div','studio-actions');
+    btn(controls,b.exploded?'ASSEMBLE OBJECT':'EXPLODE PARTS',()=>apply({type:'model-explode',block:b.id}),'choice');
+    if(b.archetype!=='custom')btn(controls,'RESET DIMENSIONS',()=>apply({type:'model-reset',block:b.id}),'choice');
+    lab.append(bar,view,choices,detail,controls,e('p','studio-note','Constructive 3D particle volumes with semantic relationships; the blueprint is a side projection. Rotate and zoom the scene above. This remains an illustrative model, not CAD or a photorealistic mesh.'));
+    root.append(lab);
+    return root;
+}
 function showSpatial(block, controls) {
     const root = section(block.id, block.title, 'Spatial assembly');
     root.append(e('p', 'description', block.description));
@@ -1754,12 +2022,22 @@ function showNumeric(block, controls) {
     }
     return root;
 }
+const auraclockFormatters=new WeakMap();
+function tickAuraClock(node){let fmt=auraclockFormatters.get(node);if(!fmt){fmt=new Intl.DateTimeFormat('en-GB',{timeZone:node.dataset.zone==='UTC'?'UTC':undefined,hourCycle:'h23',hour:'2-digit',minute:'2-digit',second:'2-digit',weekday:'long',day:'numeric',month:'long',year:'numeric'});auraclockFormatters.set(node,fmt);}
+const parts=Object.fromEntries(fmt.formatToParts(new Date()).filter(q=>q.type!=='literal').map(q=>[q.type,q.value])),h=+parts.hour,m=+parts.minute,sec=+parts.second,is12=node.dataset.format==='12';
+node.querySelector('.auraclock-time').textContent=(is12?String(h%12||12).padStart(2,'0'):parts.hour)+':'+parts.minute+':'+parts.second+(is12?(h<12?' AM':' PM'):'');
+node.querySelector('.auraclock-day').textContent=parts.weekday+', '+parts.day+' '+parts.month+' '+parts.year;
+[30*(h%12)+m/2+sec/120,6*m+sec/10,6*sec].forEach((a,i)=>node.querySelectorAll('.auraclock-hand')[i].style.transform='translate(-50%,-100%) rotate('+a+'deg)');}
+function showClock(b){const root=section(b.id,b.title,'LIVE CLOCK'),w=e('div','auraclock'),dial=e('div','auraclock-face');w.dataset.zone=b.timeZone;w.dataset.format=String(b.format);w.dataset.auraclock='true';dial.setAttribute('aria-hidden','true');dial.append(e('div','auraclock-hand hour'),e('div','auraclock-hand minute'),e('div','auraclock-hand second'));w.append(dial,e('div','auraclock-time'),e('div','auraclock-day'),e('div','auraclock-zone',b.timeZone==='UTC'?'UTC':'DEVICE LOCAL TIME'));root.append(w,e('p','description','Updated from this device every second; accuracy depends on the device clock. No external API.'));tickAuraClock(w);return root;}
+setInterval(()=>{for(const n of document.querySelectorAll('[data-auraclock="true"]'))tickAuraClock(n);},1000);
 function showExplanation(block) { const root = section(block.id, block.title, 'Interpretation'); root.append(e('p', 'description', block.text)); return root; }
 function renderBlock(block, controls) {
     switch (block.kind) {
         case 'system-graph': return showGraph09(block,controls);
         case 'fluid-network': return showFluid08(block,controls);
         case 'atmosphere': return showAtmosphere08(block,controls);
+        case 'object-model': return showObjectModel(block);
+        case 'clock': return showClock(block);
         case 'timeline-chart': return showTimeline(block, controls);
         case 'date-grid': return showDateGrid(block, controls);
         case 'spatial-assembly': return showSpatial(block, controls);
@@ -1789,8 +2067,8 @@ const CPU_WASM_URL = 'https://cdn.jsdelivr.net/npm/@wllama/wllama@3.6.1/esm/wasm
 const CPU_MODEL_SIZE_MB = 491; // conservative transfer warning, files may vary
 const MODEL_DOWNLOAD_NOTICE = 'WebGPU model: approximately 950 MB. CPU model: approximately 491 MB plus runtime/WASM assets. Network and device storage costs depend on your connection. Neither downloads until you press LOAD MODEL and consent.';
 const GENERATION_DEADLINE_MS = 180_000;
-const CPU_GENERATION_TOKENS = 270;
-const supported = new Set(['timeline-chart', 'date-grid', 'spatial-assembly', 'task-board', 'explanation']);
+const CPU_GENERATION_TOKENS = 480;
+const supported = new Set(['object-model','clock','timeline-chart', 'date-grid', 'spatial-assembly', 'task-board', 'explanation']);
 const validIdentifier = /^[a-z][a-z0-9_-]{0,47}$/;
 function safeId(value, prefix, index) { const id = value.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 34); return (validIdentifier.test(id) ? id : prefix) + '-' + index; }
 function failPlan(why) { throw Error('Planner rejected: ' + why); }
@@ -1814,7 +2092,7 @@ function validateIntentPlan(raw) {
         failPlan('block count');
     const blocks = o.blocks.map(value => {
         const b = dict(value);
-        only(b, ['kind', 'title', 'items', 'unit', 'description']);
+        only(b, ['kind', 'title', 'items', 'unit', 'description', 'timeZone', 'format', 'archetype']);
         if (!supported.has(String(b.kind)))
             failPlan('unsupported block');
         const kind = b.kind;
@@ -1823,8 +2101,14 @@ function validateIntentPlan(raw) {
             failPlan('spatial requires named items');
         if (kind === 'task-board' && items.length < 1)
             failPlan('board requires cards');
-        if ((kind === 'date-grid' || kind === 'timeline-chart' || kind === 'explanation') && items.length)
-            failPlan('items not permitted on block');
+        if ((kind==='clock'||kind==='date-grid'||kind==='timeline-chart'||kind==='explanation')&&items.length)failPlan('items not permitted on block');
+        if(kind==='object-model'){
+            if(!MODEL_KINDS.has(b.archetype)||b.archetype==='custom'||items.length||b.unit!==undefined||b.description!==undefined||b.timeZone!==undefined||b.format!==undefined)failPlan('invalid model intent');
+            return {kind,title:text(b.title,90),archetype:b.archetype};
+        }
+        if(b.archetype!==undefined)failPlan('archetype outside a constructive model');
+        if(kind==='clock'){if(b.unit!==undefined||b.description!==undefined||!['local','UTC'].includes(b.timeZone??'local')||![12,24].includes(b.format??24))failPlan('invalid clock fields');return {kind,title:text(b.title,90),timeZone:b.timeZone??'local',format:b.format??24};}
+        if(b.timeZone!==undefined||b.format!==undefined)failPlan('clock fields on other block');
         return { kind, title: text(b.title, 90), ...(items.length ? { items } : {}), ...(b.unit !== undefined ? { unit: text(b.unit, 18) } : {}), ...(b.description !== undefined ? { description: text(b.description, 500) } : {}) };
     });
     return { version: 1, intent: 'compose', title: text(o.title, 90), subtitle: text(o.subtitle, 135), role: text(o.role, 48), blocks };
@@ -1844,7 +2128,9 @@ function compileIntentPlan(raw, now = new Date(), idSuffix = 'local') {
     for (const b of p.blocks) {
         index++;
         const id = safeId(b.title, 'block', index);
-        if (b.kind === 'timeline-chart') {
+        if(b.kind==='object-model')blocks.push(constructModelBlock(b.archetype,b.title,id));
+        else if(b.kind==='clock'){blocks.push({kind:'clock',id,title:b.title,timeZone:b.timeZone||'local',format:b.format||24});}
+        else if (b.kind === 'timeline-chart') {
             const v = valuesFor(p.title + '::' + b.title);
             const start = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) - 23 * 3600000;
             blocks.push({ kind: 'timeline-chart', id, title: b.title, unit: b.unit || 'index', tracks: [{ id: 'illustrative', label: 'Illustrative index', points: v.map((n, i) => ({ t: new Date(start + i * 3600000).toISOString(), v: n })) }], selected: 'illustrative', window: 24, windows: [6, 12, 24] });
@@ -1870,13 +2156,14 @@ function compileIntentPlan(raw, now = new Date(), idSuffix = 'local') {
     const version = 1;
     // Avoid overwriting existing experiences: fixed-length random suffix from browser crypto when available.
     const suffix = idSuffix.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 11) || 'local';
-    return compileExperience({ version, id: safeId(p.title, 'local', 0).slice(0, 35) + '-' + suffix, title: p.title, subtitle: p.subtitle, role: p.role, source: 'ILLUSTRATIVE', permissions: [], blocks });
+    return compileExperience({ version, id: safeId(p.title, 'local', 0).slice(0, 35) + '-' + suffix, title: p.title, subtitle: p.subtitle, role: p.role, source: p.blocks.every(b=>b.kind==='clock')?'LOCAL':'ILLUSTRATIVE', permissions: [], blocks });
 }
 const PLANNER_SYSTEM_PROMPT = [
     'You are a bounded local visualization planner. You do NOT have internet, real data, or authority to execute tools.',
     'Output exactly ONE JSON object and nothing else, not markdown.',
-    'Schema: {"version":1,"intent":"compose","title":"short title","subtitle":"short summary","role":"short presenter role","blocks":[{"kind":"spatial-assembly","title":"...","items":["part one","part two"]},{"kind":"task-board","title":"...","items":["step one","step two"]},{"kind":"timeline-chart","title":"...","unit":"index"},{"kind":"date-grid","title":"..."},{"kind":"explanation","title":"Limits","description":"..."}]}',
-    'Select 1 to 4 useful blocks. Only kinds: spatial-assembly,task-board,timeline-chart,date-grid,explanation.',
+    'Schema: {"version":1,"intent":"compose","title":"...","subtitle":"...","role":"...","blocks":[{"kind":"object-model","title":"Miniature car","archetype":"car"}]}. This block is a car example ONLY. For a clock use kind clock, timeZone local, format 24; do not include extra keys.',
+    'Select 1–2 short blocks. Allowed kinds: object-model,clock,spatial-assembly,task-board,timeline-chart,date-grid,explanation. Clock requests MUST use clock kind with timeZone local and format 24.',
+    'Car, robot, house and rocket model requests: use {"kind":"object-model","title":"...","archetype":"car"} (replace car with robot/house/rocket). The trusted geometry builder supplies parts; never invent part dimensions.',
     'spatial-assembly and task-board REQUIRE 1..8 items (short labels). Other blocks MUST omit items.',
     'Never include URLs, JS code, permissions, executable actions, live values, claims of exact physics or real prices.',
     'Prefer a spatial assembly for mechanisms, a calendar for real dates, a time-series for trends and task board for workflows.',
@@ -2044,8 +2331,8 @@ class LocalWebLLM {
     async generate(prompt, context, opts = {}) {
         if (!this.ready || !this.engine)
             throw Error('Local AI is not loaded.');
-        if (!prompt.trim() || prompt.length > 350)
-            throw Error('Request must contain 1–350 characters.');
+        if (!prompt.trim() || prompt.length > 1200)
+            throw Error('Request must contain 1–1200 characters.');
         if (context.length > 2500)
             throw Error('Context too large.');
         const controller = new AbortController();
@@ -2065,12 +2352,11 @@ class LocalWebLLM {
                 abortListener();
             const request = { messages: [{ role: 'system', content: PLANNER_SYSTEM_PROMPT },
                     { role: 'user', content: `CONTEXT: ${context.slice(0, 600)}\nREQUEST: ${prompt}` }],
-                temperature: 0.1, max_tokens: this.backend === 'cpu' ? CPU_GENERATION_TOKENS : 350 };
+                temperature: 0.1, max_tokens: this.backend === 'cpu' ? CPU_GENERATION_TOKENS : 480 };
             request.response_format = { type: 'json_object' };
-            if (this.backend === 'cpu') {
-                request.stream = true;
+            request.stream = true;
+            if (this.backend === 'cpu')
                 request.abortSignal = controller.signal;
-            }
             opts.onProgress?.({ phase: 'prefill', tokens: 0, chars: 0 });
             const work = (async () => {
                 const result = await this.engine.chat.completions.create(request);
@@ -2090,7 +2376,7 @@ class LocalWebLLM {
                                 tokens++;
                                 if (raw.length > 8000)
                                     throw Error('Model exceeded output size limit.');
-                                opts.onProgress?.({ phase: 'generating', tokens, chars: raw.length });
+                                opts.onProgress?.({ phase: 'generating', tokens, chars: raw.length, raw });
                             }
                         }
                     }
@@ -2100,7 +2386,7 @@ class LocalWebLLM {
                     raw = reply?.choices?.[0]?.message?.content ?? '';
                     truncated = reply?.choices?.[0]?.finish_reason === 'length';
                     if (raw)
-                        opts.onProgress?.({ phase: 'generating', tokens: 1, chars: raw.length });
+                        opts.onProgress?.({ phase: 'generating', tokens: 1, chars: raw.length, raw });
                 }
                 if (truncated)
                     throw Error('Model reached its token limit before completing JSON. Retry with a simpler request.');
@@ -2173,11 +2459,13 @@ function mathSpec(text, suffix) {
     const block = { kind: 'numeric-instrument', id: 'instrument', title: subject, description: 'User-supplied arithmetic formula. No independently verified physical model or unit conversion.', inputs: parsed, outputs: [{ id: 'result', label: 'Computed result', formula: match[2].trim(), unit: '1', precision: 4 }] };
     return compileExperience({ version: 1, id: 'math-' + toId(subject).slice(0, 18) + '-' + suffix, title: subject, subtitle: 'Functional offline numerical computation · supplied formula', role: 'COMPUTATIONAL GUIDE', source: 'LOCAL', permissions: [], blocks: [block, { kind: 'explanation', id: 'math-note', title: 'Calculation provenance', text: 'Calculated locally from the exact formula you supplied. No scientific calibration or live data. Any unit labels must be interpreted by the author.' }] });
 }
+function isSimpleClockRequest(raw){return /^(?:(?:create|make|build|design|show|open)\s+)?(?:(?:a|an|the|live|digital|analog|beautiful|premium|interactive|local|working)\s+){0,5}(?:clock|timepiece|ρολόι)\s*[.!?]*$/i.test(raw.trim());}
 function fastCompose(raw, current, now = new Date(), suffix = 'local') {
     const text = normalize(raw).slice(0, 280);
     if (!text)
         return { kind: 'unsupported', reason: 'Enter a request.' };
     try {
+        if(isSimpleClockRequest(text)){const spec=compileIntentPlan({version:1,intent:'compose',title:'Live Clock',subtitle:'Device time updated every second',role:'TIMEKEEPER',blocks:[{kind:'clock',title:'Local time',timeZone:'local',format:24}]},now,suffix);return {kind:'compose',spec,reason:'Strict live-clock compiler · no AI required'};}
         if(/^\s*(?:(?:build|create|design|show|make)\s+)?(?:a\s+)?(?:resource\s+)?network\s*:/i.test(text))
             return {kind:'compose',spec:fromNetworkText09(text,suffix),reason:'Declarative network grammar compiled into connected interactive semantics — no AI'};
         if (/\b(?:weather|forecast|rain)\b/i.test(text)&&/\b(?:today|tomorrow|outside|right now|currently|live|actual|real|forecast|near me|in athens|this afternoon|this evening)\b/i.test(text))
@@ -2196,7 +2484,17 @@ function fastCompose(raw, current, now = new Date(), suffix = 'local') {
             return { kind: 'compose', spec: mathSpec(text, suffix), reason: 'Typed arithmetic instrument composed from your formula; no AI used' };
         if (unsupported.test(text))
             return { kind: 'unsupported', reason: 'This request needs a capability or verified source that the offline runtime does not have. You can import a validated ExperienceSpec, but it cannot deliver a live service, realistic game or authoritative prediction.' };
+        const archetype=describeModelIntent(text);
+        const modelMode=/\b(3d|miniature|model|assemble|assembly|construct|build|create|make|visualize|render|design|sculpt)\b/i.test(text);
+        if(archetype && (modelMode || /^(car|robot|house|rocket|σπίτι|ρομπότ)$/i.test(text))){
+            const subject=titleOf(text);
+            const spec=compileIntentPlan({version:1,intent:'compose',title:subject,subtitle:'Connected parametric geometry · illustrative',role:'OBJECT DESIGNER',blocks:[{kind:'object-model',title:subject+' · Constructive model',archetype}]},now,suffix);
+            return {kind:'compose',spec,reason:'Dimensioned constructive geometry for '+archetype+' · no model inference'};
+        }
         const wants = { spatial: geometry.test(text), calendar: temporal.test(text), chart: series.test(text), tasks: board.test(text), explain: explanation.test(text) };
+        if(!archetype && wants.spatial && /\b(3d|miniature|photorealistic|mesh|realistic model)\b/i.test(text)
+           && !/\b(parts|components|objects)\s*:/i.test(text))
+            return {kind:'unsupported',reason:'Recognizable procedural model profile unavailable. Current typed presets: car, robot, house, rocket. You can provide custom object-model JSON for other geometric assemblies, or explicitly name parts: ... for a schematic representation.'};
         const count = [wants.spatial, wants.calendar, wants.chart, wants.tasks].filter(Boolean).length;
         if (count === 0)
             return { kind: 'unsupported', reason: 'No supported scene grammar could be inferred. Describe a 3D assembly, date calendar, chart, task board, or supply an arithmetic formula; advanced AI can also provide a validated JSON plan.' };
@@ -2603,7 +2901,114 @@ function drawResource09(ctx,g,t){
   ctx.save();ctx.font='600 12px system-ui';ctx.fillStyle='#98c8d1';ctx.fillText('NETWORK / '+g.nodes.length+' NODES / '+g.unit+' / MODEL T+'+g.time+'m',25,515);ctx.restore();
 }
 
-function updateHeader() { const scene = runtime.scene; app.dataset.scene = runtime.active === 'presence' ? 'presence' : runtime.current?.blocks.some(b=>b.kind==='system-graph') ? 'network' : runtime.current?.blocks.some(b=>b.kind==='fluid-network'||b.kind==='atmosphere') ? 'domain' : runtime.current?.blocks.find(b => b.kind !== 'explanation')?.kind === 'timeline-chart' ? 'finance' : runtime.current?.blocks.find(b => b.kind !== 'explanation')?.kind === 'date-grid' ? 'calendar' : runtime.current?.blocks.find(b => b.kind !== 'explanation')?.kind === 'spatial-assembly' ? 'flow' : 'board'; $('sceneTitle').textContent = app.dataset.scene==='network'?'RESOURCE NETWORK':scene.title; $('sceneSubtitle').textContent = app.dataset.scene==='network'?'CONNECTED SEMANTIC OBJECTS · EDITABLE LINKS':scene.subtitle; $('eyebrow').textContent = scene.annotation; $('source').textContent = scene.source + ' · OFFLINE'; $('sceneRole').textContent = scene.role; }
+function updateHeader() { const scene = runtime.scene; app.dataset.scene = runtime.active === 'presence' ? 'presence' : runtime.current?.blocks.some(b=>b.kind==='object-model') ? 'model' : runtime.current?.blocks.some(b=>b.kind==='system-graph') ? 'network' : runtime.current?.blocks.some(b=>b.kind==='fluid-network'||b.kind==='atmosphere') ? 'domain' : runtime.current?.blocks.find(b => b.kind !== 'explanation')?.kind === 'timeline-chart' ? 'finance' : runtime.current?.blocks.find(b => b.kind !== 'explanation')?.kind === 'date-grid' ? 'calendar' : runtime.current?.blocks.find(b => b.kind !== 'explanation')?.kind === 'spatial-assembly' ? 'flow' : 'board'; $('sceneTitle').textContent = app.dataset.scene==='network'?'RESOURCE NETWORK':scene.title; $('sceneSubtitle').textContent = app.dataset.scene==='network'?'CONNECTED SEMANTIC OBJECTS · EDITABLE LINKS':scene.subtitle; $('eyebrow').textContent = scene.annotation; $('source').textContent = scene.source + ' · OFFLINE'; $('sceneRole').textContent = scene.role; }
+
+/* Solid constructive surfaces complement, but do not replace, the morphing particle renderer. */
+const modelSolidCanvas=document.createElement('canvas');
+modelSolidCanvas.id='modelSolidCanvas';
+modelSolidCanvas.setAttribute('aria-hidden','true');
+world.append(modelSolidCanvas);
+const modelSolidCtx=modelSolidCanvas.getContext('2d',{alpha:true});
+const modelSolidColors={aqua:[63,226,196],ice:[151,200,255],violet:[178,140,228],gold:[229,182,116]};
+function modelProject10(p,w,h){
+    const x=p[0],y=p[1],z=p[2],cy=Math.cos(renderer.yaw),sy=Math.sin(renderer.yaw),cp=Math.cos(renderer.pitch),sp=Math.sin(renderer.pitch);
+    const rx=cy*x+sy*z,rz=-sy*x+cy*z,ry=cp*y-sp*rz,depth=sp*y+cp*rz;
+    const factor=1/(1+.18*(depth+1.4)),sc=h*.585*renderer.scale;
+    return {x:w*.5+rx*sc*factor,y:h*.5-ry*sc*factor,z:depth};
+}
+function modelFaces10(part){
+    const [sx,sy,sz]=part.size;
+    const faceIndices=[[0,1,3,2],[4,6,7,5],[0,4,5,1],[2,3,7,6],[0,2,6,4],[1,5,7,3]];
+    const corners=[];
+    for(const yy of [-.5,.5])for(const zz of [-.5,.5])for(const xx of [-.5,.5]){
+        const taper=part.shape==='wedge'&&yy>0?.58:1;
+        corners.push([xx*sx*taper,yy*sy,zz*sz]);
+    }
+    if(part.shape==='roof'){
+        const verts=[[-sx/2,-sy/2,-sz/2],[sx/2,-sy/2,-sz/2],[-sx/2,-sy/2,sz/2],[sx/2,-sy/2,sz/2],[-sx/2,sy/2,0],[sx/2,sy/2,0]];
+        return {verts,faces:[[0,1,5,4],[2,4,5,3],[0,2,3,1],[0,4,2],[1,3,5]]};
+    }
+    if(part.shape==='cone'||part.shape==='cylinder'){
+        const verts=[],faces=[],n=12,cone=part.shape==='cone';
+        for(const yy of [-.5,.5])for(let i=0;i<n;i++){
+            const a=i*2*Math.PI/n,rr=cone&&yy>0?.02:.5;
+            verts.push([sx*rr*Math.cos(a),sy*yy,sz*rr*Math.sin(a)]);
+        }
+        for(let i=0;i<n;i++)faces.push([i,(i+1)%n,(i+1)%n+n,i+n]);
+        return {verts,faces};
+    }
+    if(part.shape==='sphere'){
+        const verts=[],faces=[],rings=6,n=12;
+        for(let j=0;j<=rings;j++)for(let i=0;i<n;i++){
+            const a=i*Math.PI*2/n,b=j*Math.PI/rings;
+            verts.push([sx*.5*Math.sin(b)*Math.cos(a),sy*.5*Math.cos(b),sz*.5*Math.sin(b)*Math.sin(a)]);
+        }
+        for(let j=0;j<rings;j++)for(let i=0;i<n;i++){
+            const a=j*n+i,b=j*n+(i+1)%n;faces.push([a,b,b+n,a+n]);
+        }
+        return {verts,faces};
+    }
+    return {verts:corners,faces:faceIndices};
+}
+function paintModelSolids10(){
+    if(!modelSolidCtx)return;
+    const model=runtime.current?.blocks.find(b=>b.kind==='object-model');
+    if(!model){modelSolidCanvas.style.opacity='0';return;}
+    const cssW=modelSolidCanvas.clientWidth,cssH=modelSolidCanvas.clientHeight;
+    if(cssW<1||cssH<1)return;
+    const dpr=Math.min(window.devicePixelRatio||1,1.4),w=Math.round(cssW*dpr),h=Math.round(cssH*dpr);
+    if(modelSolidCanvas.width!==w||modelSolidCanvas.height!==h){modelSolidCanvas.width=w;modelSolidCanvas.height=h;}
+    const ctx=modelSolidCtx;ctx.clearRect(0,0,w,h);
+    modelSolidCanvas.style.opacity='1';
+    const faces=[],tires=[];
+    for(const part of model.parts){
+        const center=part.position.map(v=>v*(model.exploded?1.32:1));
+        if(part.shape==='tire'||part.shape==='ring'){
+            tires.push({part,center,depth:modelProject10(center,w,h).z});continue;
+        }
+        if(part.shape==='helix')continue;
+        const mesh=modelFaces10(part);
+        const projected=mesh.verts.map(pt=>modelProject10(pt.map((v,i)=>v+center[i]),w,h));
+        for(const indices of mesh.faces){
+            const pts=indices.map(i=>projected[i]);
+            faces.push({part,pts,depth:pts.reduce((sum,p)=>sum+p.z,0)/pts.length});
+        }
+    }
+    // Sort solid surfaces by camera-space depth, then overlay the near wheel rims.
+    for(const wheel of tires){
+        const {part,center}=wheel;
+        const near=modelProject10(center,w,h);
+        const edge=modelProject10([center[0]+part.size[0]/2,center[1],center[2]],w,h);
+        const up=modelProject10([center[0],center[1]+part.size[1]/2,center[2]],w,h);
+        const rx=Math.max(6,Math.abs(edge.x-near.x)),ry=Math.max(6,Math.abs(up.y-near.y));
+        faces.push({part,pts:null,depth:near.z,center:near,rx,ry});
+    }
+    faces.sort((a,b)=>b.depth-a.depth);
+    for(const f of faces){
+        const ctxColor=modelSolidColors[f.part.color],selected=f.part.id===model.selected;
+        if(f.pts===null){
+            const x=f.center.x,y=f.center.y;
+            ctx.beginPath();ctx.ellipse(x,y,f.rx,f.ry,0,0,Math.PI*2);
+            ctx.fillStyle='#151f29';ctx.fill();
+            ctx.strokeStyle=selected?'#d6ffed':'#708396';ctx.lineWidth=4*dpr;ctx.stroke();
+            ctx.beginPath();ctx.ellipse(x,y,f.rx*.47,f.ry*.47,0,0,Math.PI*2);
+            ctx.fillStyle='#6e8996';ctx.fill();ctx.strokeStyle='#d2dddf';ctx.lineWidth=1.5*dpr;ctx.stroke();
+            continue;
+        }
+        if(f.pts.some(pt=>!Number.isFinite(pt.x)||!Number.isFinite(pt.y)))continue;
+        ctx.beginPath();ctx.moveTo(f.pts[0].x,f.pts[0].y);
+        for(let i=1;i<f.pts.length;i++)ctx.lineTo(f.pts[i].x,f.pts[i].y);
+        ctx.closePath();
+        const [a,b,c]=f.pts;
+        const cross=(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);
+        const lum=Math.max(.24,Math.min(.91,.53+(cross>0?.17:-.10)));
+        ctx.fillStyle='rgba('+ctxColor.map(v=>Math.round(v*lum)).join(',')+',.82)';
+        ctx.fill();
+        ctx.strokeStyle=selected?'rgba(197,255,231,.53)':'rgba(174,229,226,.1)';
+        ctx.lineWidth=selected?1.1*dpr:.5*dpr;ctx.stroke();
+    }
+}
+
 function morph(duration) { const now = performance.now(); const plan = director.enter(runtime.scene, now, { duration }); renderer.morph(runtime.scene, now, plan.duration); updateHeader(); $('directorStatus').textContent = plan.strategy.toUpperCase().replaceAll('-', ' ') + ' · ' + plan.shared.length + ' SEMANTIC ANCHORS'; }
 function mount() {
     panel.replaceChildren();
@@ -2804,12 +3209,214 @@ textArea.spellcheck = false;
 textArea.rows = 13;
 textArea.placeholder = 'Paste an ExperienceSpec JSON document. Only validated local components are permitted.';
 textArea.setAttribute('aria-label', 'Validated JSON experience specification');
-const desc = element('p', 'description', 'Version 1 spec: resource network, hydraulic and atmosphere, time-series, calendar, spatial assembly, task board, numeric instrument and explanation. JSON is strictly validated before mounting. No arbitrary JavaScript or privileged actions.');
+const desc = element('p', 'description', 'Version 1 spec: constructive object models, resource network, hydraulic and atmosphere, time-series, calendar, spatial assembly, task board, numeric instrument and explanation. JSON is strictly validated before mounting. No arbitrary JavaScript or privileged actions.');
 const compiledStatus = element('p', 'composer-status', 'Ready to compile.');
 compiledStatus.id = 'compileStatus';
+
+/** Natural-language authoring; the active runtime only receives compiler-validated JSON. */
+const composerWorkflow = element('section', 'composer-workflow');
+composerWorkflow.id = 'composerWorkflow';
+const composerTitle = element('div', 'composer-workflow-heading');
+composerTitle.append(element('strong', '', '01 / DESCRIBE YOUR EXPERIENCE'), element('span', 'composer-mini', 'TEXT → PLAN → VALIDATED JSON'));
+const composerPromptLabel = element('label', 'composer-prompt-label', 'WHAT SHOULD AURA CREATE?');
+composerPromptLabel.htmlFor = 'composerPrompt';
+const composerPrompt = element('textarea', 'composer-brief');
+composerPrompt.id = 'composerPrompt';
+composerPrompt.rows = 4;
+composerPrompt.maxLength = 1200;
+composerPrompt.placeholder = 'Build an underwater research station with pumps, inspection tasks and a trend chart…';
+composerPrompt.setAttribute('aria-label', 'Describe a new experience in natural language');
+const composerMetrics = element('div', 'composer-metrics');
+const composerInputTokens = element('output', 'composer-count', '~0 INPUT TOKENS');
+const composerOutputTokens = element('output', 'composer-count', '~0 OUTPUT TOKENS');
+const composerModelState = element('span', 'composer-metrics-note', 'Local AI is optional · no paid API');
+composerMetrics.append(composerInputTokens, composerOutputTokens, composerModelState);
+const composerDraftControls = element('div', 'composer-generate-actions');
+const composerAiButton = makeButton(composerDraftControls, 'GENERATE JSON · LOCAL AI', () => { void generateComposerJSON(); }, 'composer-ai-generate');
+const composerFastButton = makeButton(composerDraftControls, 'DRAFT JSON · FAST OFFLINE', () => draftComposerJSON(), 'composer-fast-draft');
+const composerSetupButton = makeButton(composerDraftControls, 'MODEL SETUP', () => {
+    dialog.close();
+    aiDialog.showModal();
+    updateAILoadButton();
+}, 'composer-model-setup');
+const composerCancelButton = makeButton(composerDraftControls, 'CANCEL GENERATION', () => {
+    if (composerGenerating) cancelInference();
+}, 'composer-cancel');
+composerCancelButton.hidden = true;
+composerWorkflow.append(composerTitle, composerPromptLabel, composerPrompt, composerMetrics, composerDraftControls);
+const composerUntrusted = element('pre', 'composer-raw-stream');
+composerUntrusted.id = 'composerUntrusted';
+composerUntrusted.setAttribute('aria-label','Provisional AI output — untrusted until validated');
+composerUntrusted.hidden = true;
+const composerOutputHead = element('div', 'composer-output-head');
+composerOutputHead.append(element('strong', '', '02 / COMPILE-READY JSON'), element('span', 'composer-mini', 'REVIEW · VALIDATE · MANIFEST'));
+let composerGenerating = false;
+const approximateTokens = (value) => Math.ceil(new TextEncoder().encode(value).length / 4);
+function updateComposerMeters() {
+    composerInputTokens.textContent = '~' + approximateTokens(composerPrompt.value) + ' INPUT TOKENS';
+    composerOutputTokens.textContent = '~' + approximateTokens(composerGenerating && !composerUntrusted.hidden ? composerUntrusted.textContent : textArea.value) + ' OUTPUT TOKENS';
+    composerModelState.textContent = localAI.ready ? 'LOCAL ' + (localAI.backend || 'AI').toUpperCase() + ' READY' : 'AI requires opt-in model · FAST works offline';
+}
+function composerJSONReady(spec, notice) {
+    const checked = compileExperience(spec);
+    textArea.value = JSON.stringify(checked, null, 2);
+    compiledStatus.textContent = notice;
+    compiledStatus.setAttribute('role', 'status');
+    updateComposerMeters();
+}
+function setComposerGenerating(active) {
+    composerGenerating = active;
+    textArea.readOnly = active;
+    textArea.setAttribute('aria-busy', String(active));
+    composerUntrusted.hidden = !active;
+    if (active) composerUntrusted.textContent = 'GENERATING / UNTRUSTED · This preview cannot be compiled.';
+
+    composerAiButton.disabled = active;
+    composerFastButton.disabled = active;
+    composerSetupButton.disabled = active;
+    composerCancelButton.hidden = !active;
+    for (const button of compilerControls.querySelectorAll('button'))
+        button.disabled = active;
+}
+function draftComposerJSON() {
+    if (composerGenerating) return;
+    const request = composerPrompt.value.trim();
+    if (!request) {
+        compiledStatus.textContent = 'Enter a description first.';
+        composerPrompt.focus();
+        return;
+    }
+    if (request.length > 280) {
+        compiledStatus.textContent = 'FAST draft supports up to 280 characters. Shorten the request or use LOCAL AI for longer briefs.';
+        return;
+    }
+    const candidate = fastCompose(request, runtime.current, new Date(), makeLocalSuffix());
+    if (candidate.kind !== 'compose') {
+        compiledStatus.textContent = 'FAST DRAFT UNAVAILABLE · ' + candidate.reason + ' · A loaded local model may support another plan.';
+        return;
+    }
+    try {
+        composerJSONReady(candidate.spec, 'VALIDATED FAST DRAFT · Deterministic local compiler, NOT AI. Review the JSON and choose COMPILE EXPERIENCE.');
+    } catch (err) {
+        compiledStatus.textContent = 'FAST DRAFT REJECTED · ' + String(err);
+    }
+}
+async function generateComposerJSON() {
+    const request = composerPrompt.value.trim();
+    if (!request) {
+        compiledStatus.textContent = 'Enter a description first.';
+        composerPrompt.focus();
+        return;
+    }
+    if (aiBusy || composerGenerating) {
+        compiledStatus.textContent = 'Another local AI generation is in progress. Cancel it before starting a new request.';
+        return;
+    }
+    if(isSimpleClockRequest(request)){
+        draftComposerJSON();
+        if(textArea.value.trim() && compiledStatus.textContent.startsWith('VALIDATED FAST DRAFT'))
+            compiledStatus.textContent='VALIDATED LIVE CLOCK JSON · Used precise local clock grammar; model inference deliberately bypassed. Choose COMPILE EXPERIENCE.';
+        return;
+    }
+    const requestedModel = describeModelIntent(request);
+    if(requestedModel && /\b(3d|miniature|model|assemble|assembly|construct|build|create|make|visualize|render|design|sculpt)\b/i.test(request)){
+        const proposal=fastCompose(request,runtime.current,new Date(),makeLocalSuffix());
+        if(proposal.kind==='compose' && proposal.spec.blocks.some(b=>b.kind==='object-model')){
+            composerJSONReady(proposal.spec,'CONSTRUCTIVE MODEL READY · Procedural geometry generated by a deterministic trusted profile (not AI inference). Review, compile and rotate the 3D scene.');
+            return;
+        }
+    }
+    if (!localAI.ready) {
+        compiledStatus.textContent = 'MODEL NOT LOADED · Use MODEL SETUP to check device and explicitly opt into local model download. FAST offline draft is available immediately.';
+        return;
+    }
+    const previousJSON = textArea.value;
+    const ticket = ++aiRequestSerial;
+    const context = JSON.stringify({ active: runtime.active, title: runtime.current?.title || 'Presence', blocks: runtime.current?.blocks.map(b => ({ kind: b.kind, title: b.title })) || [] });
+    aiBusy = true;
+    aiController = new AbortController();
+    setComposerGenerating(true);
+    compiledStatus.textContent = 'LOCAL AI · Preparing first JSON fragment. Output is a provisional plan until validated.';
+    try {
+        const plan = await localAI.generate(request, context, {
+            signal: aiController.signal,
+            onProgress: ({ phase, tokens, raw }) => {
+                if (ticket !== aiRequestSerial) return;
+                if (typeof raw === 'string') {
+                    composerUntrusted.textContent = raw;
+                    updateComposerMeters();
+                }
+                compiledStatus.textContent = phase === 'prefill'
+                    ? 'LOCAL AI · Preparing first JSON fragment.'
+                    : phase === 'validating'
+                        ? 'LOCAL AI · Validating the generated plan against the safe schema…'
+                        : 'AI PLAN STREAM · ' + tokens + ' chunks · ~' + approximateTokens(composerUntrusted.textContent) + ' estimated tokens. Untrusted preview only.';
+            }
+        });
+        if (ticket !== aiRequestSerial || aiController.signal.aborted)
+            throw Error('Generation cancelled; existing JSON preserved.');
+        const spec = compileIntentPlan(plan, new Date(), makeLocalSuffix());
+        composerJSONReady(spec, 'AI PLAN VALIDATED → EXPERIENCE JSON READY · ILLUSTRATIVE source, no live data. Review and choose COMPILE EXPERIENCE to manifest.');
+        lastAIPlan = plan;
+        aiGenerated++;
+    } catch (err) {
+        textArea.value = previousJSON;
+        const cancelled = ticket !== aiRequestSerial || aiController?.signal.aborted;
+        let recovered = false;
+        if (!cancelled) {
+            const fallback = fastCompose(request, runtime.current, new Date(), makeLocalSuffix());
+            if (fallback.kind === 'compose') {
+                try {
+                    composerJSONReady(fallback.spec, 'MODEL OUTPUT REJECTED · VALIDATED OFFLINE FALLBACK READY (not AI-generated) · Reason: ' + String(err).slice(0,120) + '. Review and compile.');
+                    recovered = true;
+                } catch {}
+            }
+        }
+        updateComposerMeters();
+        if (!recovered) compiledStatus.textContent = (cancelled ? 'CANCELLED' : 'MODEL OUTPUT REJECTED') + ' · ' + String(err) + ' · Existing JSON preserved. No scene changed.';
+        compiledStatus.setAttribute('role', recovered?'status':'alert');
+    } finally {
+        aiBusy = false;
+        aiController = null;
+        setComposerGenerating(false);
+        updateComposerMeters();
+        updateAILoadButton();
+    }
+}
+composerPrompt.addEventListener('input', updateComposerMeters);
+composerPrompt.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        if (localAI.ready) void generateComposerJSON();
+        else draftComposerJSON();
+    }
+});
+textArea.addEventListener('input', () => {
+    if (composerGenerating) return;
+    updateComposerMeters();
+    compiledStatus.textContent = 'JSON edited. Changes will be schema-validated before compilation.';
+});
+const composerCopyButton = makeButton(composerDraftControls, 'COPY JSON', () => {
+    if (!textArea.value.trim()) {
+        compiledStatus.textContent = 'No JSON to copy.';
+        return;
+    }
+    if (!navigator.clipboard?.writeText) {
+        textArea.focus();
+        textArea.select();
+        compiledStatus.textContent = 'Clipboard API unavailable. JSON selected for manual copying.';
+        return;
+    }
+    void navigator.clipboard.writeText(textArea.value).then(
+        () => compiledStatus.textContent = 'JSON copied to clipboard.',
+        () => { textArea.focus(); textArea.select(); compiledStatus.textContent = 'Clipboard access denied. JSON selected for manual copying.'; }
+    );
+});
+dialog.addEventListener('close', () => { if (composerGenerating) cancelInference(); });
+
 makeButton(heading, 'LOAD EXAMPLE', () => { const example = { version: 1, id: 'moon-operations', title: 'Moon expedition operations', subtitle: 'A new combination of timeline and task-board', role: 'MISSION COORDINATOR', source: 'ILLUSTRATIVE', permissions: [], blocks: [{ kind: 'timeline-chart', id: 'oxygen', title: 'Illustrative oxygen supply', unit: 'kg', tracks: [{ id: 'supply', label: 'Available oxygen', points: Array.from({ length: 12 }, (_, i) => ({ t: new Date(Date.UTC(2026, 10, 17, i * 2)).toISOString(), v: 140 - i * 8 })) }], selected: 'supply', window: 12, windows: [6, 12] }, { kind: 'task-board', id: 'operations', title: 'Crew tasks', lanes: [{ id: 'next', title: 'Next' }, { id: 'working', title: 'Working' }, { id: 'done', title: 'Done' }], cards: [{ id: 'check-air', title: 'Inspect airlocks', lane: 'next' }, { id: 'watch-oxygen', title: 'Verify supply model', lane: 'working' }] }, { kind: 'explanation', id: 'note', title: 'Source warning', text: 'Illustrative mission scenario generated as a compositional grammar test; not real telemetry.' }] }; textArea.value = JSON.stringify(example, null, 2); compiledStatus.textContent = 'New mixed-domain specimen loaded. Press COMPILE.'; }, 'choice');
 makeButton(heading, 'CLOSE', () => dialog.close(), 'choice');
-dialog.append(element('h2', '', 'EXPERIENCE COMPILER'), desc, heading, textArea, compiledStatus);
+dialog.append(element('h2', '', 'EXPERIENCE COMPILER'), desc, composerWorkflow, heading, composerOutputHead, composerUntrusted, textArea, compiledStatus);
 const importLabel = element('label', 'composer-import-label', 'IMPORT LOCAL JSON · never uploads');
 const jsonFile = element('input');
 jsonFile.type = 'file';
@@ -2819,7 +3426,7 @@ jsonFile.addEventListener('change', () => { const file = jsonFile.files?.[0]; if
     return; if (file.size > 80000) {
     compiledStatus.textContent = 'REJECTED · File must be 80 KB or smaller';
     return;
-} void file.text().then(text => { textArea.value = text; compiledStatus.textContent = 'Local file loaded. Review it and choose COMPILE EXPERIENCE or COMPILE PLAN JSON.'; }).catch(e => compiledStatus.textContent = 'File read error: ' + String(e)); });
+} void file.text().then(text => { textArea.value = text; updateComposerMeters(); compiledStatus.textContent = 'Local file loaded. Review it and choose COMPILE EXPERIENCE or COMPILE PLAN JSON.'; }).catch(e => compiledStatus.textContent = 'File read error: ' + String(e)); });
 importLabel.append(jsonFile);
 dialog.append(importLabel);
 makeButton(heading, 'LOAD LOCAL PLAN TEST', () => { const test = { version: 1, intent: 'compose', title: 'River waterworks observatory', subtitle: 'Illustrative water-transport monitoring and operational planning', role: 'SYSTEMS EXPLAINER', blocks: [{ kind: 'spatial-assembly', title: 'Water path', items: ['Intake pipe', 'Filter chamber', 'Buffer tank', 'Outlet valve'] }, { kind: 'timeline-chart', title: 'Illustrative throughput trend', unit: 'index' }, { kind: 'task-board', title: 'Inspection steps', items: ['Inspect inlet', 'Review filter', 'Sample output'] }] }; textArea.value = JSON.stringify(test, null, 2); compiledStatus.textContent = 'A sample PLAN loaded. Choose COMPILE PLAN JSON (no AI/model required).'; }, 'choice');
@@ -2848,15 +3455,15 @@ catch (err) {
     compiledStatus.setAttribute('role', 'alert');
 } }, 'choice');
 makeButton(compilerControls, 'COPY CURRENT JSON', () => { const data = runtime.exportCurrent(); if (data) {
-    textArea.value = data;
-    compiledStatus.textContent = 'Current experience specification copied into editor.';
+    textArea.value = data; updateComposerMeters();
+    compiledStatus.textContent = 'Current experience specification loaded into editor.';
 }
 else
     compiledStatus.textContent = 'No active experience.'; }, 'choice');
 dialog.append(compilerControls);
 document.body.append(dialog);
 function openComposer(showCurrent = false) { if (showCurrent && runtime.exportCurrent())
-    textArea.value = runtime.exportCurrent(); dialog.showModal(); textArea.focus(); }
+    textArea.value = runtime.exportCurrent(); updateComposerMeters(); dialog.showModal(); (showCurrent ? textArea : composerPrompt).focus(); }
 function makeLocalSuffix() { if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
     return crypto.randomUUID().replaceAll('-', '').slice(0, 10); return Math.random().toString(36).slice(2, 12); }
 const aiProgress = element('div', 'ai-inference-progress');
@@ -3154,6 +3761,7 @@ function frame(time) { try {
         renderer.setDirectedFrame(frame);
         renderer.draw(time);
         drawDomain08(time);
+        paintModelSolids10();
         previous = time;
         $('directorStatus').textContent = frame.phase.toUpperCase() + ' · ' + frame.strategy.toUpperCase().replaceAll('-', ' ') + ' · ' + Math.round(frame.rawProgress * 100) + '%';
         $('pauseMotion').textContent = frame.paused ? '▶' : 'Ⅱ';
@@ -3168,6 +3776,6 @@ catch (error) {
 updateHeader();
 mount();
 requestAnimationFrame(frame);
-Object.defineProperty(window, '__proteusDiagnostics', { configurable: false, value: () => ({ version: '0.9.0', grammar: 'ResourceGraph09', domain: runtime.current?.blocks.find(b=>b.kind==='fluid-network'||b.kind==='atmosphere'||b.kind==='system-graph')?.kind||null, backend: renderer.backend, fps: renderer.fps, morphProgress: renderer.morphProgress, scene: runtime.scene.id, active: runtime.active, identity: runtime.identity, role: runtime.scene.role, objects: runtime.scene.objects.map(o => ({ id: o.id, kind: o.kind, position: o.position })), history: runtime.history, available: runtime.available, spec: runtime.current ? structuredClone(runtime.current) : null, revision: runtime.revision, rotation: renderer.rotation, director: { ...director.diagnostics, frame: director.frame(performance.now()), continuity: renderer.continuity }, quality: renderer.graphicsQuality, fast: { composed: fastComposed, rejections: fastFailures, lastPlanningMs: lastFastLatencyMs }, commands: commandCount, message: messageText, errors: [...errors], localAI: { status: localAI.status, ready: localAI.ready, model: localAI.model, selectedBackend: aiChoice, activeBackend: localAI.backend, downloadApproved: aiApproved, probe: lastProbe, generated: aiGenerated, requestBusy: aiBusy, generatedChunks: aiTokens, phase: aiPhase, lastPlanKind: lastAIPlan?.intent || null } }) });
+Object.defineProperty(window, '__proteusDiagnostics', { configurable: false, value: () => ({ version: '0.10.0', grammar: 'ResourceGraph09', domain: runtime.current?.blocks.find(b=>b.kind==='fluid-network'||b.kind==='atmosphere'||b.kind==='system-graph')?.kind||null, backend: renderer.backend, fps: renderer.fps, morphProgress: renderer.morphProgress, scene: runtime.scene.id, active: runtime.active, identity: runtime.identity, role: runtime.scene.role, objects: runtime.scene.objects.map(o => ({ id: o.id, kind: o.kind, position: o.position })), history: runtime.history, available: runtime.available, spec: runtime.current ? structuredClone(runtime.current) : null, revision: runtime.revision, rotation: renderer.rotation, director: { ...director.diagnostics, frame: director.frame(performance.now()), continuity: renderer.continuity }, quality: renderer.graphicsQuality, fast: { composed: fastComposed, rejections: fastFailures, lastPlanningMs: lastFastLatencyMs }, constructive: { active: runtime.current?.blocks.find(b=>b.kind==='object-model')?.archetype||null, parts: runtime.current?.blocks.find(b=>b.kind==='object-model')?.parts.length||0 }, commands: commandCount, message: messageText, errors: [...errors], localAI: { status: localAI.status, ready: localAI.ready, model: localAI.model, selectedBackend: aiChoice, activeBackend: localAI.backend, downloadApproved: aiApproved, probe: lastProbe, generated: aiGenerated, requestBusy: aiBusy, generatedChunks: aiTokens, phase: aiPhase, lastPlanKind: lastAIPlan?.intent || null } }) });
 
 </script></body></html>
