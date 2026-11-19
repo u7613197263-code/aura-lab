@@ -411,6 +411,37 @@ function sample(obj, i, count) {
             return [cx + sx * .5 * Math.cos(a), cy + (t - .5) * sy, cz + sz * .5 * Math.sin(a)];
         }
         case 'spray': return [cx + (f(i, 2) - .5) * sx, cy + (f(i, 3) - .5) * sy, cz + (f(i, 4) - .5) * sz];
+
+        // Constructive surface primitives: object geometry has genuine bounded 3D volumes.
+        case 'box': {
+            const face=Math.floor(f(i,31)*6),u=f(i,32)-.5,v=f(i,33)-.5;
+            const p=face===0?[.5,u,v]:face===1?[-.5,u,v]:face===2?[u,.5,v]:
+                face===3?[u,-.5,v]:face===4?[u,v,.5]:[u,v,-.5];
+            return [cx+p[0]*sx,cy+p[1]*sy,cz+p[2]*sz];
+        }
+        case 'wedge': {
+            const face=Math.floor(f(i,41)*6),u=f(i,42)-.5,v=f(i,43)-.5;
+            const y=face===0?.5:face===1?-.5:v;
+            const width=(1-.42*(y+.5));
+            const x=face===2?.5*width:face===3?-.5*width:u*width;
+            const z=face===4?.5:face===5?-.5:v;
+            return [cx+x*sx,cy+y*sy,cz+z*sz];
+        }
+        case 'roof': {
+            const u=f(i,51)-.5,v=f(i,52)-.5,fac=Math.floor(f(i,53)*4);
+            const x=u*sx,z=v*sz;
+            const roofY=(.5-Math.abs(v))*sy;
+            return [cx+x,cy+(fac===0?-.42*sy:fac===1?roofY:roofY*(f(i,54)*.10+.90)),cz+z];
+        }
+        case 'tire': {
+            const a=2*Math.PI*f(i,61),b=2*Math.PI*f(i,62);
+            const r=.38+.12*Math.cos(b);
+            return [cx+sx*r*Math.cos(a),cy+sy*r*Math.sin(a),cz+sz*.49*Math.sin(b)];
+        }
+        case 'cone': {
+            const a=2*Math.PI*f(i,71),h=f(i,72),r=(1-h)*.5;
+            return [cx+sx*r*Math.cos(a),cy+(h-.5)*sy,cz+sz*r*Math.sin(a)];
+        }
         case 'sphere': {
             const a = 2 * Math.PI * f(i, 2), z = 2 * f(i, 3) - 1;
             const k = Math.sqrt(1 - z * z);
@@ -1040,8 +1071,105 @@ function unique(ids) { if (new Set(ids).size !== ids.length)
 const sourceValues = ['PROCEDURAL', 'SYNTHETIC', 'LOCAL', 'ILLUSTRATIVE'];
 function source(x) { if (!sourceValues.includes(x))
     fail('unknown provenance'); return x; }
+
+// GENESIS 0.10 — typed constructive models. Geometry is a bounded procedural point cloud,
+// NOT imported meshes, autonomous CAD, or open-ended 3D object synthesis.
+const MODEL_KINDS = new Set(['car','robot','house','rocket','custom']);
+const MODEL_SHAPES = new Set(['box','wedge','tire','cone','cylinder','sphere','roof','helix','ring']);
+function makeModelPart(id,name,shape,position,size,color='aqua',weight=120) {
+    return {id,name,shape,position,size,color,weight};
+}
+function modelParts(archetype) {
+    const P=makeModelPart;
+    switch(archetype){
+    case 'car': return [
+        P('chassis','Underframe','box',[0,-.31,0],[2.70,.22,1.08],'gold',330),
+        P('body','Vehicle body','box',[0,-.09,0],[2.85,.42,1.16],'aqua',780),
+        P('hood','Front bonnet','wedge',[.94,.17,0],[.94,.28,1.09],'aqua',240),
+        P('roof','Cabin roof','wedge',[-.12,.48,0],[1.44,.62,1.06],'aqua',520),
+        P('glass','Window glazing','wedge',[-.12,.46,.01],[1.27,.40,1.13],'ice',260),
+        P('tire-fl','Front left tire','tire',[.90,-.47,.66],[.50,.50,.24],'violet',300),
+        P('tire-fr','Front right tire','tire',[.90,-.47,-.66],[.50,.50,.24],'violet',300),
+        P('tire-rl','Rear left tire','tire',[-.92,-.47,.66],[.50,.50,.24],'violet',300),
+        P('tire-rr','Rear right tire','tire',[-.92,-.47,-.66],[.50,.50,.24],'violet',300),
+        P('headlight-l','Left headlamp','box',[1.43,.01,.40],[.09,.11,.23],'ice',90),
+        P('headlight-r','Right headlamp','box',[1.43,.01,-.40],[.09,.11,.23],'ice',90),
+        P('taillights','Rear light bar','box',[-1.43,-.02,0],[.09,.12,.78],'gold',90)
+    ];
+    case 'robot': return [
+        P('torso','Torso housing','box',[0,.10,0],[.90,1.05,.55],'aqua',650),
+        P('head','Sensor head','sphere',[0,.94,0],[.59,.51,.55],'ice',460),
+        P('eye-l','Left optic','sphere',[-.17,.96,.26],[.13,.12,.09],'gold',120),
+        P('eye-r','Right optic','sphere',[.17,.96,.26],[.13,.12,.09],'gold',120),
+        P('arm-l','Left arm','cylinder',[-.70,.0,0],[.26,.95,.26],'violet',290),
+        P('arm-r','Right arm','cylinder',[.70,.0,0],[.26,.95,.26],'violet',290),
+        P('hand-l','Left manipulator','sphere',[-.70,-.60,0],[.29,.20,.26],'gold',130),
+        P('hand-r','Right manipulator','sphere',[.70,-.60,0],[.29,.20,.26],'gold',130),
+        P('leg-l','Left leg','box',[-.25,-.79,0],[.30,.85,.36],'aqua',300),
+        P('leg-r','Right leg','box',[.25,-.79,0],[.30,.85,.36],'aqua',300)
+    ];
+    case 'house': return [
+        P('foundation','Foundation','box',[0,-.84,0],[2.3,.18,1.8],'gold',370),
+        P('walls','Wall envelope','box',[0,-.22,0],[2.10,1.12,1.58],'aqua',930),
+        P('roof','Pitched roof','roof',[0,.65,0],[2.34,.68,1.83],'violet',850),
+        P('door','Entrance door','box',[0,-.48,.83],[.39,.65,.10],'gold',260),
+        P('window-l','Left window','box',[-.60,-.13,.84],[.37,.40,.08],'ice',230),
+        P('window-r','Right window','box',[.60,-.13,.84],[.37,.40,.08],'ice',230),
+        P('chimney','Chimney','box',[.66,1.04,-.20],[.24,.74,.26],'gold',220)
+    ];
+    case 'rocket': return [
+        P('fuselage','Pressurized fuselage','cylinder',[0,.02,0],[.65,1.90,.65],'aqua',1200),
+        P('nose','Nose cone','cone',[0,1.25,0],[.68,.82,.68],'ice',620),
+        P('engine','Engine bell','cone',[0,-1.12,0],[.66,.48,.66],'gold',460),
+        P('fin-l','Left stabilizer','wedge',[-.46,-.72,0],[.65,.58,.27],'violet',340),
+        P('fin-r','Right stabilizer','wedge',[.46,-.72,0],[.65,.58,.27],'violet',340),
+        P('porthole','Observation window','sphere',[0,.43,.34],[.29,.29,.12],'ice',210)
+    ];
+    default: return [];
+    }
+}
+function constructModelBlock(archetype,title,id) {
+    if(!MODEL_KINDS.has(archetype) || archetype==='custom')throw Error('Unknown model profile');
+    const parts=modelParts(archetype);
+    return {kind:'object-model',id,title,archetype,selected:parts[0].id,exploded:false,parts};
+}
+function checkObjectModel(o,id,title){
+    exact(o,['kind','id','title','archetype','selected','exploded','parts']);
+    const archetype=str(o.archetype,20);
+    if(!MODEL_KINDS.has(archetype)||typeof o.exploded!=='boolean')fail('Invalid model profile');
+    const parts=arr(o.parts,24).map(v=>{
+        const p=record(v);
+        exact(p,['id','name','shape','position','size','color','weight']);
+        const shape=str(p.shape,20),color=str(p.color,20);
+        if(!MODEL_SHAPES.has(shape)||!Object.keys(interactionPalette).includes(color))fail('Unknown procedural model primitive');
+        const position=arr(p.position,3),size=arr(p.size,3);
+        if(position.length!==3||size.length!==3)fail('Part geometry must have 3D coordinates');
+        return {id:ident(p.id),name:str(p.name,65),shape,
+            position:position.map(x=>finite(x,-2.5,2.5)),
+            size:size.map(x=>finite(x,.045,3.5)),color,weight:int(p.weight,20,1500)};
+    });
+    if(parts.length<2)fail('Object model requires at least two constructive parts');
+    unique(parts.map(p=>p.id));
+    const selected=ident(o.selected);
+    if(!parts.some(p=>p.id===selected))fail('Missing selected model component');
+    return {kind:'object-model',id,title,archetype,selected,exploded:o.exploded,parts};
+}
+function describeModelIntent(text) {
+    const normalized=text.toLowerCase();
+    if(/\b(game|racing game|driving simulator|race simulator)\b/.test(normalized))return null;
+    const terms=[
+        ['car',/\b(car|cars|vehicle|vehicles|sedan|coupe|sports car|automobile|αυτοκίνητο)\b/],
+        ['robot',/\b(robot|android robot|humanoid robot|ρομπότ)\b/],
+        ['house',/\b(house|home|cottage|cabin|little house|σπίτι)\b/],
+        ['rocket',/\b(rocket|space rocket|launch vehicle|πύραυλο)\b/]
+    ];
+    const match=terms.filter(([,regex])=>regex.test(normalized));
+    return match.length===1?match[0][0]:null;
+}
+
 function checkBlock(v) {
     const o = record(v), kind = o.kind, id = ident(o.id), title = str(o.title);
+    if (kind === 'object-model') return checkObjectModel(o,id,title);
     if (kind === 'system-graph') return validateGraph09(o,id,title);
     if (kind === 'fluid-network' || kind === 'atmosphere') return validateDomain08(o,id,title);
     if(kind==='clock'){exact(o,['kind','id','title','timeZone','format']);if(!['local','UTC'].includes(o.timeZone)||![12,24].includes(o.format))fail('Invalid clock settings');return {kind,id,title,timeZone:o.timeZone,format:o.format};}
@@ -1167,6 +1295,13 @@ function sceneFromExperience(spec) {
             for (const entry of block.events.filter(e => cells.includes(e.day)).slice(0, 7)) {
                 const i = cells.indexOf(entry.day), c = i % 7, r = Math.floor(i / 7);
                 objects.push(visual('appointment:' + entry.id, 'sphere', 'Local appointment ' + entry.title, interactionPalette.violet, 48, { position: [.1 + (c + .5 - 3.5) * 2.8 / 7, .06 + (rows / 2 - r - .5) * 1.9 / rows, .15], size: [.025, .025, .025] }));
+            }
+        }
+        else if (block.kind === 'object-model') {
+            for(const part of block.parts){
+                const shift=block.exploded ? part.position.map(v=>v*.32) : [0,0,0];
+                const origin=part.position.map((v,i)=>v+shift[i]);
+                objects.push(visual('constructive:'+block.id+':'+part.id,part.shape,part.name,interactionPalette[part.color],part.weight,{position:origin,size:part.size}));
             }
         }
         else if (block.kind === 'spatial-assembly') {
