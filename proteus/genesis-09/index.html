@@ -1179,10 +1179,10 @@ function describeModelIntent(text) {
     const normalized=text.toLowerCase();
     if(/\b(game|racing game|driving simulator|race simulator)\b/.test(normalized))return null;
     const terms=[
-        ['car',/\b(car|cars|vehicle|vehicles|sedan|coupe|sports car|automobile|αυτοκίνητο)\b/],
-        ['robot',/\b(robot|android robot|humanoid robot|ρομπότ)\b/],
-        ['house',/\b(house|home|cottage|cabin|little house|σπίτι)\b/],
-        ['rocket',/\b(rocket|space rocket|launch vehicle|πύραυλο)\b/]
+        ['car',/\b(car|cars|vehicle|vehicles|sedan|coupe|sports car|automobile)\b|αυτοκίνητο/],
+        ['robot',/\b(robot|android robot|humanoid robot)\b|ρομπότ/],
+        ['house',/\b(house|home|cottage|cabin|little house)\b|σπίτι/],
+        ['rocket',/\b(rocket|space rocket|launch vehicle)\b|πύραυλο/]
     ];
     const match=terms.filter(([,regex])=>regex.test(normalized));
     return match.length===1?match[0][0]:null;
@@ -1843,7 +1843,7 @@ function showObjectModel(b) {
     const root=section(b.id,b.title,'CONSTRUCTIVE OBJECT');
     const lab=e('div','modelstudio');
     const bar=e('div','studio-overline');
-    bar.append(e('span','',b.archetype.toUpperCase()+' / PARAMETRIC OBJECT'),e('span','',String(b.parts.length)+' INTERCONNECTED PARTS'));
+    bar.append(e('span','',b.archetype.toUpperCase()+' / PARAMETRIC OBJECT'),e('span','',String(b.parts.length)+' SEMANTIC PARTS'));
     const view=e('div','studio-viewport');
     view.append(modelBlueprint(b));
     const choices=e('div','studio-choices');
@@ -2492,6 +2492,9 @@ function fastCompose(raw, current, now = new Date(), suffix = 'local') {
             return {kind:'compose',spec,reason:'Dimensioned constructive geometry for '+archetype+' · no model inference'};
         }
         const wants = { spatial: geometry.test(text), calendar: temporal.test(text), chart: series.test(text), tasks: board.test(text), explain: explanation.test(text) };
+        if(!archetype && wants.spatial && /\b(3d|miniature|photorealistic|mesh|realistic model)\b/i.test(text)
+           && !/\b(parts|components|objects)\s*:/i.test(text))
+            return {kind:'unsupported',reason:'Recognizable procedural model profile unavailable. Current typed presets: car, robot, house, rocket. You can provide custom object-model JSON for other geometric assemblies, or explicitly name parts: ... for a schematic representation.'};
         const count = [wants.spatial, wants.calendar, wants.chart, wants.tasks].filter(Boolean).length;
         if (count === 0)
             return { kind: 'unsupported', reason: 'No supported scene grammar could be inferred. Describe a 3D assembly, date calendar, chart, task board, or supply an arithmetic formula; advanced AI can also provide a validated JSON plan.' };
