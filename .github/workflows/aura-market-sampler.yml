@@ -1,13 +1,8 @@
-name: AURA Market Sampler
+name: AURA Market Sampler (paused)
 
+# All automatic triggers removed at user's request.
+# Can run only when explicitly dispatched by the owner.
 on:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/aura-market-sampler.yml
-  schedule:
-    # Every five minutes, offset from the top of the hour to reduce queue delays.
-    - cron: "3-58/5 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -28,18 +23,14 @@ jobs:
           ref: crypto-signal-lab
           fetch-depth: 0
           persist-credentials: true
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-
       - name: Validate sampler logic
         run: node scripts/market-sampler.mjs --self-test
-
       - name: Discover markets and capture due outcomes
         run: node scripts/market-sampler.mjs
-
       - name: Commit shared public market ledger
         run: |
           git config user.name "github-actions[bot]"
